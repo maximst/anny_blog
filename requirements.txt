@@ -1,4 +1,8 @@
 Django
 PIL
 south
-
+pytz
+django-voting
+django-taggit
+django-social-auth
+django-coffeescript

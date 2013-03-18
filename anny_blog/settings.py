@@ -130,8 +130,13 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'south',
+    'voting',
+    'taggit',
+    'social_auth',
+    'coffeescript',
 
     'blog',
+    'tag',
 )
 
 # A sample logging configuration. The only tangible logging
