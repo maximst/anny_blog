@@ -7,8 +7,9 @@
         <h4>{{ content.title }}</h4>
       </div>
       <div class="blog-detail-body content-detail-body">
-        <div class="blog-author content-author">Posted by {% if content.author.first_name or content.author.last_name %}{{ content.author.first_name }} {{ content.author.last_name }}{% else %}{{ content.author.username }}{% endif %} on {{ content.create_time }}</div>
+        <div class="blog-author content-author">Posted by {% if content.user.first_name or content.user.last_name %}{{ content.user.first_name }} {{ content.user.last_name }}{% else %}{{ content.user.username }}{% endif %} on {{ content.create_time }}</div>
         {% vote %}
+        <br />
         <div class="blog-detail-body-content content-detail-body-content">
           {{ content.body|safe }}
         </div>
