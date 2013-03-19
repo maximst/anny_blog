@@ -68,7 +68,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = autopath('static')
+STATIC_ROOT = '/static/'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -76,6 +76,8 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    autopath('static'),
+    autopath('media'),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -86,7 +88,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -137,6 +139,7 @@ INSTALLED_APPS = (
 
     'blog',
     'tag',
+    'core',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -168,6 +171,51 @@ LOGGING = {
     }
 }
 
+
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.debug',
+    'django.core.context_processors.request',
+    'django.contrib.auth.context_processors.auth',
+    'social_auth.context_processors.social_auth_backends',
+    'social_auth.context_processors.social_auth_by_type_backends',
+    'social_auth.context_processors.social_auth_login_redirect',
+)
+CONTEXT_PROCESSORS = TEMPLATE_CONTEXT_PROCESSORS
+
+LOGIN_URL = '/accounts/login/'
+
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.contrib.vkontakte.VKontakteOAuth2Backend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+STUPIDITY_LEVELS = (
+    (0, '1'),
+    (1, '2'),
+    (2, '3'),
+    (3, '4'),
+)
+
+MENU_ITEMS = (
+    ('blog', 'Blog'),
+)
+
+LOGIN_URL          = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/accounts/profile/'
+LOGIN_ERROR_URL    = '/accounts/login-error/'
+
+FACEBOOK_APP_ID = '365616846862745'
+FACEBOOK_API_SECRET = '8b2297f7819263e8e7ba1293d1acbe28'
+FACEBOOK_PROFILE_EXTRA_PARAMS = {'locale': 'ru_RU'}
+#FACEBOOK_EXTENDED_PERMISSIONS = ['user_photos']
+
+VK_APP_ID = '3222058'
+VK_API_SECRET = '40uiMRels7fjeAQgypOg'
+VK_EXTRA_SCOPE = ['photos', ]
+
+COFFEESCRIPT_ROOT = autopath('static')
 
 try:
     from local_settings import *

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load coretags %}
+
+{% block content %}
+    <div class="blog-detail content-detail">
+      <div class="blog-detail-header content-detail-header">
+        <h4>{{ content.title }}</h4>
+      </div>
+      <div class="blog-detail-body content-detail-body">
+        <div class="blog-author content-author">Posted by {% if content.author.first_name or content.author.last_name %}{{ content.author.first_name }} {{ content.author.last_name }}{% else %}{{ content.author.username }}{% endif %} on {{ content.create_time }}</div>
+        {% vote %}
+        <div class="blog-detail-body-content content-detail-body-content">
+          {{ content.body|safe }}
+        </div>
+        <div class="blog-detail-footer content-detail-footer">
+        {% if content.tags.all %}
+        <span class="float-left">
+        <small>
+          Tags:
+          {% for t in content.tags.all %}
+            <a href="/tag/{{ t.slug }}">{{ t.name }}</a>{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </small>
+        </span>
+        {% endif %}
+        <div class="btn-group">
+          {% if user.is_authenticated %}
+            <a class="btn" href="#comment_form">Add Comment</a>
+          {% endif %}
+          {% comment %}        <small><a class="btn" href="#">{% if content.user.first_name or content.user.last_name %}{{ content.user.first_name }} {{ content.user.last_name }}{% else %}{{ content.user.username }}{% endif %} blog</a></small>{% endcomment %}
+        </div>
+        </div>
+      </div>
+      {% comment %}{% include "comments.html" %}{% endcomment %}
+    <a name="comment_form"></a>
+    <br>{% comment %}{% render_comment_form for content %}{% endcomment %}
+    </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% load static %}
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="/">ANNY</a>
+      <ul class="nav">
+        {% for section in sections %}
+          <li {% if section.slug == current_section %}class="active"{% endif %}><a href="{{ section.url }}">{{ section.title }}</a></li>
+        {% endfor %}
+      </ul>
+      <span class="float-right">
+      <ul class="nav">
+        {% if user.is_authenticated %}
+          {% if user.is_superuser %}<li><a href="{% url "admin:index" %}">Admin</a></li>{% endif %}
+          <li><a href="{% url "profile" %}" title="My profile">{{ user.first_name }} {{ user.last_name }} ({{ user }})</a></li>
+          <li><a href="{% url "logout" %}">Logout</a></li>
+        {% else %}
+          <li class="btn disabled">You are not logged in.</li>
+          <li><a href="{% url "socialauth_begin" "facebook" %}?next={{ request.META.PATH_INFO }}" class="facebook" title="Login via facebook">FB</a></li>
+          <li><a href="{% url "login" %}?next={{ request.META.PATH_INFO }}">Login</a></li>
+        {% endif %}
+      </ul>
+      </span>
+    </div>
+  </div>
+</div>

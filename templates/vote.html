@@ -1,0 +1,9 @@
+<div id="vote_block" class="vote-block" title="Score: {{ score.score }} / Votes: {{ score.num_votes }}">
+  <a id="up_vote"{% if user.is_authenticated %} onclick="return false;"{% endif %} href="{% url "vote" app=app model=model pk=pk vote=user_vote %}" title="Up"><i class="icon-thumbs-up"></i></a>
+  <span id="score_votes" {% if score.score < 0 %}class="text-error"{% endif %}{% if score.score > 0 %}class="text-success"{% endif %}>
+    {{ score.score }}
+  </span>
+  <span id="success_alert" class="no-display alert alert-info">
+    <strong>SUCCESS:</strong> Your vote is considered!
+  </span>
+</div>

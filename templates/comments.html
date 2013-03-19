@@ -1,0 +1,27 @@
+{% load comments %}
+<a name="comments"></a>
+{% get_comment_list for content as comments %}
+{% for comment in comments %}
+  <div class="comment" id="comment_{{ comment.pk }}">
+    <div class="comment-header">
+      {{ comment.submit_date }}. Posted by <a href="#">{% if comment.user.first_name or comment.user.last_name %}{{ comment.user.first_name }} {{ comment.user.last_name }}{% else %}{{ comment.user.username }}{% endif %}</a>
+      <span class="float-right">
+        <a href="#comment_{{ comment.pk }}">#{{ comment.pk }}</a>
+      </span>
+    </div>
+    <div class="float-left user-avatar">
+      <div class="avatar-wrapper">
+        <img src="{{ comment.user.profile.avatar.url }}">
+        <div class="avatar-shadow"></div>
+      </div>
+    </div>
+    <div class="comment-wrapper">
+      <div class="comment-body">
+        {{ comment.comment }}
+      </div>
+      <div class="comment-footer">
+        {% if comment.user.is_superuser or comment.user.is_staff %}{{ comment.user.profile.signature|safe }}{% else %}{{ comment.user.profile.signature|striptags }}{% endif %}
+      </div>
+    </div>
+  </div>
+{% endfor %}
