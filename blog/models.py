@@ -34,4 +34,12 @@ class Comment(models.Model):
     def __unicode__(self):
         return u'%s: %s - %s' % (self.user, self.blog, self.body[:32])
 
+
+class BlogImage(models.Model):
+    title = models.CharField(max_length=128, default='', blank=True)
+    blog = models.ForeignKey(Blog)
+    image = models.ImageField(upload_to='images')
+
+
 Blog.num_comments = property(lambda b: Comment.objects.filter(blog=b).count())
+Blog.images = property(lambda b: BlogImage.objects.filter(blog=b))

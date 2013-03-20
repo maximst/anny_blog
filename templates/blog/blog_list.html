@@ -8,22 +8,22 @@
   <div class="blog-list-header content-list-header">
     <a href="{% url "blog" slug=row.slug %}" title="Go to: {{ row.title }}"><h4>{{ row.title }}</h4></a>
   </div>
-  <div class="blog-info"><small>{{ row.create_time }}</small></div>
   <div class="blog-list-body content-list-body">
     {{ row.preview|safe }}
   </div>
   <div class="blog-list-footer content-list-footer">
+      <span class="blog-time">
+        {{ row.create_time.time|date:"G:i" }}
+      </span>
       {% if row.tags.all %}
         <span class="float-left">
-        <small>
           Tags:
           {% for t in row.tags.all %}
             <a href="/tag/{{ t.slug }}">{{ t.name }}</a>{% if not forloop.last %}, {% endif %}
           {% endfor %}
-        </small>
         </span>
       {% endif %}
-      <div class="btn-group">
+      <!--<div class="btn-group">
         <a class="btn" href="{% url "blog" slug=row.slug %}">Read more</a>
         <a class="btn" href="{% url "blog" slug=row.slug %}#comments">{{ row.num_comments }} Comments</a>
 
@@ -31,9 +31,11 @@
           <a class="btn" href="{% url "blog" slug=row.slug %}#comment_form">Add Comment</a>
         {% endif %}
         {% comment %}      <small><a class="btn" href="#">{% if row.user.first_name or row.user.last_name %}{{ row.user.first_name }} {{ row.user.last_name }}{% else %}{{ row.user.username }}{% endif %} blog</a></small>{% endcomment %}
-      </div>
+      </div>-->
   </div>
+  {{ row.post_date|date:"d-M Y" }}
 </div>
+
 
 {% endfor %}
 

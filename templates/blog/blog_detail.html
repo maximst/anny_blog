@@ -12,6 +12,11 @@
         <br />
         <div class="blog-detail-body-content content-detail-body-content">
           {{ content.body|safe }}
+          <div class="blog-images">
+          {% for im in content.images %}
+            <img src="{{ im.image.url }}" alt="{{ im.title }}" />
+          {% endfor %}
+          </div>
         </div>
         <div class="blog-detail-footer content-detail-footer">
         {% if content.tags.all %}
