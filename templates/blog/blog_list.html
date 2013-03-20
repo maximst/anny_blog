@@ -4,10 +4,11 @@
 
 {% for row in content %}
 
-<div id="preview-{{ row.id }}" class="fp-list blog-list content-list">
+<div id="preview-{{ row.id }}" class="fp-list blog-list content-list {% if row.linebreack %}linebreack{% endif %}">
   <div class="blog-list-header content-list-header">
     <a href="{% url "blog" slug=row.slug %}" title="Go to: {{ row.title }}"><h4>{{ row.title }}</h4></a>
   </div>
+  <div class="blog-info"><small>{{ row.create_time }}</small></div>
   <div class="blog-list-body content-list-body">
     {{ row.preview|safe }}
   </div>
@@ -33,6 +34,7 @@
       </div>
   </div>
 </div>
+
 {% endfor %}
 
 {% endblock %}

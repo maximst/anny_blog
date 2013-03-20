@@ -14,7 +14,7 @@ def blog_detail(request, slug):
 
 def blog_list(request):
     contents = Blog.objects.all()
-    paginator = Paginator(contents, 15)
+    paginator = Paginator(contents, 10)
 
     page = request.GET.get('p')
     try:
@@ -23,4 +23,10 @@ def blog_list(request):
         content = paginator.page(1)
     except EmptyPage:
         content = paginator.page(paginator.num_pages)
+
+    last_date = content[0].create_time.date()
+    for c in content:
+        content[content.index(c)].__setattr__('linebreack',
+                            (c.create_time.date() != last_date))
+        last_date = c.create_time.date()
     return render(request, 'blog/blog_list.html', {'content': content})

@@ -1,3 +1,16 @@
+body {
+    background: #e5e5e5;
+}
+
 .no-display {
     display: none;
+}
+
+.linebreack {
+    border-top: 1px solid #fff;
+    box-shadow: 0 -1px 0 #777;
+}
+
+.blog-list {
+    margin: 5px;
 }
