@@ -2,11 +2,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.context_processors import csrf
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from models import Blog
+from models import Blog, Comment
 
 def blog_detail(request, slug):
     content = get_object_or_404(Blog, slug=slug)
-    contents = {'content': content}
+    comments = Comment.objects.filter(blog=content)
+    contents = {'content': content, 'comments': comments}
     contents.update(csrf(request))
     return render(request, 'blog/blog_detail.html', contents)
 

@@ -32,8 +32,33 @@
         </div>
         </div>
       </div>
-      {% comment %}{% include "comments.html" %}{% endcomment %}
+    <a name="comments"></a>
+    {% for comment in comments %}
+      <div class="comment-author">
+        {% if comment.user.get_full_name %}
+          {{ comment.user.get_full_name }}
+        {% else %}
+          {{ commnt.user.username }}
+        {% endif %}
+      </div>
+      <div class="comment-info">
+        {{ comment.create_time }}
+      </div>
+      <h3>{{ comment.title|striptags|linebreaks }}</h3>
+      <div class="comment-body">
+        {{ comment.body|striptags|linebreaks }}
+      </div>
+    {% endfor %}
+
     <a name="comment_form"></a>
-    <br>{% comment %}{% render_comment_form for content %}{% endcomment %}
+    <br>
+    {% if user.is_authenticated %}
+      <textarea></textarea>
+    {% else %}
+      <ul>
+        <li><a href="{% url "socialauth_begin" "facebook" %}?next={{ request.META.PATH_INFO }}" class="facebook" title="Login via facebook">FB</a></li>
+        <li><a href="{% url "login" %}?next={{ request.META.PATH_INFO }}">Login</a></li>
+      </ul>
+    {% endif %}
     </div>
 {% endblock %}

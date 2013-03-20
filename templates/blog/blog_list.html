@@ -24,9 +24,8 @@
       {% endif %}
       <div class="btn-group">
         <a class="btn" href="{% url "blog" slug=row.slug %}">Read more</a>
-        {% if comment_count %}
-          <a class="btn" href="{% url "blog" slug=row.slug %}#comments">{{ comment_count }} Comments</a>
-        {% endif %}
+        <a class="btn" href="{% url "blog" slug=row.slug %}#comments">{{ row.num_comments }} Comments</a>
+
         {% if user.is_authenticated %}
           <a class="btn" href="{% url "blog" slug=row.slug %}#comment_form">Add Comment</a>
         {% endif %}
