@@ -136,6 +136,7 @@ INSTALLED_APPS = (
     'taggit',
     'social_auth',
     'coffeescript',
+    'sorl.thumbnail',
 
     'blog',
     'tag',

@@ -5,6 +5,7 @@ from tag.models import ArticleTaggedItem, TaggableManagerN
 
 
 class Blog(models.Model):
+    IMAGE_ROWS_CHOICES = [(i.__str__(), i) for i in range(1, 11)]
     title = models.CharField(max_length=128, unique=True)
     preview = models.TextField(default='', blank=True)
     body = models.TextField(default='')
@@ -17,6 +18,8 @@ class Blog(models.Model):
     edit_time = models.DateTimeField(auto_now=True, auto_now_add=False)
     ip = models.GenericIPAddressField(default='127.0.0.1')
     tags = TaggableManagerN(through=ArticleTaggedItem)
+    image_rows = models.PositiveIntegerField(max_length=2, default=1,
+                               choices=IMAGE_ROWS_CHOICES)
 
     def __unicode__(self):
         return u'%s' % self.title
@@ -39,7 +42,10 @@ class BlogImage(models.Model):
     title = models.CharField(max_length=128, default='', blank=True)
     blog = models.ForeignKey(Blog)
     image = models.ImageField(upload_to='images')
+    front_page = models.BooleanField(default=True)
 
 
 Blog.num_comments = property(lambda b: Comment.objects.filter(blog=b).count())
 Blog.images = property(lambda b: BlogImage.objects.filter(blog=b))
+Blog.front_images = property(lambda b: BlogImage.objects.filter(blog=b,
+                                                            front_page=True))

@@ -6,3 +6,4 @@ django-voting
 django-taggit
 django-social-auth
 django-coffeescript
+sorl-thumbnail

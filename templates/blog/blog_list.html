@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load l10n %}
+{% load thumbnail %}
 
 {% block content %}
 
@@ -10,6 +12,14 @@
   </div>
   <div class="blog-list-body content-list-body">
     {{ row.preview|safe }}
+  </div>
+  <div class="blog-images">
+    {% for im in row.front_images %}
+      <img src="{{ im.image.url }}" width="500px" alt="{{ im.title }}" />
+      {% if forloop.counter == row.image_rows %}
+        <br />
+      {% endif %}
+    {% endfor %}
   </div>
   <div class="blog-list-footer content-list-footer">
       <span class="blog-time">
@@ -33,7 +43,9 @@
         {% comment %}      <small><a class="btn" href="#">{% if row.user.first_name or row.user.last_name %}{{ row.user.first_name }} {{ row.user.last_name }}{% else %}{{ row.user.username }}{% endif %} blog</a></small>{% endcomment %}
       </div>-->
   </div>
-  {{ row.post_date|date:"d-M Y" }}
+  {% localize off %}
+    {{ row.post_date|date:"d-M Y" }}
+  {% endlocalize %}
 </div>
 
 
