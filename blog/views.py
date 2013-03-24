@@ -15,7 +15,7 @@ def blog_detail(request, slug):
 def blog_list(request):
     contents = Blog.objects.all().order_by('-create_time')
     if not contents:
-	return render(request, 'blog/blog_list.html', {'content': content})
+	return render(request, 'blog/blog_list.html', {'content': contents})
     paginator = Paginator(contents, 10)
 
     page = request.GET.get('p')
