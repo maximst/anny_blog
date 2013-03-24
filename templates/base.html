@@ -1,12 +1,10 @@
-{% load static %}
-{% load coretags %}
-{% load coffeescript %}
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html>
 <!-- Copyright (C) 2012 Maxim Starodubcev <maxim@trambroid.com> -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+{% load static %}
+{% load coretags %}
+{% load coffeescript %}
 <head>
     <title>{{ page_title }}</title>
     <link rel="author" title="Maxim Starodubcev" href="mailto: (author) maxim@trambroid.com">
@@ -21,16 +19,19 @@
 
 <body>
 
+<div class="background"><img class="background-image" src="{% get_static_prefix %}img/background_bw.jpeg"></div>
+
+
+{% menubar %}
 
 <div class="container">
-  {% menubar %}
   <div class="row">
-      <br>
-      <br>
-      <br>
-      {% breadcrump %}
+    <div class="wrapper"> </div>
+    <div class="content">
+    {% breadcrump %}
       {% block content %}{% endblock %}
       {% include "paginator.html" %}
+    </div>
   </div>
 </div>
 

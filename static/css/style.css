@@ -1,7 +1,57 @@
 body {
     background: #e0e0e0;
     font-size: 10pt;
+    cursor: url("../img/cursor.png"), default;
 }
+
+.blog-list-header a {
+    text-shadow: 0 1px 0 #fff;
+}
+
+.blog-list-header a:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1000;
+    top: 40px;
+}
+
+.background-image {
+    width: 100%;
+}
+
+.row {
+    position: relative;
+}
+
+.content {
+    z-index: 1;
+    padding: 50px 10px 10px 10px;
+}
+
+.wrapper {
+    background: #e0e0e0;
+    opacity: 0.8;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    content: "";
+    z-index: -777;
+    border: #fff;
+    box-shadow: 0 0 10px 7px #000;
+    -moz-box-shadow: 0 0 10px 7px #000;
+    -webkit-box-shadow: 0 0 10px 7px #000;
+    -khtml-box-shadow: 0 0 10px 7px #000;
+    -o-box-shadow: 0 0 10px 7px #000;
+    -ms-box-shadow: 0 0 10px 7px #000;
+    padding-top: 5px;
+}
+
 
 .no-display {
     display: none;
@@ -30,7 +80,9 @@ body {
     -ms-box-shadow: 0 3px 10px #000;
 }
 
+
 .breadcrumb {
+    z-index: 30;
     border: 1px solid #fff;
     box-shadow: 0 0 17px #658 inset;
     -moz-box-shadow: 0 0 17px #658 inset;
@@ -38,6 +90,7 @@ body {
     -khtml-box-shadow: 0 0 17px #658 inset;
     -o-box-shadow: 0 0 17px #658 inset;
     -ms-box-shadow: 0 0 17px #658 inset;
+    margin: 5px;
 }
 
 .blog-list-header h4 {
@@ -47,4 +100,17 @@ body {
 .blog-time {
     padding-right: 10px;
     color: #777;
+}
+
+.video {
+    text-align: center;
+    padding: 10px;
+}
+
+.blog-images {
+    text-align: center;
+}
+
+.blog-images img {
+    margin: 5px;
 }
