@@ -1,7 +1,7 @@
 body {
     background: #fff;
     font-size: 10pt;
-    cursor: url("../img/cursor.png"), default;
+    cursor: url("../img/cursor.cur"), default;
 }
 
 .blog-list-header a {
