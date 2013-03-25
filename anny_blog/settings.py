@@ -219,7 +219,7 @@ VK_EXTRA_SCOPE = ['photos', ]
 
 COFFEESCRIPT_ROOT = autopath('static')
 
-THUMBNAIL_QUALITY = 75
+THUMBNAIL_QUALITY = 80
 
 try:
     from local_settings import *
