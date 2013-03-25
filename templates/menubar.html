@@ -1,9 +1,13 @@
 {% load static %}
 <div class="navbar navbar-inverse navbar-fixed-top">
-<img class="django-powered" src="{% get_static_prefix %}img/django_grey.gif" border="0" alt="Powered by Django." title="Powered by Django." />
+  <div class="django-powered">
+    <div class="powered">Powered by</div>
+    Django
+  </div>
+<!--<img class="django-powered" src="{% get_static_prefix %}img/django_grey.gif" border="0" alt="Powered by Django." title="Powered by Django." />-->
   <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="/">ANNY</a>
+      <a class="brand" href="/">Anny</a>
       <ul class="nav">
         {% for section in sections %}
           <li {% if section.slug == current_section %}class="active"{% endif %}><a href="{{ section.url }}">{{ section.title }}</a></li>
@@ -22,6 +26,9 @@
         {% endif %}
       </ul>
       </span>
+      <div class="soul">
+        Необходимо помнить о красоте душевной!
+      </div>
     </div>
   </div>
 </div>
