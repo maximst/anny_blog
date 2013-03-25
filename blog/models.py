@@ -8,6 +8,19 @@ from urlparse import urlparse, parse_qs
 
 class Blog(models.Model):
     IMAGE_ROWS_CHOICES = [(i, i.__str__()) for i in range(1, 11)]
+    IMAGE_SIZE = {
+        1: 1024,
+        2: 500,
+        3: 300,
+        4: 220,
+        5: 170,
+        6: 140,
+        7: 120,
+        8: 100,
+        9: 90,
+        10: 80,
+    }
+
     title = models.CharField(max_length=128, unique=True)
     preview = models.TextField(default='', blank=True)
     body = models.TextField(default='')
@@ -28,19 +41,11 @@ class Blog(models.Model):
         return u'%s' % self.title
 
     def image_size(self):
-        IMAGE_SIZE = {
-            1: 1024,
-            2: 500,
-            3: 300,
-            4: 220,
-            5: 170,
-            6: 140,
-            7: 120,
-            8: 100,
-            9: 90,
-            10: 80,
-        }
-        return IMAGE_SIZE[self.image_rows].__str__()
+        return '%ix%i' % (self.IMAGE_SIZE[self.image_rows],
+                          self.IMAGE_SIZE[self.image_rows])
+
+    def image_width(self):
+        return self.IMAGE_SIZE[self.image_rows]
 
     def image_size_precent(self):
         IMAGE_SIZE = {
