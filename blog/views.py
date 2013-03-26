@@ -2,7 +2,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.context_processors import csrf
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 from models import Blog, Comment
+
+from tag.models import ArticleTag
 
 def blog_detail(request, slug):
     content = get_object_or_404(Blog, slug=slug)
@@ -16,6 +19,38 @@ def blog_list(request):
     contents = Blog.objects.all().order_by('-create_time')
     if not contents:
 	return render(request, 'blog/blog_list.html', {'content': contents})
+    paginator = Paginator(contents, 10)
+
+    page = request.GET.get('p')
+    try:
+        content = paginator.page(page)
+    except PageNotAnInteger:
+        content = paginator.page(1)
+    except EmptyPage:
+        content = paginator.page(paginator.num_pages)
+
+    last_date = content[0].create_time.date()
+    for c in content:
+        content[content.index(c) - 1].__setattr__('linebreack',
+                            (c.create_time.date() != last_date))
+        if c.create_time.date() != last_date:
+            content[content.index(c) - 1].__setattr__('post_date', last_date)
+        last_date = c.create_time.date()
+    content[-1].__setattr__('post_date', last_date)
+    content[-1].__setattr__('linebreack', True)
+    return render(request, 'blog/blog_list.html', {'content': content})
+
+
+def tags(request, tag=None):
+    if tag:
+        contents = Blog.objects.filter(tags__name__in=[tag])\
+                                    .order_by('-create_time')
+    else:
+        contents = ArticleTag.objects.all()
+        return render(request, 'tag_list.html', {'content': contents})
+
+    if not contents:
+        return render(request, 'blog/blog_list.html', {'content': contents})
     paginator = Paginator(contents, 10)
 
     page = request.GET.get('p')
