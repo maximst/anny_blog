@@ -17,9 +17,10 @@
 	<div class="blog-images">
 	  {% for im in content.front_images %}
 	    {% thumbnail im.image content.image_size as i %}
-	      <a rel="prettyPhoto[{{ content.slug }}]" href="{{ im.image.url }}" title="{{ im.image.title }}">
+	      <a rel="prettyPhoto[{{ content.slug }}]" href="{{ im.image.url }}" title="{{ im.title }}">
 		<div style="height: {{ content.image_width }}px; width: {{ content.image_width }}px;">
 		  <img style="margin:{{ i|margin:content.image_size }};" class="blog-image" src="{{ i.url }}" style="max-width: {{ content.image_size }}px; width: {{ content.image_size_precent }}%;">
+		  {{ im.title }}
 		</div>
 	      </a>
 	    {% endthumbnail %}
