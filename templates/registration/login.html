@@ -24,7 +24,9 @@
 </form>
 
 Or login via social networks:
-<a href="{% url "socialauth_begin" "facebook" %}?{{ redirect_querystring }}" class="facebook" title="Login via facebook">Facebook</a>
+ <a href="{% url "socialauth_begin" "facebook" %}?{{ redirect_querystring }}" class="facebook" title="Login via facebook">Facebook</a>
+ or 
+ <a href="{% url "socialauth_begin" "vkontakte-oauth2" %}?{{ redirect_querystring }}" class="vkontakte" title="Login via vkontakte">Vkontakte</a>
 
 {% endblock %}
 

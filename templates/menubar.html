@@ -22,6 +22,7 @@
         {% else %}
           <li class="btn disabled">You are not logged in.</li>
           <li><a href="{% url "socialauth_begin" "facebook" %}?next={{ request.META.PATH_INFO }}" class="facebook" title="Login via facebook">FB</a></li>
+          <li><a href="{% url "socialauth_begin" "vkontakte-oauth2" %}?next={{ request.META.PATH_INFO }}" class="vkontakte" title="Login via vkontakte">VK</a></li>
           <li><a href="{% url "login" %}?next={{ request.META.PATH_INFO }}">Login</a></li>
         {% endif %}
       </ul>
