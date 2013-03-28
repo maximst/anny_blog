@@ -142,6 +142,7 @@ INSTALLED_APPS = (
     'blog',
     'tag',
     'core',
+    'user_profile',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -215,7 +216,7 @@ FACEBOOK_PROFILE_EXTRA_PARAMS = {'locale': 'ru_RU'}
 
 VK_APP_ID = '3222058'
 VK_API_SECRET = '40uiMRels7fjeAQgypOg'
-VK_EXTRA_SCOPE = ['photos', ]
+#VK_EXTRA_SCOPE = ['photos', ]
 
 COFFEESCRIPT_ROOT = autopath('static')
 

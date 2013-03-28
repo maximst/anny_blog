@@ -2,21 +2,19 @@ from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
 
 from pytz import all_timezones
-
-from trambroid import settings
+from urllib2 import urlopen
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, unique=True)
-    avatar = models.ImageField(upload_to='user_avatars', blank=True,
-                                default='user_avatars/default.png')
-    stupidity_level = models.SmallIntegerField(max_length=1, default=0,
-                                            choices=settings.STUPIDITY_LEVELS)
-    signature = models.CharField(max_length=255, blank=True,
-                                      default=('<img alt="" '
-                                      'src="http://www.trambroid.com'
-                                      '/files/userbar.png" />'))
+    avatar = models.ImageField(upload_to='avatars', blank=True,
+                                default='avatars/default.png')
+    signature = models.CharField(max_length=255, blank=True, default='')
+    location = models.CharField(max_length=255, blank=True, default='')
     timezone = models.CharField(max_length=32, default='Europe/Kiev',
                                   choices=zip(all_timezones, all_timezones))
 
@@ -40,3 +38,16 @@ def user_post_save(sender, **kwargs):
         except UserProfile.DoesNotExist:
             uprof = UserProfile(user=user)
             uprof.save()
+            try:
+                sa = user.social_auth.get(provider='facebook')
+                facebook_api = 'http://graph.facebook.com/%s/picture' %\
+                                                  str(sa.uid)
+                image_url = urlopen(facebook_api).url
+                img_temp = NamedTemporaryFile(delete=True)
+                img_temp.write(urlopen(image_url).read())
+                img_temp.flush()
+                uprof.avatar.file.save(img_filename, File(img_temp))
+                uprof.save()
+            except:
+                pass
+
