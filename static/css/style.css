@@ -16,6 +16,14 @@ body {
   
 }
 
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
 .blog-list-header a {
     text-shadow: 0 1px 0 #fff;
 }
@@ -199,5 +207,110 @@ body {
   -khtml-text-shadow: 0 0 1px #000;
   -o-text-shadow: 0 0 1px #000;
   -ms-text-shadow: 0 0 1px #000;
+}
+
+#id_body {
+    width: 98%;
+    height: 170px;
+}
+
+.add-comment {
+    color: #000;
+    border: 1px solid #fff;
+    background: #777;
+    padding: 10px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -o-border-radius: 5px;
+    -ms-border-radius: 5px;
+    text-shadow: 0 1px 0 #a0a0a0;
+    -moz-text-shadow: 0 1px 0 #a0a0a0;
+    -webkit-text-shadow: 0 1px 0 #a0a0a0;
+    -khtml-text-shadow: 0 1px 0 #a0a0a0;
+    -o-text-shadow: 0 1px 0 #a0a0a0;
+    -ms-text-shadow: 0 1px 0 #a0a0a0;
+    box-shadow: 0 0 3px #000 inset;
+    -moz-box-shadow: 0 0 3px #000 inset;
+    -webkit-box-shadow: 0 0 3px #000 inset;
+    -khtml-box-shadow: 0 0 3px #000 inset;
+    -o-box-shadow: 0 0 3px #000 inset;
+    -ms-box-shadow: 0 0 3px #000 inset;
+}
+
+.add-comment textarea {
+    border: 1px solid #aaa;
+    box-shadow: 0 0 3px #000 inset;
+    -moz-box-shadow: 0 0 3px #000 inset;
+    -webkit-box-shadow: 0 0 3px #000 inset;
+    -khtml-box-shadow: 0 0 3px #000 inset;
+    -o-box-shadow: 0 0 3px #000 inset;
+    -ms-box-shadow: 0 0 3px #000 inset;
+}
+
+.btn {
+    box-shadow: 0 1px 2px #000;
+    -webkit-box-shadow: 0 1px 2px #000;
+    -moz-box-shadow: 0 1px 2px #000;
+    -khtml-box-shadow: 0 1px 2px #000;
+    -o-box-shadow: 0 1px 2px #000;
+    -ms-box-shadow: 0 1px 2px #000;
+}
+
+.btn:hover,
+.add-comment textarea:hover,
+.add-comment textarea:focus {
+    border: 1px solid #0af;
+}
+
+.avatar {
+    float: left;
+    background: #777;
+    box-shadow: 0 0 5px #000 inset;
+    -moz-box-shadow: 0 0 5px #000 inset;
+    -webkit-box-shadow: 0 0 5px #000 inset;
+    -khtml-box-shadow: 0 0 5px #000 inset;
+    -o-box-shadow: 0 0 5px #000 inset;
+    -ms-box-shadow: 0 0 5px #000 inset;
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    padding: 5px;
+}
+
+.comment {
+    min-height: 150px;
+    background: #ddd;
+    margin: 10px 0;
+    border: 1px solid #fff;
+    box-shadow: 0 1px 3px #000 inset;
+    border-radius: 5px;
+}
+
+.comment-info {
+  padding: 5px 15px;
+  border-bottom: 1px solid #aaa;
+}
+
+.comment-time {
+    padding: 0 16px;
+    font-size: 70%;
+}
+
+.comment-body {
+    min-height: 120px;
+    margin: 0px 0px 0px 132px;
+    text-indent: 2em;
+    border-left: 1px solid #aaa;
+    padding: 10px;
+}
+
+.signature {
+    border-left: 1px solid #aaa;
+    margin: 0 1px 0px 132px;
+    border-top: 1px solid #aaa;
+    padding: 5px;
+    box-shadow: 0 1px 0 #fff inset;
 }
 

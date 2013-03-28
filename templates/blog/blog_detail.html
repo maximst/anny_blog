@@ -54,36 +54,55 @@
         </span>
         {% endif %}
         <div class="btn-group">
-          {% if user.is_authenticated %}
+          {% comment %}{% if user.is_authenticated %}{% endcomment %}
             <a class="btn" href="#comment_form">Add Comment</a>
-          {% endif %}
+          {% comment %}{% endif %}{% endcomment %}
           {% comment %}        <small><a class="btn" href="#">{% if content.user.first_name or content.user.last_name %}{{ content.user.first_name }} {{ content.user.last_name }}{% else %}{{ content.user.username }}{% endif %} blog</a></small>{% endcomment %}
         </div>
         </div>
       </div>
     <a name="comments"></a>
     {% for comment in comments %}
-      <div class="comment-author">
-        {% if comment.user.get_full_name %}
-          {{ comment.user.get_full_name }}
-        {% else %}
-          {{ commnt.user.username }}
+      <div class="comment">
+        <div class="comment-info">
+            {% if comment.user.get_full_name %}
+              {{ comment.user.get_full_name }}
+            {% else %}
+              {{ comment.user.username }}
+            {% endif %}
+          <span class="text-right comment-time">
+            {{ comment.create_time }}
+          </span>
+        </div>
+        {% if comment.user.profile %}
+          <img src="{{ comment.user.profile.avatar.url }}" class="img-rounded img-polaroid avatar" />
         {% endif %}
-      </div>
-      <div class="comment-info">
-        {{ comment.create_time }}
-      </div>
-      <h3>{{ comment.title|striptags|linebreaks }}</h3>
-      <div class="comment-body">
-        {{ comment.body|striptags|linebreaks }}
+{% comment %}        <h3>{{ comment.title }}</h3>{% endcomment %}
+        <div class="comment-body">
+            {{ comment.body|striptags|linebreaks }}
+        </div>
+        <div class="signature">
+          {% if comment.user.profile %}
+            {{ comment.user.profile.signature|striptags }}
+          {% endif %}
+        </div>
       </div>
     {% endfor %}
 
     <a name="comment_form"></a>
     <br>
     {% if user.is_authenticated %}
-      <textarea></textarea>
+      <div class="add-comment">
+        <form method="post" action="">
+          {{ comment_form.as_p }}
+          {% csrf_token %}
+          <div class="text-left">
+            <input type="submit" class="btn" value="Отправить"></input>
+          </div>
+        </form>
+      </div>
     {% else %}
+      Пожалуйста войдите, что-бы оставить коментарий
       <ul>
         <li><a href="{% url "socialauth_begin" "facebook" %}?next={{ request.META.PATH_INFO }}" class="facebook" title="Login via facebook">FB</a></li>
         <li><a href="{% url "socialauth_begin" "vkontakte-oauth2" %}?next={{ request.META.PATH_INFO }}" class="vkontakte" title="Login via vkontakte">VK</a></li>
