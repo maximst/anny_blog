@@ -6,6 +6,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 
+from social_auth.models import UserSocialAuth
+
 from pytz import all_timezones
 from urllib2 import urlopen
 
@@ -38,16 +40,25 @@ def user_post_save(sender, **kwargs):
         except UserProfile.DoesNotExist:
             uprof = UserProfile(user=user)
             uprof.save()
-            try:
-                sa = user.social_auth.get(provider='facebook')
-                facebook_api = 'http://graph.facebook.com/%s/picture' %\
-                                                  str(sa.uid)
-                image_url = urlopen(facebook_api).url
-                img_temp = NamedTemporaryFile(delete=True)
-                img_temp.write(urlopen(image_url).read())
-                img_temp.flush()
-                uprof.avatar.file.save(img_filename, File(img_temp))
-                uprof.save()
-            except:
-                pass
+
+@receiver(post_save, sender=UserSocialAuth,
+          dispatch_uid='social_auth.models.UserSocialAuth')
+def user_sa_post_save(sender, **kwargs):
+    usa = kwargs.get('instance', None)
+    # raw is used when loaddata is running
+    if (kwargs.get('created', True) and not kwargs.get('raw', False)):
+        uprof = UserProfile.objects.get(user__pk=usa.user_id)
+
+        if usa.provider == 'facebook':
+            facebook_api = 'http://graph.facebook.com/%s/picture' %\
+                                                 str(usa.uid)
+            image_url = urlopen(facebook_api).url
+            img_temp = NamedTemporaryFile(delete=True)
+            img_temp.write(urlopen(image_url).read())
+            img_temp.flush()
+            # TODO: Convert image to PNG
+            img_filename = '%i.png' % usa.user_id
+            uprof.avatar.save(img_filename, File(img_temp))
+            uprof.save()
+
 

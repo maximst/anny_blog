@@ -209,6 +209,8 @@ LOGIN_URL          = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/accounts/profile/'
 LOGIN_ERROR_URL    = '/accounts/login-error/'
 
+SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
+
 FACEBOOK_APP_ID = '365616846862745'
 FACEBOOK_API_SECRET = '8b2297f7819263e8e7ba1293d1acbe28'
 FACEBOOK_PROFILE_EXTRA_PARAMS = {'locale': 'ru_RU'}
