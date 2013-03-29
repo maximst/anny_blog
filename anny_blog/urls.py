@@ -5,7 +5,8 @@ from django.contrib import admin
 from django.contrib import auth
 
 from blog.views import blog_list, blog_detail, tags
-from core.views import vote, logout, profile
+from core.views import vote, logout
+from user_profile.views import profile
 
 admin.autodiscover()
 
