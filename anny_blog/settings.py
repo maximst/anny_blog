@@ -235,6 +235,8 @@ COFFEESCRIPT_ROOT = autopath('static')
 
 THUMBNAIL_QUALITY = 80
 
+AVATAR_SIZE = (100, 100)
+
 try:
     from local_settings import *
 except ImportError:

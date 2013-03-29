@@ -79,6 +79,11 @@ class Blog(models.Model):
                     'webkitAllowFullScreen mozallowfullscreen '
                     'allowFullScreen></iframe>') % (url.scheme, video_id)
 
+    def save(self):
+        if not self.preview:
+            self.preview = self.body
+        return super(Blog, self).save()
+
 
 class Comment(models.Model):
     title = models.CharField(max_length=64, blank=True, default='')

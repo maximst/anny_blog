@@ -1,9 +1,13 @@
 from django.contrib.auth import login
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.conf import settings
 
 from urllib2 import urlopen
 import vkontakte
+from StringIO import StringIO
+from PIL import Image
 
 def set_user_profile(backend, details, response, social_user, uid, \
       user, *args, **kwargs):
@@ -17,9 +21,23 @@ def set_user_profile(backend, details, response, social_user, uid, \
             img_temp = NamedTemporaryFile(delete=True)
             img_temp.write(urlopen(image_url).read())
             img_temp.flush()
-            # TODO: Convert image to PNG
+
+            img = Image.open(img_temp)
+            if img.mode != 'RGB':
+              img = img.convert('RGB')
+            min_side = min(img.size)
+            max_side = max(img.size)
+            offsets = [0, 0]
+            size = [min_side, min_side]
+            offsets[img.size.index(max_side)] = (max_side - min_side) / 2
+            size[img.size.index(max_side)] = min_side + max(offsets)
+            img = img.crop((offsets[0], offsets[1], size[0], size[1]))
+            img = img.resize(settings.AVATAR_SIZE, Image.ANTIALIAS)
+            f = StringIO()
+            img.save(f, 'PNG')
+
             img_filename = '%i.png' % usa.user_id
-            uprof.avatar.save(img_filename, File(img_temp))
+            uprof.avatar.save(img_filename, File(f))
             uprof.save()
 
         if usa.provider == 'vkontakte-oauth2':
@@ -30,10 +48,14 @@ def set_user_profile(backend, details, response, social_user, uid, \
             img_temp = NamedTemporaryFile(delete=True)
             img_temp.write(urlopen(image_url).read())
             img_temp.flush()
-            # TODO: Convert image to PNG
+
+            img = Image.open(img_temp)
+            if img.mode != 'RGB':
+              img = img.convert('RGB')
+            f = StringIO()
+            img.save(f, 'PNG')
+
             img_filename = '%i.png' % usa.user_id
-            uprof.avatar.save(img_filename, File(img_temp))
+            uprof.avatar.save(img_filename, File(f))
             uprof.sex = result[0]['sex']
             uprof.save()
-
-
