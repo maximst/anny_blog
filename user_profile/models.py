@@ -10,6 +10,7 @@ from social_auth.models import UserSocialAuth
 
 from pytz import all_timezones
 from urllib2 import urlopen
+import vkontakte
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, unique=True)
