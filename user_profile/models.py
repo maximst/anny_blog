@@ -42,37 +42,37 @@ def user_post_save(sender, **kwargs):
             uprof = UserProfile(user=user)
             uprof.save()
 
-@receiver(post_save, sender=UserSocialAuth,
-          dispatch_uid='social_auth.models.UserSocialAuth')
-def user_sa_post_save(sender, **kwargs):
-    usa = kwargs.get('instance', None)
-    # raw is used when loaddata is running
-    if (kwargs.get('created', True) and not kwargs.get('raw', False)):
-        uprof = UserProfile.objects.get(user__pk=usa.user_id)
+#@receiver(post_save, sender=UserSocialAuth,
+          #dispatch_uid='social_auth.models.UserSocialAuth')
+#def user_sa_post_save(sender, **kwargs):
+    #usa = kwargs.get('instance', None)
+    ## raw is used when loaddata is running
+    #if (kwargs.get('created', True) and not kwargs.get('raw', False)):
+        #uprof = UserProfile.objects.get(user__pk=usa.user_id)
 
-        if usa.provider == 'facebook':
-            facebook_api = 'http://graph.facebook.com/%s/picture' %\
-                                                 str(usa.uid)
-            image_url = urlopen(facebook_api).url
-            img_temp = NamedTemporaryFile(delete=True)
-            img_temp.write(urlopen(image_url).read())
-            img_temp.flush()
-            # TODO: Convert image to PNG
-            img_filename = '%i.png' % usa.user_id
-            uprof.avatar.save(img_filename, File(img_temp))
-            uprof.save()
+        #if usa.provider == 'facebook':
+            #facebook_api = 'http://graph.facebook.com/%s/picture?type=large' %\
+                                                 #str(usa.uid)
+            #image_url = urlopen(facebook_api).url
+            #img_temp = NamedTemporaryFile(delete=True)
+            #img_temp.write(urlopen(image_url).read())
+            #img_temp.flush()
+            ## TODO: Convert image to PNG
+            #img_filename = '%i.png' % usa.user_id
+            #uprof.avatar.save(img_filename, File(img_temp))
+            #uprof.save()
 
-        if usa.provider == 'vkontakte-oauth2':
-            vk_api = vkontakte.API(token=usa.extra_data['access_token'])
-            result = vk_api.users.get(fields='sex,bdate,photo_100,country,city',
-                                                                  uids=usa.uid)
-            image_url = result[0]['photo_100']
-            img_temp = NamedTemporaryFile(delete=True)
-            img_temp.write(urlopen(image_url).read())
-            img_temp.flush()
-            # TODO: Convert image to PNG
-            img_filename = '%i.png' % usa.user_id
-            uprof.avatar.save(img_filename, File(img_temp))
-            uprof.save()
+        #if usa.provider == 'vkontakte-oauth2':
+            #vk_api = vkontakte.API(token=usa.extra_data['access_token'])
+            #result = vk_api.users.get(fields='sex,bdate,photo_100,country,city',
+                                                                  #uids=usa.uid)
+            #image_url = result[0]['photo_100']
+            #img_temp = NamedTemporaryFile(delete=True)
+            #img_temp.write(urlopen(image_url).read())
+            #img_temp.flush()
+            ## TODO: Convert image to PNG
+            #img_filename = '%i.png' % usa.user_id
+            #uprof.avatar.save(img_filename, File(img_temp))
+            #uprof.save()
 
 
