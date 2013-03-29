@@ -1,6 +1,5 @@
 from django.contrib.auth import login
 from django.core.files import File
-from django.core.files.temp import NamedTemporaryFile
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.conf import settings
 
@@ -18,9 +17,7 @@ def set_user_profile(backend, details, response, social_user, uid, \
             facebook_api = 'http://graph.facebook.com/%s/picture?type=large' %\
                                                  str(usa.uid)
             image_url = urlopen(facebook_api).url
-            img_temp = NamedTemporaryFile(delete=True)
-            img_temp.write(urlopen(image_url).read())
-            img_temp.flush()
+            img_temp = StringIO(urlopen(image_url).read())
 
             img = Image.open(img_temp)
             if img.mode != 'RGB':
@@ -45,8 +42,7 @@ def set_user_profile(backend, details, response, social_user, uid, \
             result = vk_api.users.get(fields='sex,bdate,photo_100,country,city',
                                                                   uids=usa.uid)
             image_url = result[0]['photo_100']
-            img_temp = NamedTemporaryFile(delete=True)
-            img_temp.write(urlopen(image_url).read())
+            img_temp = StringIO(urlopen(image_url).read())
             img_temp.flush()
 
             img = Image.open(img_temp)
