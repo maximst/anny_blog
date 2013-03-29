@@ -33,7 +33,7 @@ def set_user_profile(backend, details, response, social_user, uid, \
             # TODO: Convert image to PNG
             img_filename = '%i.png' % usa.user_id
             uprof.avatar.save(img_filename, File(img_temp))
+            uprof.sex = result[0]['sex']
             uprof.save()
 
-    #login(kwargs['request'], user)
 
