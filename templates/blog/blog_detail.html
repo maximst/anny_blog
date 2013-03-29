@@ -19,9 +19,13 @@
 	    {% thumbnail im.image content.image_size as i %}
 <!--	      <div class="thumbnail-container">-->
 		<a rel="prettyPhoto[{{ content.slug }}]" href="{{ im.image.url }}" title="{{ im.title }}">
+		{% if row.image_rows != 1 %}
 		  <div style="height: {{ content.image_width }}px; width: {{ content.image_width }}px;">
-		    <img style="margin:{{ i|margin:content.image_size }};" class="blog-image" src="{{ i.url }}" style="max-width: {{ content.image_size }}px; width: {{ content.image_size_precent }}%;">
+                {% endif %}
+		    <img style="margin:{{ i|margin:content.image_size }};" class="blog-image" src="{{ i.url }}" style="max-width: {{ content.image_size }}px; width: {{ content.image_size_precent }}%;" />
+                {% if row.image_rows != 1 %}
 		  </div>
+                {% endif %}
 		</a>
 <!--		<br>
 		{% if im.title %}
