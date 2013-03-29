@@ -61,4 +61,17 @@ def user_sa_post_save(sender, **kwargs):
             uprof.avatar.save(img_filename, File(img_temp))
             uprof.save()
 
+        if usa.provider == 'vkontakte-oauth2':
+            vk_api = vkontakte.API(token=usa.extra_data['access_token'])
+            result = vk_api.users.get(fields='sex,bdate,photo_100,country,city',
+                                                                  uids=usa.uid)
+            image_url = result[0]['photo_100']
+            img_temp = NamedTemporaryFile(delete=True)
+            img_temp.write(urlopen(image_url).read())
+            img_temp.flush()
+            # TODO: Convert image to PNG
+            img_filename = '%i.png' % usa.user_id
+            uprof.avatar.save(img_filename, File(img_temp))
+            uprof.save()
+
 

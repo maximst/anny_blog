@@ -9,3 +9,4 @@ django-coffeescript
 sorl-thumbnail
 psycopg2
 django-grappelli
+vkontakte
