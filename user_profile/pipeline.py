@@ -35,5 +35,5 @@ def set_user_profile(backend, details, response, social_user, uid, \
             uprof.avatar.save(img_filename, File(img_temp))
             uprof.save()
 
-    login(kwargs['request'], user)
+    #login(kwargs['request'], user)
 
