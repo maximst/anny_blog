@@ -1,4 +1,7 @@
 from django.contrib.auth import login
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
+
 from urllib2 import urlopen
 import vkontakte
 
