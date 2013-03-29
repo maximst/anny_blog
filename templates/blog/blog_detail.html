@@ -106,12 +106,10 @@
         </form>
       </div>
     {% else %}
-      Пожалуйста войдите, что-бы оставить коментарий
-      <ul>
-        <li><a href="{% url "socialauth_begin" "facebook" %}?next={{ request.META.PATH_INFO }}" class="facebook" title="Login via facebook">FB</a></li>
-        <li><a href="{% url "socialauth_begin" "vkontakte-oauth2" %}?next={{ request.META.PATH_INFO }}" class="vkontakte" title="Login via vkontakte">VK</a></li>
-        <li><a href="{% url "login" %}?next={{ request.META.PATH_INFO }}">Login</a></li>
-      </ul>
+      Пожалуйста войдите, что-бы оставить коментарий:
+      <a href="{% url "socialauth_begin" "facebook" %}?next={{ request.META.PATH_INFO }}" class="facebook" title="Login via facebook"><img src="{{ static_prefix }}img/facebook.png" alt="FB" border="0" width="22" height="22" /></a>
+      <a href="{% url "socialauth_begin" "vkontakte-oauth2" %}?next={{ request.META.PATH_INFO }}" class="vkontakte" title="Login via vkontakte"><img src="{{ static_prefix }}img/vkontakte.png" alt="VK" border="0" width="22" height="22" /></a>
+      <a href="{% url "login" %}?next={{ request.META.PATH_INFO }}">Login</a>
     {% endif %}
     </div>
 {% endblock %}

@@ -1,10 +1,13 @@
 {% load static %}
+
+{% get_static_prefix as static_prefix %}
+
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="django-powered">
     <div class="powered">Powered by</div>
     Django
   </div>
-<!--<img class="django-powered" src="{% get_static_prefix %}img/django_grey.gif" border="0" alt="Powered by Django." title="Powered by Django." />-->
+<!--<img class="django-powered" src="{{ static_prefix }}img/django_grey.gif" border="0" alt="Powered by Django." title="Powered by Django." />-->
   <div class="navbar-inner">
     <div class="container">
       <a class="brand" href="/">ANNY</a>
@@ -21,8 +24,8 @@
           <li><a href="{% url "logout" %}">Logout</a></li>
         {% else %}
           <li class="btn disabled">You are not logged in.</li>
-          <li><a href="{% url "socialauth_begin" "facebook" %}?next={{ request.META.PATH_INFO }}" class="facebook" title="Login via facebook">FB</a></li>
-          <li><a href="{% url "socialauth_begin" "vkontakte-oauth2" %}?next={{ request.META.PATH_INFO }}" class="vkontakte" title="Login via vkontakte">VK</a></li>
+          <li><a href="{% url "socialauth_begin" "facebook" %}?next={{ request.META.PATH_INFO }}" class="facebook" title="Login via facebook"><img src="{{ static_prefix }}img/facebook.png" alt="FB" border="0" width="22" height="22" /></a></li>
+          <li><a href="{% url "socialauth_begin" "vkontakte-oauth2" %}?next={{ request.META.PATH_INFO }}" class="vkontakte" title="Login via vkontakte"><img src="{{ static_prefix }}img/vkontakte.png" alt="VK" border="0" width="22" height="22" /></a></li>
           <li><a href="{% url "login" %}?next={{ request.META.PATH_INFO }}">Login</a></li>
         {% endif %}
       </ul>
