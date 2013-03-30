@@ -47,8 +47,8 @@ def set_user_profile(backend, details, response, social_user, uid, \
             me = fb.get('me')
             uprof.sex = GENDER.get(me['gender'], 0)
             bdate = me['birthday'].split('/')
-            bdate.reverse()
-            uprof.bdate = date(*map(int, bdate))
+            bdate = map(int, bdate)
+            uprof.bdate = date(bdate[2], bdate[0], bdate[1])
             uprof.save()
 
         if usa.provider == 'vkontakte-oauth2':
