@@ -10,3 +10,5 @@ sorl-thumbnail
 psycopg2
 django-grappelli
 vkontakte
+pyfaceb
+requests==0.14.2

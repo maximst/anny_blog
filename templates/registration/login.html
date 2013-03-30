@@ -19,14 +19,14 @@
 </tr>
 </table>
 
-<input type="submit" value="login" />
+<input type="submit" value="login" class="btn" />
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
 Or login via social networks:
- <a href="{% url "socialauth_begin" "facebook" %}?{{ redirect_querystring }}" class="facebook" title="Login via facebook">Facebook</a>
+  <a href="{% url "socialauth_begin" "facebook" %}?{{ redirect_querystring }}" class="facebook" title="Login via facebook"><img src="{{ static_prefix }}img/facebook.png" alt="FB" border="0" width="22" height="22" /></a>
  or 
- <a href="{% url "socialauth_begin" "vkontakte-oauth2" %}?{{ redirect_querystring }}" class="vkontakte" title="Login via vkontakte">Vkontakte</a>
+ <a href="{% url "socialauth_begin" "vkontakte-oauth2" %}?{{ redirect_querystring }}" class="vkontakte" title="Login via vkontakte"><img src="{{ static_prefix }}img/vkontakte.png" alt="VK" border="0" width="22" height="22" /></a>
 
 {% endblock %}
 

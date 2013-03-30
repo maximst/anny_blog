@@ -3,10 +3,58 @@
 {% load thumbnail %}
 
 {% block content %}
+<script type="text/javascript">
+$(function() {
+  $( "#id_bdate" ).datepicker({dateFormat: 'dd.mm.yy'});
+});
+</script>
 
-<form method="POST" action="">
+<h4>{{ user.username }}</h4>
+
+<form method="POST" action="" enctype="multipart/form-data">
   {% csrf_token %}
-  {{ form.as_p }}
+  <table class="table table-bordered table-hover table-profile">
+  <tr>
+    <td>{{ form.email.label_tag }}</td>
+    <td>{{ form.email }}</td>
+  </tr>
+  <tr>
+    <td>{{ form.first_name.label_tag }}</td>
+    <td>{{ form.first_name }}</td>
+  </tr>
+  <tr>
+    <td>{{ form.last_name.label_tag }}</td>
+    <td>{{ form.last_name }}</td>
+  </tr>
+  <tr>
+    <td>{{ form.avatar.label_tag }}</td>
+    <td>{{ form.avatar }}
+    <br />
+    <img src="{{ user.profile.avatar.url }}" width="50" height="50" />
+    {{ form.delete_avatar }} Удалить</td>
+  </tr>
+  <tr>
+    <td>{{ form.bdate.label_tag }}</td>
+    <td>{{ form.bdate }}</td>
+  </tr>
+  <tr>
+    <td>{{ form.sex.label_tag }}</td>
+    <td>{{ form.sex }}</td>
+  </tr>
+  <tr>
+    <td>{{ form.location.label_tag }}</td>
+    <td>{{ form.location }}</td>
+  </tr>
+  <tr>
+    <td>{{ form.timezone.label_tag }}</td>
+    <td>{{ form.timezone }}</td>
+  </tr>
+  <tr>
+    <td>{{ form.signature.label_tag }}</td>
+    <td>{{ form.signature }}</td>
+  </tr>
+  </table>
+  <input type="submit" class="btn" value="Сохранить" />
 </form>
 
 {% endblock %}

@@ -10,6 +10,7 @@
     <link rel="author" title="Maxim Starodubcev" href="mailto: (author) maxim@trambroid.com">
     <script type="text/javascript" src="{% get_static_prefix %}js/bootstrap.js"></script>
     <script type="text/javascript" src="{% get_static_prefix %}js/jquery.js"></script>
+    <script type="text/javascript" src="{% get_static_prefix %}js/jquery-ui.js"></script>
     <script type="text/javascript" src="{% get_static_prefix %}js/jquery.prettyPhoto.js"></script>
 <!--    <script type="text/javascript" src="{% get_static_prefix %}js/ajax.js"></script>-->
     <script type="text/javascript" src="{% get_static_prefix %}{% coffeescript 'coffee/ajax.coffee' %}"></script>
@@ -17,6 +18,7 @@
     <link rel="stylesheet" href="{% get_static_prefix %}css/bootstrap-responsive.css" type="text/css"/>
     <link rel="stylesheet" href="{% get_static_prefix %}css/prettyPhoto.css" type="text/css"/>
     <link rel="stylesheet" href="{% get_static_prefix %}css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="{% get_static_prefix %}css/jquery-ui.min.css" type="text/css"/>
 </head>
 
 <body>
@@ -29,9 +31,6 @@
     });
   });
 </script>
-
-<div class="background"><img class="background-image" src="{% get_static_prefix %}img/background_bw.jpeg"></div>
-
 
 {% menubar %}
 
@@ -48,6 +47,8 @@
     </div>
   </div>
 </div>
+
+<div class="background"><img class="background-image" src="{% get_static_prefix %}img/background_bw.jpeg"></div>
 
 </body>
 </html>

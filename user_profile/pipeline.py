@@ -7,6 +7,9 @@ from urllib2 import urlopen
 import vkontakte
 from StringIO import StringIO
 from PIL import Image
+from datetime import date
+from pyfaceb import FBGraph
+
 
 def set_user_profile(backend, details, response, social_user, uid, \
       user, *args, **kwargs):
@@ -14,6 +17,11 @@ def set_user_profile(backend, details, response, social_user, uid, \
         uprof = user.profile
         usa = social_user
         if usa.provider == 'facebook':
+            GENDER = {
+                'male': 2,
+                'female': 1
+            }
+
             facebook_api = 'http://graph.facebook.com/%s/picture?type=large' %\
                                                  str(usa.uid)
             image_url = urlopen(facebook_api).url
@@ -35,6 +43,12 @@ def set_user_profile(backend, details, response, social_user, uid, \
 
             img_filename = '%i.png' % usa.user_id
             uprof.avatar.save(img_filename, File(f))
+            fb = FBGraph(usa.extra_data['access_token'])
+            me = fb.get('me')
+            uprof.sex = GENDER.get(me['gender'], 0)
+            bdate = me['birthday'].split('/')
+            bdate.reverse()
+            uprof.bdate = date(*map(int, bdate))
             uprof.save()
 
         if usa.provider == 'vkontakte-oauth2':
@@ -54,4 +68,9 @@ def set_user_profile(backend, details, response, social_user, uid, \
             img_filename = '%i.png' % usa.user_id
             uprof.avatar.save(img_filename, File(f))
             uprof.sex = result[0]['sex']
+            bdate = result[0]['bdate'].split('.')
+            bdate.reverse()
+            if len(bdate) == 2:
+                bdate.insert(0, '0')
+            uprof.bdate = date(*map(int, bdate))
             uprof.save()
