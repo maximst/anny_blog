@@ -10,7 +10,7 @@ $(function() {
 </script>
 
 <h4>{{ user.username }}</h4>
-
+{% if not user.social_auth.all %}
 <form method="POST" action="" enctype="multipart/form-data">
   {% csrf_token %}
   <table class="table table-bordered table-hover table-profile">
@@ -56,5 +56,19 @@ $(function() {
   </table>
   <input type="submit" class="btn" value="Сохранить" />
 </form>
+{% else %}
+
+<b>{{ user.username }}</b><br />
+{{ user.get_full_name }}<br />
+<img src="{{ user.profile.avatar.url }}" />
+{{ form.email.label_tag }}: {{ user.email }}<br />
+{{ form.bdate.label_tag }}: {{ user.profile.bdate }}<br />
+{{ form.sex.label_tag }}: {{ user.profile.sex }}<br />
+{{ form.location.label_tag }}: {{ user.profile.location }}<br />
+{{ form.timezone.label_tag }}: {{ user.profile.timezone }}<br />
+{{ form.signature.label_tag }}: {{ user.profile.signature }}<br />
+
+
+{% endif %}
 
 {% endblock %}
