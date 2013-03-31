@@ -33,6 +33,9 @@ class UserProfile(models.Model):
         else:
             return u'%s' % self.user.username
 
+    def sex_name(self):
+        return u'%s' % SEX_CHOICES[self.sex]
+
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
 
