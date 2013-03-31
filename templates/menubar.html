@@ -2,6 +2,24 @@
 
 {% get_static_prefix as static_prefix %}
 
+<script type="text/javascript">
+function digitalWatch() {
+    var date = new Date();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    //     var seconds = date.getSeconds();
+    if (hours < 10) hours = "0" + hours;
+    if (minutes < 10) minutes = "0" + minutes;
+    //     if (seconds < 10) seconds = "0" + seconds;
+    document.getElementById("digital_watch").innerHTML = hours + ":" + minutes;/* + ":" + seconds;*/
+    setTimeout("digitalWatch()", 10000);
+}
+
+$(document).ready(function() {
+    digitalWatch();
+});
+</script>
+
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="django-powered">
     <div class="powered">Powered by</div>
@@ -28,6 +46,7 @@
           <li><a href="{% url "socialauth_begin" "vkontakte-oauth2" %}?next={{ request.META.PATH_INFO }}" class="vkontakte" title="Login via vkontakte"><img src="{{ static_prefix }}img/vkontakte.png" alt="VK" border="0" width="22" height="22" /></a></li>
           <li><a href="{% url "login" %}?next={{ request.META.PATH_INFO }}">Login</a></li>
         {% endif %}
+        <li><div id="digital_watch">00:00</div></li>
       </ul>
       </span>
       <div class="soul">

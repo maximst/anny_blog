@@ -16,6 +16,18 @@ body {
   
 }
 
+@font-face {
+  font-family: 'digital-7_monomono';
+  src: url('../fonts/digital7-webfont.eot');
+  src: url('../fonts/digital7-webfont.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/digital7-webfont.woff') format('woff'),
+  url('../fonts/digital7-webfont.ttf') format('truetype'),
+  url('../fonts/digital7-webfont.svg#digital-7_monomono') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  
+}
+
 .text-left {
     text-align: left;
 }
@@ -328,4 +340,17 @@ body {
     -khtml-box-shadow: 0 1px 4px #000;
     -o-box-shadow: 0 1px 4px #000;
     -ms-box-shadow: 0 1px 4px #000;
+}
+
+#digital_watch {
+    font-family: 'digital-7_monomono';
+    font-size: 30px;
+    padding: 9px;
+    color: #658;
+    text-shadow: 0 0 2px #000;
+    -moz-text-shadow: 0 0 2px #000;
+    -webkit-text-shadow: 0 0 2px #000;
+    -khtml-text-shadow: 0 0 2px #000;
+    -o-text-shadow: 0 0 2px #000;
+    -ms-text-shadow: 0 0 2px #000;
 }
