@@ -4,6 +4,8 @@ from django.conf import settings
 from django.core.paginator import Page
 from django.contrib.contenttypes.models import ContentType
 
+from blog.models import Blog
+
 from voting.models import Vote
 
 register = template.Library()
@@ -50,4 +52,17 @@ def vote(context):
     else:
         user_vote = 1
     return {'app': ct.app_label, 'model': ct.model, 'pk': context['content'].pk,
+      'user_vote': user_vote, 'score': score, 'user': context['request'].user}
+
+@register.inclusion_tag('vote.html', takes_context=True)
+def vote_list(context, blog_id):
+    blog = Blog.objects.get(pk=blog_id)
+    score = Vote.objects.get_score(blog)
+    user_vote = Vote.objects.get_for_user(blog,
+                                          context['request'].user)
+    if user_vote:
+        user_vote = 0
+    else:
+        user_vote = 1
+    return {'app': 'blog', 'model': 'blog', 'pk': blog.pk,
       'user_vote': user_vote, 'score': score, 'user': context['request'].user}

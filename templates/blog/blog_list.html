@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load l10n %}
 {% load thumbnail %}
+{% load coretags %}
 
 {% block content %}
 
@@ -10,6 +11,7 @@
   <div class="blog-list-header content-list-header">
     <a href="{% url "blog" slug=row.slug %}" title="Go to: {{ row.title }}"><h4>{{ row.title }}</h4></a>
   </div>
+  {% vote_list row.pk %}
   <div class="blog-list-body content-list-body">
     {{ row.preview|safe }}
   </div>
