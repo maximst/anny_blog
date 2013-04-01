@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.contrib import auth
 
 from blog.views import blog_list, blog_detail, tags
-from core.views import vote, logout
+from core.views import vote, logout, registration, registration_thanks
 from user_profile.views import profile
 
 admin.autodiscover()
@@ -22,6 +22,9 @@ urlpatterns = patterns('',
     url(r'^accounts/login/$', auth.views.login, name='login'),
     url(r'^accounts/logout/$', logout, name='logout'),
     url(r'^accounts/profile/$', profile, name='profile'),
+    url(r'^accounts/registration/$', registration, name='registration'),
+    url(r'^accounts/registration_thanks/$', registration_thanks,
+                                            name='registration-thanks'),
     url(r'^accounts/social/', include('social_auth.urls')),
     url(r'^tag/(?P<tag>.+)/', tags, name='tags'),
     url(r'^tag/$', tags, name='tags'),

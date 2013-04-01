@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load coretags %}
+{% load thumbnail %}
+
+{% block content %}
+<script type="text/javascript">
+$(function() {
+  $( "#id_bdate" ).datepicker({dateFormat: 'dd.mm.yy'});
+});
+</script>
+
+{% if form.error %}
+  {{ form.error }}
+{% endif %}
+
+<form method="POST" action="" enctype="multipart/form-data">
+  {% csrf_token %}
+  <table class="table table-bordered table-hover table-profile">
+    {{ form.as_table }}
+  </table>
+  <input type="submit" class="btn" value="Сохранить" />
+</form>
+
+{% endblock %}
