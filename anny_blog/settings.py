@@ -7,7 +7,7 @@ def autopath(*dirname):
                                     .replace('\\', '/'))[0], *dirname)
 
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 HOSTNAME = 'anny.trambroid.com'

@@ -28,6 +28,6 @@ urlpatterns = patterns('',
     url(r'^accounts/social/', include('social_auth.urls')),
     url(r'^tag/(?P<tag>.+)/', tags, name='tags'),
     url(r'^tag/$', tags, name='tags'),
-    url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
-    {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+    #url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
+    #{'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
 )
