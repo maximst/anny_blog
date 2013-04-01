@@ -24,3 +24,4 @@ $ () =>
   $(document).click hide_div
   $('.down_vote').click vote
   $('.up_vote').click vote
+
