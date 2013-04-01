@@ -13,7 +13,7 @@ TEMPLATE_DEBUG = DEBUG
 HOSTNAME = 'anny.trambroid.com'
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Anny', 'veanyur@rambler.ru'),
 )
 
 MANAGERS = ADMINS
