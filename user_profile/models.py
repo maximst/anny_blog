@@ -1,9 +1,10 @@
 #-*-coding: utf8-*-
 from django.db import models
 from django.dispatch import receiver
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.contrib.auth.models import User
-
+from django.core.mail import EmailMessage
+from django.conf import settings
 
 from social_auth.models import UserSocialAuth
 
@@ -37,6 +38,42 @@ class UserProfile(models.Model):
         return dict(self.SEX_CHOICES)[self.sex]
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
+
+
+@receiver(pre_save, sender=User, dispatch_uid='user_profile.UserProfile')
+def user_pre_save(sender, **kwargs):
+    new_user = kwargs.get('instance', None)
+    old_user = sender.objects.get(id=new_user.id)
+    if new_user.is_active != old_user.is_active:
+        if new_user.is_active:
+            msg = EmailMessage(
+                u'Учетная запись %s активирована' % new_user.username,
+                (u'<html>'
+                u'<meta http-equiv="Content-Type" content="text/html; '
+                u'charset=UTF-8"><body>'
+                u'Ваша учетная запись активирована<br />'
+                u'Теперь вы можете '
+                u'<a href="http://%s/accounts/login/">войти</a> '
+                u'</body></html>') % settings.HOSTNAME,
+                u'admin@%s' % settings.HOSTNAME,
+                [new_user.email]
+            )
+            msg.content_subtype = "html"
+            msg.send()
+        else:
+            admins = sender.objects.filter(is_superuser=True)
+            msg = EmailMessage(
+                u'Учетная запись %s заблокирована' % new_user.username,
+                (u'<html>'
+                u'<meta http-equiv="Content-Type" content="text/html; '
+                u'charset=UTF-8"><body>'
+                u'Ваша учетная запись заблокирована :-('
+                u'</body></html>'),
+                u'admin@%s' % settings.HOSTNAME,
+                [new_user.email]
+            )
+            msg.content_subtype = "html"
+            msg.send()
 
 
 @receiver(post_save, sender=User, dispatch_uid='user_profile.UserProfile')
