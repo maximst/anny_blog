@@ -77,10 +77,14 @@ def registration(request):
                 admins = User.objects.filter(is_superuser=True)
                 msg = EmailMessage(
                     u'Новый пользователь %s' % request.POST['username'],
-                    (u'Зарегистрировался новый пользователь '
+                    (u'<html>'
+                    u'<meta http-equiv="Content-Type" content="text/html; '
+                    u'charset=UTF-8"><body>'
+                    u'Зарегистрировался новый пользователь '
                     u'<a href="http://%s/admin/auth/user/%i">%s</a>'
                     u'<br />'
-                    u'Данные:<br /><ul>%s</ul>') % (settings.HOSTNAME, user_pk,
+                    u'Данные:<br /><ul>%s</ul>'
+                    u'</body></html>') % (settings.HOSTNAME, user_pk,
                                           request.POST['username'], form.as_ul()),
                     u'admin@%s' % settings.HOSTNAME,
                     [a.email for a in admins]
