@@ -2,6 +2,7 @@
 <html>
 <!-- Copyright (C) 2012 Maxim Starodubcev <maxim@trambroid.com> -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
 {% load static %}
 {% load coretags %}
 {% load coffeescript %}
@@ -22,6 +23,7 @@
 </head>
 
 <body>
+<header>
 <!--s_links--><!--f485b75b9228d78ed859121ee216bfc4--><!--/s_links-->
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function(){
@@ -60,22 +62,24 @@
 <!-- /Yandex.Metrika counter --> 
 
 {% menubar %}
-
+</header>
 <div class="container">
   <div class="row">
     <div class="wrapper"> </div>
     <div class="content">
-    {% breadcrump %}
+    <nav>{% breadcrump %}</nav>
       {% block content %}{% endblock %}
       {% include "paginator.html" %}
     </div>
-    <div class="footer">
+    <footer class="footer">
       Powered by Django.
-    </div>
+    </footer>
   </div>
 </div>
 
-<div class="background"><img class="background-image" src="{% get_static_prefix %}img/background_bw.jpeg"></div>
+<aside>
+  <div class="background"><img class="background-image" src="{% get_static_prefix %}img/background_bw.jpeg"></div>
+</aside>
 
 </body>
 </html>
