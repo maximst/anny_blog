@@ -81,11 +81,13 @@
       Powered by Django.
     </footer>
   </div>
+  {% load linkexchange_tags %}
+  
+  {{ linkexchange_blocks }}
 </div>
 
 <aside>
   <div class="background"><img class="background-image" src="{{ static_prefix }}img/background_bw.jpeg"></div>
-  {{ sape.links|join:", " }}
 </aside>
 
 </body>
