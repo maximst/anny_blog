@@ -84,6 +84,11 @@
   {% load linkexchange_tags %}
   
   {{ linkexchange_blocks }}
+  
+  {% linkexchange_filter request %}
+  Links
+  {% endlinkexchange_filter %}
+  {{ page.content|linkexchange_filter:request }}
 </div>
 
 <aside>
