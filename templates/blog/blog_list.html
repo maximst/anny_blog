@@ -55,10 +55,15 @@
         {{ row.create_time.time|date:"G:i" }}
       </time>
       </span>
-      {{ row.num_comments }} Comments
+      <span>
+        <a href="{% url "blog" slug=row.slug %}#comment_form">Оставить коментарий </a>
+      </span>
+      <span>
+        {{ row.num_comments }} Коментариев
+      </span>
       {% if row.tags.all %}
         <span class="float-left">
-          Tags:
+          Тэги:
           {% for t in row.tags.all %}
             <a href="/tag/{{ t.slug }}">{{ t.name }}</a>{% if not forloop.last %}, {% endif %}
           {% endfor %}

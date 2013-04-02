@@ -50,7 +50,7 @@
         {% if content.tags.all %}
         <span class="float-left">
         <small>
-          Tags:
+          Тэги:
           {% for t in content.tags.all %}
             <a href="/tag/{{ t.slug }}">{{ t.name }}</a>{% if not forloop.last %}, {% endif %}
           {% endfor %}
@@ -59,7 +59,7 @@
         {% endif %}
         <div class="btn-group">
           {% comment %}{% if user.is_authenticated %}{% endcomment %}
-            <a class="btn" href="#comment_form">Add Comment</a>
+            <a class="btn" href="#comment_form">Добавить коментарий</a>
           {% comment %}{% endif %}{% endcomment %}
           {% comment %}        <small><a class="btn" href="#">{% if content.user.first_name or content.user.last_name %}{{ content.user.first_name }} {{ content.user.last_name }}{% else %}{{ content.user.username }}{% endif %} blog</a></small>{% endcomment %}
         </div>

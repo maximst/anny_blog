@@ -26,7 +26,8 @@ def menubar(context):
         sections.append({'slug': slug, 'title': title, 'url': url})
 
     current_section = context['request'].META['PATH_INFO'].split('/')[1]
-    context.update({'current_section': current_section, 'sections': sections})
+    context.update({'current_section': current_section, 'sections': sections,
+                                                'admin': settings.ADMINS[0]})
     return context
 
 @register.inclusion_tag('breadcrump.html', takes_context=True)

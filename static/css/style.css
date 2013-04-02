@@ -354,3 +354,24 @@ body {
     -o-text-shadow: 0 0 2px #000;
     -ms-text-shadow: 0 0 2px #000;
 }
+
+.email {
+    padding: 4px 5px !important;
+}
+
+.navbar .nav > li > a {
+    padding: 10px 6px;
+}
+
+.navbar .nav {
+    margin: 0;
+}
+
+.brand {
+    padding: 10px 3px;
+    margin-left: -2px;
+}
+
+.blog-list-footer span {
+    margin: 4px;
+}
