@@ -2,7 +2,7 @@
 {% if content.paginator %}
 <div class="pagination">
   <ul>
-    <li{% if not content.has_previous %} class="disabled"{% endif %}><a href="?p={% comment %}{{ content.previous_page_number }}{% endcomment %}">Prev.</a></li>
+    <li{% if not content.has_previous %} class="disabled"{% endif %}><a href="?p={% if content.has_previous %}{{ content.previous_page_number }}{% endif %}">Prev.</a></li>
     {% if content.has_previous %}
       {% if content.previous_page_number != content.paginator.page_range.0 %}
         <li><a href="?p={{ content.paginator.page_range.0 }}">{{ content.paginator.page_range.0 }}</a></li>
@@ -18,7 +18,7 @@
         <li><a href="?p={{ content.paginator.num_pages }}">{{ content.paginator.num_pages }}</a></li>
       {% endif %}
     {% endif %}
-    <li{% if not content.has_next %} class="disabled"{% endif %}><a href="?p={% comment %}{{ content.next_page_number }}{% endcomment %}">Next</a></li>
+    <li{% if not content.has_next %} class="disabled"{% endif %}><a href="?p={% if content.has_next %}{{ content.next_page_number }}{% endif %}">Next</a></li>
   </ul>
 </div>
 {% endif %}
