@@ -140,6 +140,7 @@ INSTALLED_APPS = (
     'social_auth',
     'coffeescript',
     'sorl.thumbnail',
+    'linkexchange_django',
 
     'blog',
     'tag',
@@ -185,6 +186,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'social_auth.context_processors.social_auth_backends',
     'social_auth.context_processors.social_auth_by_type_backends',
     'social_auth.context_processors.social_auth_login_redirect',
+    'linkexchange_django.context_processors.linkexchange',
 )
 CONTEXT_PROCESSORS = TEMPLATE_CONTEXT_PROCESSORS
 
@@ -234,6 +236,7 @@ VK_API_SECRET = '40uiMRels7fjeAQgypOg'
 #VK_EXTRA_SCOPE = ['photos', ]
 
 COFFEESCRIPT_ROOT = autopath('static')
+LINKEXCHANGE_CONFIG = autopath('anny_blog', 'linkexchange.cfg')
 
 THUMBNAIL_QUALITY = 80
 

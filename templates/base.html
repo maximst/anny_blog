@@ -85,6 +85,12 @@
 
 <aside>
   <div class="background"><img class="background-image" src="{{ static_prefix }}img/background_bw.jpeg"></div>
+  {% load linkexchange_tags %}
+  {% linkexchange_filter request %}
+  Links: 
+  {% endlinkexchange_filter %}
+  
+    {{ page.content|linkexchange_filter:request }}
 </aside>
 
 </body>
