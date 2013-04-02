@@ -141,6 +141,7 @@ INSTALLED_APPS = (
     'coffeescript',
     'sorl.thumbnail',
     #'linkexchange_django',
+    'sape.django',
 
     'blog',
     'tag',
@@ -187,6 +188,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'social_auth.context_processors.social_auth_by_type_backends',
     'social_auth.context_processors.social_auth_login_redirect',
     #'linkexchange_django.context_processors.linkexchange',
+    'sape.django.context_processors.sape',
 )
 CONTEXT_PROCESSORS = TEMPLATE_CONTEXT_PROCESSORS
 
@@ -237,6 +239,9 @@ VK_API_SECRET = '40uiMRels7fjeAQgypOg'
 
 COFFEESCRIPT_ROOT = autopath('static')
 LINKEXCHANGE_CONFIG = autopath('anny_blog', 'linkexchange.cfg')
+SAPE_DATABASE = autopath('sape')
+SAPE_USER = 'f485b75b9228d78ed859121ee216bfc4'
+SAPE_HOST = HOSTNAME
 
 THUMBNAIL_QUALITY = 80
 
