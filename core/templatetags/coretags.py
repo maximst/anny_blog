@@ -84,7 +84,7 @@ def meta(context, t, *args):
             image = False
         else:
             title = 'Anny'
-            description = 'Шик по последней моде!<br /> Следи за модой!'
+            description = 'Шик по последней моде! Следи за модой!'
             image = u'http://%s%simg/logo.png' % (settings.HOSTNAME,
                                              settings.STATIC_URL)
     if t == 'title':
