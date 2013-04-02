@@ -71,12 +71,14 @@ def vote_list(context, blog_id):
 @register.simple_tag(takes_context=True)
 def meta(context, t=None):
     try:
-        content = context['content'][0]
+        content = context.get('content')[0]
         title = 'Anny'
         description = 'Шик по последней моде! Следи за модой!'
     except:
-        title = context['content'].title
-        description = context['content'].body
+        content = context.get('content')
+        if content:
+            title = content.title
+            description = content.body
     if t == 'title':
         res = title
     elif t == 'description':
