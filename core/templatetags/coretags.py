@@ -81,7 +81,7 @@ def meta(context, t=None):
             description = content.body
         else:
             title = 'Anny'
-            description = 'Шик по последней моде! Следи за модой!'
+            description = 'Шик по последней моде!<br /> Следи за модой!'
     if t == 'title':
         res = title
     elif t == 'description':
