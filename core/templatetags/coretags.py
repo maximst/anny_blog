@@ -1,3 +1,4 @@
+#!-*-coding: utf8-*-
 from django import template
 from django.core.urlresolvers import reverse
 from django.conf import settings
@@ -66,3 +67,19 @@ def vote_list(context, blog_id):
         user_vote = 1
     return {'app': 'blog', 'model': 'blog', 'pk': blog.pk,
       'user_vote': user_vote, 'score': score, 'user': context['request'].user}
+
+@register.simple_tag(takes_context=True)
+def meta(context, t=None):
+    try:
+        content = context['content'][0]
+        title = 'Anny'
+        description = 'Шик по последней моде! Следи за модой!'
+    except:
+        title = context['content'].title
+        description = context['content'].body
+    if t == 'title':
+        res = title
+    elif t == 'description':
+        res = description
+
+    return res

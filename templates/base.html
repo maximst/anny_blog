@@ -6,8 +6,11 @@
 {% load static %}
 {% load coretags %}
 {% load coffeescript %}
+
 <head>
-    <title>{{ page_title }}</title>
+    <title>{% meta "title" %}</title>
+    <meta content="{% meta "title" %}" property="og:title">
+    <meta content="{% meta "description" %}" property="og:description">
     <link rel="author" title="Maxim Starodubcev" href="mailto: (author) maxim@trambroid.com">
     <script type="text/javascript" src="{% get_static_prefix %}js/bootstrap.js"></script>
     <script type="text/javascript" src="{% get_static_prefix %}js/jquery.js"></script>
