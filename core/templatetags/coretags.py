@@ -88,3 +88,7 @@ def meta(context, t=None):
         res = description
 
     return res
+
+@register.simple_tag
+def get_settings():
+    return settings
