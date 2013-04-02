@@ -81,7 +81,9 @@
       Powered by Django.
     </footer>
   </div>
-  {{ sape.links|join:", " }}
+  {% load linkexchange_tags %}
+  
+  {{ linkexchange_blocks }}
 </div>
 
 <aside>
