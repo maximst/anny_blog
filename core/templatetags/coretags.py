@@ -69,23 +69,34 @@ def vote_list(context, blog_id):
       'user_vote': user_vote, 'score': score, 'user': context['request'].user}
 
 @register.simple_tag(takes_context=True)
-def meta(context, t=None):
+def meta(context, t, *args):
     try:
         content = context.get('content')[0]
         title = 'Anny'
         description = 'Шик по последней моде! Следи за модой!'
+        image = u'http://%s%simg/logo.png' % (settings.HOSTNAME,
+                                             settings.STATIC_URL)
     except:
         content = context.get('content')
         if content:
             title = content.title
             description = content.body
+            image = False
         else:
             title = 'Anny'
             description = 'Шик по последней моде!<br /> Следи за модой!'
+            image = u'http://%s%simg/logo.png' % (settings.HOSTNAME,
+                                             settings.STATIC_URL)
     if t == 'title':
         res = title
     elif t == 'description':
         res = description
+    elif t == 'image':
+        if image:
+            res = ('<meta content="%s" property="og:image">\n'
+              '     <link rel="image_src" href="%s" />') % (image, image)
+        else:
+            res = ''
 
     return res
 

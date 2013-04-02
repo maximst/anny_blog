@@ -10,7 +10,7 @@ def autopath(*dirname):
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-HOSTNAME = 'anny.trambroid.com'
+HOSTNAME = 'follow-chic.com'
 
 ADMINS = (
     ('Anny', 'veanyur@rambler.ru'),
