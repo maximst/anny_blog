@@ -82,13 +82,8 @@
     </footer>
   </div>
   {% load linkexchange_tags %}
-  
-  {{ linkexchange_blocks }}
-  
-  {% linkexchange_filter request %}
-  Links
-  {% endlinkexchange_filter %}
-  {{ page.content|linkexchange_filter:request }}
+  {{ linkexchange_blocks.0 }}{{ linkexchange_blocks.1 }}
+
 </div>
 
 <aside>
