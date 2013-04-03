@@ -13,7 +13,7 @@ TEMPLATE_DEBUG = DEBUG
 HOSTNAME = 'follow-chic.com'
 
 ADMINS = (
-    ('Anny', 'veanyur@rambler.ru'),
+    ('Anny', 'Annymodel@yandex.ua'),
 )
 
 MANAGERS = ADMINS
