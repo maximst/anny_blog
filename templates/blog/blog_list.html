@@ -21,7 +21,7 @@
     {% for im in row.front_images %}
       {% thumbnail im.image row.image_size as i %}
 <!--	  <div class="thumbnail-container">-->
-            <a rel="prettyPhoto[{{ row.slug }}]" class="thumbnail" href="{{ im.image.url }}" title="{{ im.title }}">
+            <a rel="prettyPhoto[{{ row.slug }}]" class="thumbnail-img" href="{{ im.image.url }}" title="{{ im.title }}">
             {% if row.image_rows != 1 and row.image_rows != 2 %}
               <div style="height: {{ row.image_width }}px; width: {{ row.image_width }}px;">
             {% endif %}

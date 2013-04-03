@@ -431,3 +431,7 @@ a {
     -o-text-shadow: 0 1px 1px #000 !important;
     -ms-text-shadow: 0 1px 1px #000 !important;*/
 }
+
+.thumbnail-img:hover {
+    text-decoration: none !important;
+}
