@@ -8,6 +8,11 @@ from blog.views import blog_list, blog_detail, tags
 from core.views import vote, logout, registration, registration_thanks
 from user_profile.views import profile
 
+from sitemap import BlogSitemap
+
+sitemaps = {'blog': BlogSitemap}
+
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -28,6 +33,8 @@ urlpatterns = patterns('',
     url(r'^accounts/social/', include('social_auth.urls')),
     url(r'^tag/(?P<tag>.+)/$', tags, name='tags'),
     url(r'^tag/$', tags, name='tags'),
+    url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap',
+                                            {'sitemaps': sitemaps})
     #url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
     #{'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
 )
