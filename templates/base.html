@@ -83,6 +83,7 @@
   </div>
   {% load linkexchange_tags %}
   {{ linkexchange_blocks.0 }}{{ linkexchange_blocks.1 }}
+  {{ sape.links|safeseq|join:", " }}
 
 </div>
 
