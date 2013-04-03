@@ -8,9 +8,15 @@ from blog.views import blog_list, blog_detail, tags
 from core.views import vote, logout, registration, registration_thanks
 from user_profile.views import profile
 
-from sitemap import BlogSitemap
+from sitemap import (BlogSitemap, CommentSitemap, BlogImageSitemap,
+                                                  ArticleTagSitemap)
 
-sitemaps = {'blog': BlogSitemap}
+sitemaps = {
+    'blog': BlogSitemap,
+    'comment': CommentSitemap,
+    'blog_image': BlogImageSitemap,
+    'tags': ArticleTagSitemap,
+}
 
 
 admin.autodiscover()
