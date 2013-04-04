@@ -55,6 +55,8 @@ User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 @receiver(pre_save, sender=User, dispatch_uid='user_profile.UserProfile')
 def user_pre_save(sender, **kwargs):
     new_user = kwargs.get('instance', None)
+    if not new_user.id:
+        return None
     old_user = sender.objects.get(id=new_user.id)
     if new_user.is_active != old_user.is_active:
         if new_user.is_active:
