@@ -35,7 +35,7 @@ $(document).ready(function() {
           <li {% if section.slug == current_section %}class="active"{% endif %}><a href="{{ section.url }}">{{ section.title }}</a></li>
         {% endfor %}
       </ul>-->
-      <span class="float-right">
+      <span>
       <ul class="nav">
         {% if user.is_authenticated %}
           {% if user.is_superuser %}<li><a class="animate-link" href="{% url "admin:index" %}">Админка</a></li>{% endif %}
