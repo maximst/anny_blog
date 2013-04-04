@@ -91,6 +91,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -143,6 +144,7 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'linkexchange_django',
     'sape.django',
+    'compressor',
 
     'blog',
     'tag',
@@ -249,6 +251,8 @@ THUMBNAIL_QUALITY = 80
 AVATAR_SIZE = (100, 100)
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * (1024 * 1024)
+
+#COMPRESS_ENABLED = True
 
 try:
     from local_settings import *
