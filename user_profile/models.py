@@ -9,6 +9,7 @@ from django.conf import settings
 from social_auth.models import UserSocialAuth
 
 from pytz import all_timezones
+from datetime import date
 
 class UserProfile(models.Model):
     SEX_CHOICES = (
@@ -36,6 +37,17 @@ class UserProfile(models.Model):
 
     def sex_name(self):
         return dict(self.SEX_CHOICES)[self.sex]
+
+    def year_old(self):
+        tdate = date.today()
+        if not self.bdate or not self.bdate.year:
+            return 0
+
+        full_year_old = tdate.year - self.bdate.year
+        if self.bdate.month < tdate.month and self.bdate.day < tdate.month:
+            return full_year_old - 1
+        else:
+            return full_year_old
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 

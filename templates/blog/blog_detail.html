@@ -8,7 +8,7 @@
         <h4>{{ content.title }}</h4>
       </div>
       <div class="blog-detail-body content-detail-body">
-        <div class="blog-author content-author">{% if content.user.profile.sex == 1 %}<b style="color: #f0a; font-size: 16px;">♀</b>{% endif %} {% if content.user.profile.sex == 2 %}<b style="color: #0af; font-size: 16px;">♂</b>{% endif %} {{ content.create_time }} {% if content.user.first_name or content.user.last_name %}{{ content.user.first_name }} {{ content.user.last_name }}{% else %}{{ content.user.username }}{% endif %} добавил{% if content.user.profile.sex == 1 %}а{% endif %} запись</div>
+        <div class="blog-author content-author">{% if content.user.profile.sex == 1 %}<b style="color: #f0a; font-size: 16px;">♀</b>{% endif %} {% if content.user.profile.sex == 2 %}<b style="color: #0af; font-size: 16px;">♂</b>{% endif %} {% comment %}{% if content.user.profile.year_old %} Возраст: {{ content.user.profile.year_old }} {% endif %}{% endcomment %} {{ content.create_time }} {% if content.user.first_name or content.user.last_name %}{{ content.user.first_name }} {{ content.user.last_name }}{% else %}{{ content.user.username }}{% endif %} добавил{% if content.user.profile.sex == 1 %}а{% endif %} запись</div>
         {% vote %}
         <br />
         <div class="blog-detail-body-content content-detail-body-content">
@@ -67,7 +67,7 @@
       </div>
     <a name="comments"></a>
     {% for comment in comments %}
-      <div class="comment">
+      <div class="comment" id="comment-{{ comment.pk }}">
         <div class="comment-info">
             {% if comment.user.profile.sex == 1 %}<b style="color: #f0a; font-size: 16px;">♀</b>{% endif %} {% if comment.user.profile.sex == 2 %}<b style="color: #0af; font-size: 16px;">♂</b>{% endif %}
             {% if comment.user.get_full_name %}
@@ -75,8 +75,12 @@
             {% else %}
               {{ comment.user.username }}
             {% endif %}
+            {% if content.user.profile.year_old %} Возраст: {{ content.user.profile.year_old }} {% endif %}
           <span class="text-right comment-time">
             {{ comment.create_time }}
+          </span>
+          <span class="float-right">
+            <a href="#comment-{{ comment.pk }}" title="Comment: {{ forloop.counter }}">#{{ forloop.counter }}</a>
           </span>
         </div>
         {% if comment.user.profile %}

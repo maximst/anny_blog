@@ -72,6 +72,10 @@ a {
     text-align: right;
 }
 
+.float-right {
+    float: right;
+}
+
 .blog-list-header a {
     text-shadow: 0 1px 0 #fff;
 }
