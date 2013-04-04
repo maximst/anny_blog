@@ -5,7 +5,6 @@ body {
 }
 
 a:hover {
-    font-size: 120%;
     transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
     -khtml-transition: all 0.3s ease;
@@ -21,6 +20,24 @@ a {
     -moz-transition: all 1s ease;
     -o-transition: all 1s ease;
     -ms-transition: all 1s ease;
+}
+
+.animate-link:hover {
+    transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -khtml-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+}
+
+#digital_watch:hover {
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -khtml-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
 }
 
 @font-face {
@@ -382,6 +399,12 @@ a {
     font-size: 30px;
     padding: 9px;
     color: #000;
+    transition: all 1s ease;
+    -webkit-transition: all 1s ease;
+    -khtml-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
     text-shadow: 0 1px 0 #444, 0 0 10px #B400FF, 0 0 10px #B400FF, 0 0 10px #B400FF, 0 0 8px #B400FF, 0 0 8px #B400FF, 0 0 8px #B400FF;
     -moz-text-shadow: 0 1px 0 #444, 0 0 10px #B400FF, 0 0 10px #B400FF, 0 0 10px #B400FF, 0 0 8px #B400FF, 0 0 8px #B400FF, 0 0 8px #B400FF;
     -webkit-text-shadow: 0 1px 0 #444, 0 0 10px #B400FF, 0 0 10px #B400FF, 0 0 10px #B400FF, 0 0 8px #B400FF, 0 0 8px #B400FF, 0 0 8px #B400FF;
@@ -397,19 +420,6 @@ a {
 
 .email img {
     position: absolute;
-}
-
-.hover-img:hover {
-    opacity: 0;
-    transition: all 0.3s ease;
-    -webkit-transition: all 0.3s ease;
-    -khtml-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    -ms-transition: all 0.3s ease;
-}
-
-.hover-img {
     transition: all 1s ease;
     -webkit-transition: all 1s ease;
     -khtml-transition: all 1s ease;
@@ -418,6 +428,18 @@ a {
     -ms-transition: all 1s ease;
 }
 
+.email:hover img {
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -khtml-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+}
+
+.hover-img:hover {
+    opacity: 0;
+}
 
 
 .navbar .nav > li > a {
@@ -446,6 +468,8 @@ a {
 }
 
 .vkontakte, .facebook {
+/*    width: 22px;
+    padding: 9px 3px !important;*/
    /* border: 2px solid #000000;
     box-shadow: 0 1px 0 #333333, 0 1px 0 #333333 inset;
     -moz-box-shadow: 0 1px 0 #333333, 0 1px 0 #333333 inset;
@@ -475,6 +499,8 @@ a {
 }
 
 .vkontakte:hover, .facebook:hover {
+
+/*    padding: 4px 10px 3px 4px !important;*/
    /* color: #fff !important;
     border-color: #fff;
     text-shadow: 0 1px 1px #000 !important;
