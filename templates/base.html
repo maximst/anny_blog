@@ -6,7 +6,6 @@
 {% load static %}
 {% load coretags %}
 {% load coffeescript %}
-{% load compress %}
 {% get_static_prefix as static_prefix %}
 
 <head>
@@ -17,21 +16,19 @@
     {% meta "image" %}
     <meta name='yandex-verification' content='7ac77779f12b7717' />
     <link rel="author" title="Maxim Starodubcev" href="mailto: (author) maxim@trambroid.com">
-    {% compress js %}
     <script type="text/javascript" src="{{ static_prefix }}js/bootstrap.js"></script>
     <script type="text/javascript" src="{{ static_prefix }}js/jquery.js"></script>
     <script type="text/javascript" src="{{ static_prefix }}js/jquery-ui.js"></script>
     <script type="text/javascript" src="{{ static_prefix }}js/jquery.prettyPhoto.js"></script>
 <!--    <script type="text/javascript" src="{% get_static_prefix %}js/ajax.js"></script>-->
     <script type="text/javascript" src="{{ static_prefix }}{% coffeescript 'coffee/ajax.coffee' %}"></script>
-    {% endcompress %}
-    {% compress css %}
+
     <link rel="stylesheet" href="{{ static_prefix }}css/bootstrap.css" type="text/css"/>
     <link rel="stylesheet" href="{{ static_prefix }}css/bootstrap-responsive.css" type="text/css"/>
     <link rel="stylesheet" href="{{ static_prefix }}css/prettyPhoto.css" type="text/css"/>
     <link rel="stylesheet" href="{{ static_prefix }}css/style.css" type="text/css"/>
     <link rel="stylesheet" href="{{ static_prefix }}css/jquery-ui.min.css" type="text/css"/>
-    {% endcompress %}
+
 </head>
 
 <body>
