@@ -38,7 +38,7 @@ $(document).ready(function() {
       <span class="float-right">
       <ul class="nav">
         {% if user.is_authenticated %}
-          {% if user.is_superuser %}<li><a class="animate-link" href="{% url "admin:index" %}">Администрирование</a></li>{% endif %}
+          {% if user.is_superuser %}<li><a class="animate-link" href="{% url "admin:index" %}">Админка</a></li>{% endif %}
           <li><a class="animate-link" href="{% url "profile" %}" title="My profile">{% if user.get_full_name %}{{ user.get_full_name }}{% else %}{{ user.username }}{% endif %}</a></li>
           <li><a class="animate-link" href="{% url "logout" %}">Выйти</a></li>
         {% else %}
