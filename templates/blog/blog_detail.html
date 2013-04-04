@@ -8,7 +8,7 @@
         <h4>{{ content.title }}</h4>
       </div>
       <div class="blog-detail-body content-detail-body">
-        <div class="blog-author content-author">{{ content.create_time }} {% if content.user.first_name or content.user.last_name %}{{ content.user.first_name }} {{ content.user.last_name }}{% else %}{{ content.user.username }}{% endif %} добавил{% if content.user.profile.sex == 1 %}а{% endif %} запись</div>
+        <div class="blog-author content-author">{% if content.user.profile.sex == 1 %}<b style="color: #f0a; font-size: 16px;">♀</b>{% endif %} {% if content.user.profile.sex == 2 %}<b style="color: #0af; font-size: 16px;">♂</b>{% endif %} {{ content.create_time }} {% if content.user.first_name or content.user.last_name %}{{ content.user.first_name }} {{ content.user.last_name }}{% else %}{{ content.user.username }}{% endif %} добавил{% if content.user.profile.sex == 1 %}а{% endif %} запись</div>
         {% vote %}
         <br />
         <div class="blog-detail-body-content content-detail-body-content">
@@ -69,6 +69,7 @@
     {% for comment in comments %}
       <div class="comment">
         <div class="comment-info">
+            {% if comment.user.profile.sex == 1 %}<b style="color: #f0a; font-size: 16px;">♀</b>{% endif %} {% if comment.user.profile.sex == 2 %}<b style="color: #0af; font-size: 16px;">♂</b>{% endif %}
             {% if comment.user.get_full_name %}
               {{ comment.user.get_full_name }}
             {% else %}
