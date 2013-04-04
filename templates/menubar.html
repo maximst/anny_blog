@@ -49,7 +49,7 @@ $(document).ready(function() {
           <li><a href="{% url "login" %}?next={{ request.META.PATH_INFO }}">Войти</a></li>
           <li><a href="{% url "registration" %}?next={{ request.META.PATH_INFO }}">Регистрация</a></li>
         {% endif %}
-        <li><a class="email" href="mailto:{{ admin.1 }}" title="Написать письмо {{ admin.0 }}"><img src="{{ static_prefix }}img/email.png" alt="Написать {{ admin.0 }}" /></a></li>
+        <li><a class="email" href="mailto:{{ admin.1 }}" title="Написать письмо {{ admin.0 }}"><img src="{{ static_prefix }}img/email_hover.png" alt="Написать {{ admin.0 }}" /><img class="hover-img" src="{{ static_prefix }}img/email.png" alt="Написать {{ admin.0 }}" /></a></li>
         <li><div id="digital_watch">00:00</div></li>
       </ul>
       </span>

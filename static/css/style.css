@@ -4,12 +4,23 @@ body {
     /*cursor: url("../img/cursor.cur"), default;*/
 }
 
+a:hover {
+    font-size: 120%;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -khtml-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+}
+
 a {
-    -webkit-transition: all 0.5s ease;
-    -khtml-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    -ms-transition: all 0.5s ease;
+    transition: all 1s ease;
+    -webkit-transition: all 1s ease;
+    -khtml-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
 }
 
 @font-face {
@@ -208,6 +219,22 @@ a {
     -khtml-text-shadow: 0 1px 0 #333;
     -o-text-shadow: 0 1px 0 #333;
     -ms-text-shadow: 0 1px 0 #333;
+    transition: all 1s ease;
+    -webkit-transition: all 1s ease;
+    -khtml-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+}
+
+.django-powered:hover {
+    color: #fff;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -khtml-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
 }
 
 .powered {
@@ -365,7 +392,33 @@ a {
 
 .email {
     padding: 4px 5px !important;
+    width: 41px;
 }
+
+.email img {
+    position: absolute;
+}
+
+.hover-img:hover {
+    opacity: 0;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -khtml-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+}
+
+.hover-img {
+    transition: all 1s ease;
+    -webkit-transition: all 1s ease;
+    -khtml-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+}
+
+
 
 .navbar .nav > li > a {
     padding: 10px 6px;
