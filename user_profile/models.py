@@ -44,7 +44,7 @@ class UserProfile(models.Model):
             return 0
 
         full_year_old = tdate.year - self.bdate.year
-        if self.bdate.month < tdate.month and self.bdate.day < tdate.month:
+        if tdate.month < self.bdate.month and tdate.month < self.bdate.day:
             return full_year_old - 1
         else:
             return full_year_old

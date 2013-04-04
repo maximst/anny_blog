@@ -75,7 +75,7 @@
             {% else %}
               {{ comment.user.username }}
             {% endif %}
-            {% if content.user.profile.year_old %} Возраст: {{ content.user.profile.year_old }} {% endif %}
+            {% if comment.user.profile.year_old %} Возраст: {{ comment.user.profile.year_old }} {% endif %}
           <span class="text-right comment-time">
             {{ comment.create_time }}
           </span>
