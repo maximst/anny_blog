@@ -77,17 +77,20 @@ def meta(context, t, *args):
         description = 'Шик по последней моде! Следи за модой!'
         image = u'http://%s%simg/logo.png' % (settings.HOSTNAME,
                                              settings.STATIC_URL)
+        keywords = []
     except:
         content = context.get('content')
         if content:
             title = content.title
             description = content.body
             image = False
+            keywords = content.tags.all()
         else:
             title = 'Anny'
             description = 'Шик по последней моде! Следи за модой!'
             image = u'http://%s%simg/logo.png' % (settings.HOSTNAME,
                                              settings.STATIC_URL)
+            keywords = []
     if t == 'title':
         res = title
     elif t == 'description':
@@ -98,6 +101,10 @@ def meta(context, t, *args):
               '     <link rel="image_src" href="%s" />') % (image, image)
         else:
             res = ''
+    elif t == 'keywords':
+        res = ', '.join(keywords)
+        if keywords:
+            res = ', ' + res
 
     return res
 
