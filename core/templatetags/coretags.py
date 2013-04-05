@@ -73,39 +73,38 @@ def vote_list(context, blog_id):
 def meta(context, t, *args):
     try:
         content = context.get('content')[0]
-        title = 'Anny'
-        description = 'Шик по последней моде! Следи за модой!'
-        image = u'http://%s%simg/logo.png' % (settings.HOSTNAME,
-                                             settings.STATIC_URL)
-        keywords = []
+        detail = False
     except:
         content = context.get('content')
-        if content:
-            title = content.title
-            description = content.body
-            image = False
-            keywords = content.tags.all()
-            keywords = [t.name for t in keywords]
-        else:
-            title = 'Anny'
-            description = 'Шик по последней моде! Следи за модой!'
-            image = u'http://%s%simg/logo.png' % (settings.HOSTNAME,
-                                             settings.STATIC_URL)
-            keywords = []
+        detail = True
+
     if t == 'title':
-        res = title
+        if detail:
+            res = content.title
+        else:
+            res = 'Anny'
     elif t == 'description':
-        res = description
+        if detail:
+            res = content.body
+        else:
+            res = 'Шик по последней моде! Следи за модой!'
     elif t == 'image':
-        if image:
+        if detail:
+            res = ''
+        else:
+            image = u'http://%s%simg/logo.png' % (settings.HOSTNAME,
+                                                  settings.STATIC_URL)
             res = ('<meta content="%s" property="og:image">\n'
               '     <link rel="image_src" href="%s" />') % (image, image)
+    elif t == 'keywords':
+        if detail:
+            keywords = content.tags.all()
+            keywords = [t.name for t in keywords]
+            res = ', '.join(keywords)
+            if keywords:
+                res = ', ' + res
         else:
             res = ''
-    elif t == 'keywords':
-        res = ', '.join(keywords)
-        if keywords:
-            res = ', ' + res
     else:
         res = ''
 
