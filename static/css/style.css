@@ -538,3 +538,12 @@ a {
 .adsense {
     text-align: center;
 }
+
+.adsense ins {
+    box-shadow: 0 1px 5px #000;
+    -moz-box-shadow: 0 1px 5px #000;
+    -webkit-box-shadow: 0 1px 5px #000;
+    -khtml-box-shadow: 0 1px 5px #000;
+    -o-box-shadow: 0 1px 5px #000;
+    -ms-box-shadow: 0 1px 5px #000;
+}
