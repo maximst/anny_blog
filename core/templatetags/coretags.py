@@ -78,7 +78,7 @@ def meta(context, t, *args):
         content = context.get('content')
         detail = True
 
-    if not isinstance(content, Blog):
+    if not content or not isinstance(content, Blog):
         detail = False
 
     if t == 'title':
