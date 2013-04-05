@@ -78,6 +78,9 @@ def meta(context, t, *args):
         content = context.get('content')
         detail = True
 
+    if not isinstance(content, Blog):
+        detail = False
+
     if t == 'title':
         if detail:
             res = content.title
