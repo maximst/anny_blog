@@ -45,8 +45,8 @@ class ProfileForm(forms.Form):
             img_temp = StringIO(avatar.read())
 
             img = Image.open(img_temp)
-            if img.mode != 'RGB':
-                img = img.convert('RGB')
+            if img.mode != 'RGBA':
+                img = img.convert('RGBA')
             min_side = min(img.size)
             max_side = max(img.size)
             offsets = [0, 0]
