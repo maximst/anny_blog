@@ -85,7 +85,7 @@ def meta(context, t, *args):
             description = content.body
             image = False
             keywords = content.tags.all()
-            keywords = [for t.name in keywords]
+            keywords = [t.name for t in keywords]
         else:
             title = 'Anny'
             description = 'Шик по последней моде! Следи за модой!'
