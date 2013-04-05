@@ -102,7 +102,7 @@ def meta(context, t, *args):
             keywords = [t.name for t in keywords]
             res = ', '.join(keywords)
             if keywords:
-                res = ', ' + res
+                res += ', '
         else:
             res = ''
     else:
