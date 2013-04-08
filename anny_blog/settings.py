@@ -143,6 +143,7 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'linkexchange_django',
     'sape.django',
+    'supercaptcha',
 
     'blog',
     'tag',

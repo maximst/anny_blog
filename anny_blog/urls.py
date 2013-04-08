@@ -40,7 +40,8 @@ urlpatterns = patterns('',
     url(r'^tag/(?P<tag>.+)/$', tags, name='tags'),
     url(r'^tag/$', tags, name='tags'),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap',
-                                            {'sitemaps': sitemaps})
+                                            {'sitemaps': sitemaps}),
+    url(r'^captcha/(?P<code>[\da-f]{32})/$', 'supercaptcha.draw'),
     #url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
     #{'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
 )
