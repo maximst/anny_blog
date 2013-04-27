@@ -547,3 +547,14 @@ a {
     -o-box-shadow: 0 1px 5px #000;
     -ms-box-shadow: 0 1px 5px #000;
 }
+
+.img-border {
+    border-color: #777 !important;
+    background: none !important;
+    box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -khtml-box-shadow: none !important;
+    -o-box-shadow: none !important;
+    -ms-box-shadow: none !important;
+}
