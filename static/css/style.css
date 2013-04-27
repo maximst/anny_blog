@@ -78,6 +78,11 @@ a {
 
 .blog-list-header a {
     text-shadow: 0 1px 0 #fff;
+    -moz-text-shadow: 0 1px 0 #fff;
+    -webkit-text-shadow: 0 1px 0 #fff;
+    -khtml-text-shadow: 0 1px 0 #fff;
+    -o-text-shadow: 0 1px 0 #fff;
+    -ms-text-shadow: 0 1px 0 #fff;
 }
 
 .blog-list-header a:hover {
@@ -133,6 +138,11 @@ a {
 .linebreack {
     border-bottom: 1px solid #777;
     box-shadow: 0 1px 0 #fff;
+    -moz-box-shadow: 0 1px 0 #fff;
+    -webkit-box-shadow: 0 1px 0 #fff;
+    -khtml-box-shadow: 0 1px 0 #fff;
+    -o-box-shadow: 0 1px 0 #fff;
+    -ms-box-shadow: 0 1px 0 #fff;
     margin-bottom: 30px !important;
 }
 
@@ -214,6 +224,11 @@ a {
   padding: 5px !important;
   margin: 10px !important;
   box-shadow: 0 1px 3px #000 !important;
+  -moz-box-shadow: 0 1px 3px #000 !important;
+  -webkit-box-shadow: 0 1px 3px #000 !important;
+  -khtml-box-shadow: 0 1px 3px #000 !important;
+  -o-box-shadow: 0 1px 3px #000 !important;
+  -ms-box-shadow: 0 1px 3px #000 !important;
 }
 
 .footer {
@@ -369,7 +384,17 @@ a {
     margin: 10px 0;
     border: 1px solid #fff;
     box-shadow: 0 1px 3px #000 inset;
+    -moz-box-shadow: 0 1px 3px #000 inset;
+    -webkit-box-shadow: 0 1px 3px #000 inset;
+    -khtml-box-shadow: 0 1px 3px #000 inset;
+    -o-box-shadow: 0 1px 3px #000 inset;
+    -ms-box-shadow: 0 1px 3px #000 inset;
     border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -o-border-radius: 5px;
+    -ms-border-radius: 5px;
 }
 
 .comment-info {
@@ -396,6 +421,11 @@ a {
     border-top: 1px solid #aaa;
     padding: 5px;
     box-shadow: 0 1px 0 #fff inset;
+    -moz-box-shadow: 0 1px 0 #fff inset;
+    -webkit-box-shadow: 0 1px 0 #fff inset;
+    -khtml-box-shadow: 0 1px 0 #fff inset;
+    -o-box-shadow: 0 1px 0 #fff inset;
+    -ms-box-shadow: 0 1px 0 #fff inset;
 }
 
 #id_signature {

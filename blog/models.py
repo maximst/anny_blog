@@ -99,13 +99,17 @@ class Comment(models.Model):
 
 
 class BlogImage(models.Model):
+    ORDER_CHOICES = zip(*[range(100)]*2)
+
     title = models.CharField(max_length=128, default='', blank=True)
     blog = models.ForeignKey(Blog)
     image = models.ImageField(upload_to='images')
     front_page = models.BooleanField(default=True)
+    order = models.IntegerField(default=0, blank=True, choices=ORDER_CHOICES)
 
 
 Blog.num_comments = property(lambda b: Comment.objects.filter(blog=b).count())
-Blog.images = property(lambda b: BlogImage.objects.filter(blog=b))
+Blog.images = property(lambda b: BlogImage.objects.filter(blog=b)\
+                                              .order_by('order', 'pk'))
 Blog.front_images = property(lambda b: BlogImage.objects.filter(blog=b,
-                                                            front_page=True))
+                              front_page=True).order_by('order', 'pk'))

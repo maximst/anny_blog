@@ -25,7 +25,8 @@
             {% if row.image_rows != 1 %}
             <div {% if row.image_rows == 2 %}class="img-border"{% endif %} style="height: {{ row.image_width }}px; width: {{ row.image_width }}px;">
             {% endif %}
-            <img {% if row.image_rows != 1 %}style="margin:{{ i|margin:row.image_size }};"{% endif %} class="blog-image" src="{{ i.url }}" style="max-width: {{ row.image_size }}px; width: {{ row.image_size_precent }}%;" />
+
+            <img {% if row.image_rows != 1 %}style="margin:{{ i|margin:row.image_size }};"{% endif %} class="blog-image" src="{{ i.url }}" style="max-width: {{ row.image_size }}px; width: {{ row.image_size_precent }}%;" alt="{{ im.title }}" />
             {% if row.image_rows != 1 %}
               </div>
             {% endif %}
