@@ -55,9 +55,9 @@
   <div class="blog-list-footer content-list-footer">
       <span class="blog-time">
       <time>
-      {% localtime off %}
+      {% timezone TIME_ZONE %}
         {{ row.create_time.time|date:"G:i" }}
-      {% endlocaltime %}
+      {% endtimezone  %}
       </time>
       </span>
       <span>
@@ -85,9 +85,9 @@
       </div>-->
   </div>
   <time>
-  {% localtime on %}
+  {% timezone TIME_ZONE %}
     {{ row.post_date|date:"d-M Y" }}
-  {% endlocaltime %}
+  {% endtimezone  %}
   </time>
 </div>
 
