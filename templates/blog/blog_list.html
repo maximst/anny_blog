@@ -54,7 +54,7 @@
   <div class="blog-list-footer content-list-footer">
       <span class="blog-time">
       <time>
-      {% localtime on %}
+      {% localtime off %}
         {{ row.create_time.time|date:"G:i" }}
       {% endlocaltime %}
       </time>
