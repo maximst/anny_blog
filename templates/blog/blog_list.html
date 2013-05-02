@@ -2,6 +2,7 @@
 {% load l10n %}
 {% load thumbnail %}
 {% load coretags %}
+{% load tz %}
 
 {% block content %}
 
@@ -53,7 +54,7 @@
   <div class="blog-list-footer content-list-footer">
       <span class="blog-time">
       <time>
-        {{ row.create_time.time|date:"G:i" }}
+        {{ row.create_time.time|localtime|date:"G:i" }}
       </time>
       </span>
       <span>
@@ -80,11 +81,9 @@
         {% comment %}      <small><a class="btn" href="#">{% if row.user.first_name or row.user.last_name %}{{ row.user.first_name }} {{ row.user.last_name }}{% else %}{{ row.user.username }}{% endif %} blog</a></small>{% endcomment %}
       </div>-->
   </div>
-  {% localize off %}
   <time>
-    {{ row.post_date|date:"d-M Y" }}
+    {{ row.post_date|localtime|date:"d-M Y" }}
   </time>
-  {% endlocalize %}
 </div>
 
 
