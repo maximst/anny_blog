@@ -57,7 +57,7 @@
       <time>
       {% localtime on %}
         {% timezone TIME_ZONE %}
-          {{ row.create_time.time|date:"G:i" }}
+          {{ row.create_time|date:"G:i" }}
         {% endtimezone %}
       {% endlocaltime %}
       </time>
@@ -88,7 +88,9 @@
   </div>
   <time>
   {% localtime on %}
-    {{ row.post_date|date:"d-M Y" }}
+    {% timezone TIME_ZONE %}
+      {{ row.post_date|date:"d-M Y" }}
+    {% endtimezone %}
   {% endlocaltime %}
   </time>
 </div>
