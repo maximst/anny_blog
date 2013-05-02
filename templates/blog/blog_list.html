@@ -56,7 +56,9 @@
       <span class="blog-time">
       <time>
       {% localtime on %}
-        {{ row.create_time.time|date:"G:i" }}
+        {% timezone "Europe/Kiev" %}
+          {{ row.create_time.time|date:"G:i" }}
+        {% endtimezone %}
       {% endlocaltime %}
       </time>
       </span>
