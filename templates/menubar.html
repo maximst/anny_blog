@@ -44,10 +44,10 @@ $(document).ready(function() {
         {% else %}
           <!--<li class="btn disabled">Вы не вошли.</li>-->
           
-          <li><a class="animate-link" href="{% url "socialauth_begin" "facebook" %}?next={{ request.META.PATH_INFO }}" class="facebook" title="Login via facebook"><img src="{{ static_prefix }}img/facebook.png" alt="FB" border="0" width="22" height="22" /></a></li>
-          <li><a class="animate-link" href="{% url "socialauth_begin" "vkontakte-oauth2" %}?next={{ request.META.PATH_INFO }}" class="vkontakte" title="Login via vkontakte"><img src="{{ static_prefix }}img/vkontakte.png" alt="VK" border="0" width="22" height="22" /></a></li>
-          <li><a class="animate-link" href="{% url "login" %}?next={{ request.META.PATH_INFO }}">Войти</a></li>
-          <li><a class="animate-link" href="{% url "registration" %}?next={{ request.META.PATH_INFO }}">Регистрация</a></li>
+          <li><a class="animate-link" href="{% url "socialauth_begin" "facebook" %}?{{ redirect_querystring }}" class="facebook" title="Login via facebook"><img src="{{ static_prefix }}img/facebook.png" alt="FB" border="0" width="22" height="22" /></a></li>
+          <li><a class="animate-link" href="{% url "socialauth_begin" "vkontakte-oauth2" %}?{{ redirect_querystring }}" class="vkontakte" title="Login via vkontakte"><img src="{{ static_prefix }}img/vkontakte.png" alt="VK" border="0" width="22" height="22" /></a></li>
+          <li><a class="animate-link" href="{% url "login" %}?{{ redirect_querystring }}">Войти</a></li>
+          <li><a class="animate-link" href="{% url "registration" %}?{{ redirect_querystring }}">Регистрация</a></li>
         {% endif %}
         <li><a class="email animate-link" href="mailto:{{ admin.1 }}" title="Написать письмо {{ admin.0 }}"><img src="{{ static_prefix }}img/email_hover.png" alt="Написать {{ admin.0 }}" /><img class="hover-img" src="{{ static_prefix }}img/email.png" alt="Написать {{ admin.0 }}" /></a></li>
         <li><div id="digital_watch" class="animate-link">00:00</div></li>
