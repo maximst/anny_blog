@@ -19,3 +19,4 @@ class Log(models.Model):
     http_referer = models.URLField(max_length=1024, default='')
     http_user_agent = models.CharField(default='', max_length=255)
     user = models.ForeignKey(User, default=None, null=True, blank=True)
+    access_time = models.DateTimeField(auto_now=False, auto_now_add=True)
