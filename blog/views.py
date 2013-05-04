@@ -7,8 +7,25 @@ from models import Blog, Comment
 from forms import CommentForm
 
 from tag.models import ArticleTag
+from core.models import Log
+
+def log_write(request):
+    log_row = Log(
+        ip = request.META.get('REMOTE_ADDR', '127.0.0.1'),
+        port = int(request.META.get('REMOTE_PORT', '0')),
+        method = request.META.get('REQUEST_METHOD', 'GET'),
+        path = request.path,
+        query_get = request.GET.__str__(),
+        query_post = request.POST.__str__(),
+        sessionid = request.COOKIES.get('sessionid', ''),
+        http_referer = request.META.get('HTTP_REFERER', ''),
+        http_user_agent = request.META.get('HTTP_USER_AGENT', ''),
+        user = request.user
+    )
+    log_row.save()
 
 def blog_detail(request, slug):
+    log_write(request)
     user = request.user
 
     content = get_object_or_404(Blog, slug=slug)
@@ -30,6 +47,7 @@ def blog_detail(request, slug):
 
 
 def blog_list(request):
+    log_write(request)
     contents = Blog.objects.all().order_by('-create_time')
     if not contents:
         return render(request, 'blog/blog_list.html', {'content': contents})
@@ -56,6 +74,7 @@ def blog_list(request):
 
 
 def tags(request, tag=None):
+    log_write(request)
     if tag:
         contents = Blog.objects.filter(tags__name__in=[tag])\
                                     .order_by('-create_time')
