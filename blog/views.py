@@ -10,10 +10,6 @@ from tag.models import ArticleTag
 from core.models import Log
 
 def log_write(request):
-    if request.user.is_authenticated():
-        user = request.user
-    else:
-        user = None
     log_row = Log(
         ip = request.META.get('REMOTE_ADDR', '127.0.0.1'),
         port = int(request.META.get('REMOTE_PORT', '0')),
@@ -24,8 +20,10 @@ def log_write(request):
         sessionid = request.COOKIES.get('sessionid', ''),
         http_referer = request.META.get('HTTP_REFERER', ''),
         http_user_agent = request.META.get('HTTP_USER_AGENT', ''),
-        user = request.user
     )
+    if request.user.is_authenticated():
+        log_row.user = request.user
+
     log_row.save()
 
 def blog_detail(request, slug):
