@@ -10,6 +10,10 @@ from tag.models import ArticleTag
 from core.models import Log
 
 def log_write(request):
+    if request.user.is_authenticated():
+        user = request.user
+    else:
+        user = None
     log_row = Log(
         ip = request.META.get('REMOTE_ADDR', '127.0.0.1'),
         port = int(request.META.get('REMOTE_PORT', '0')),
