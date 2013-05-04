@@ -10,6 +10,8 @@ from tag.models import ArticleTag
 from core.models import Log
 
 def log_write(request):
+    if 'YandexMetrika' in request.META['HTTP_USER_AGENT']:
+        return None
     log_row = Log(
         ip = request.META.get('REMOTE_ADDR', '127.0.0.1'),
         port = int(request.META.get('REMOTE_PORT', '0')),
