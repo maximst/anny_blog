@@ -243,7 +243,7 @@ VK_API_SECRET = '40uiMRels7fjeAQgypOg'
 COFFEESCRIPT_ROOT = autopath('static')
 LINKEXCHANGE_CONFIG = autopath('anny_blog', 'linkexchange.cfg')
 SAPE_DATABASE = autopath('sape')
-SAPE_USER = 'f485b75b9228d78ed859121ee216bfc4'
+SAPE_USER = '1ace11f022c3a648b3cc382788c589cd'
 SAPE_HOST = HOSTNAME
 
 THUMBNAIL_QUALITY = 80
