@@ -597,4 +597,5 @@ a {
 .linx li {
     display: inline;
     font-size: 10px;
+    font-family: monospace;
 }
