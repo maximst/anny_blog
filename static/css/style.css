@@ -589,6 +589,12 @@ a {
     -ms-box-shadow: none !important;
 }
 
+.linx {
+    padding: 0;
+    margin: -10px;
+}
+
 .linx li {
     display: inline;
+    font-size: 9px;
 }
