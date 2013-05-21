@@ -588,3 +588,7 @@ a {
     -o-box-shadow: none !important;
     -ms-box-shadow: none !important;
 }
+
+.linx li {
+    display: inline;
+}
