@@ -63,7 +63,7 @@
       </time>
       </span>
       <span>
-        <a href="{% url "blog" slug=row.slug %}#comment_form">Оставить коментарий </a>
+        <a href="{% if user.is_authenticated %}{% url "blog" slug=row.slug %}#comment_form{% else %}{% url "login" %}?{% url "blog" slug=row.slug %}#comment_form{% endif %}">Оставить коментарий </a>
       </span>
       <span>
         {{ row.num_comments }} Коментариев

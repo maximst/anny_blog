@@ -6,6 +6,11 @@
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
+Вы можете войти используя аккаунты социальных сетей:
+</br>
+<a href="{% url "socialauth_begin" "facebook" %}?{{ redirect_querystring }}" class="facebook" title="Login via facebook"><img src="{{ static_prefix }}img/facebook.png" alt="FB" border="0" width="22" height="22" /></a>
+<a href="{% url "socialauth_begin" "vkontakte-oauth2" %}?{{ redirect_querystring }}" class="vkontakte" title="Login via vkontakte"><img src="{{ static_prefix }}img/vkontakte.png" alt="VK" border="0" width="22" height="22" /></a>
+
 <form method="post" action="{% url "login" %}">
 {% csrf_token %}
 <table>
@@ -23,10 +28,5 @@
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
 <a href="{% url "registration" %}?next={{ request.META.PATH_INFO }}">Регистрация</a><br />
-Вы можете использовать аккаунт в социальных сетях:
-  <a href="{% url "socialauth_begin" "facebook" %}?{{ redirect_querystring }}" class="facebook" title="Login via facebook"><img src="{{ static_prefix }}img/facebook.png" alt="FB" border="0" width="22" height="22" /></a>
- или 
- <a href="{% url "socialauth_begin" "vkontakte-oauth2" %}?{{ redirect_querystring }}" class="vkontakte" title="Login via vkontakte"><img src="{{ static_prefix }}img/vkontakte.png" alt="VK" border="0" width="22" height="22" /></a>
-
 {% endblock %}
 
