@@ -26,7 +26,7 @@ class Blog(models.Model):
     body = models.TextField(default='')
     slug = models.SlugField(max_length=128, unique=True)
     deleted = models.BooleanField(default=False)
-    user = models.ForeignKey(User, null=True)
+    user = models.ForeignKey(User, null=True, default=1)
     front_page = models.BooleanField(default=True)
     on_top = models.BooleanField(default=False)
     create_time = models.DateTimeField(auto_now=False, auto_now_add=True)
