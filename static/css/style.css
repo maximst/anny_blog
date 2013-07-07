@@ -478,7 +478,7 @@ a {
     -ms-transition: all 1s ease;
 }
 
-.email:hover img {
+.email:hover img, #vk_like {
     transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
     -khtml-transition: all 0.3s ease;
@@ -598,4 +598,14 @@ a {
     display: inline;
     font-size: 10px;
     font-family: monospace;
+}
+
+#vk_like {
+    margin: 10px;
+    transition: all 1s ease;
+    -webkit-transition: all 1s ease;
+    -khtml-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
 }
