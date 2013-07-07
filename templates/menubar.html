@@ -51,6 +51,12 @@ $(document).ready(function() {
         {% endif %}
         <li><a class="email animate-link" href="mailto:{{ admin.1 }}" title="Написать письмо {{ admin.0 }}"><img src="{{ static_prefix }}img/email_hover.png" alt="Написать {{ admin.0 }}" /><img class="hover-img" src="{{ static_prefix }}img/email.png" alt="Написать {{ admin.0 }}" /></a></li>
         <li><div id="digital_watch" class="animate-link">00:00</div></li>
+        <li>
+            <div id="vk_like"></div>
+            <script type="text/javascript">
+                VK.Widgets.Like("vk_like", {type: "mini", height: 18});
+            </script>
+        </li>
       </ul>
       </span>
       <div class="soul">
