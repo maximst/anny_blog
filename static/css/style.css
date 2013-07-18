@@ -605,5 +605,6 @@ a {
 }
 
 .fb-like {
-    top: -1px
+    top: -1px;
+    margin: 0 16px 0 0;
 }
