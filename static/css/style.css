@@ -600,6 +600,6 @@ a {
     font-family: monospace;
 }
 
-#vk_like {
+#vk_like, .fb-like {
     float: right;
 }
