@@ -148,6 +148,7 @@ a {
 
 .blog-list {
     margin: 5px;
+    padding-top: 3px;
 }
 
 .blog-list-footer {
@@ -600,10 +601,13 @@ a {
     font-family: monospace;
 }
 
-.likes {
+#vk_like, .fb-like {
     float: right;
+    display: inline !important;
+    clear: none !important;
 }
 
 .fb-like {
-    margin: 5px 0 0 0;
+    margin: 0 0 0 16px;
+    top: -1px;
 }
