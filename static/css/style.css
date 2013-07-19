@@ -35,16 +35,6 @@ a,
     -ms-transform: scale(1.2);
 }
 
-.transform1:hover {
-    transform: scale(1.1);
-    -moz-transform: scale(1.1);
-    -webkit-transform: scale(1.1);
-    -khtml-transform: scale(1.1);
-    -o-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-}
-
-
 @font-face {
   font-family: 'newpushkinbook';
   src: url('../fonts/pushkin-webfont.eot');
@@ -81,7 +71,8 @@ a,
     float: right;
 }
 
-.blog-list-header a {
+.blog-list-header a,
+.shadowed-text {
     text-shadow: 0 1px 0 #fff;
     -moz-text-shadow: 0 1px 0 #fff;
     -webkit-text-shadow: 0 1px 0 #fff;
@@ -243,12 +234,6 @@ a,
 .footer {
     text-align: center;
     padding: 10px;
-    text-shadow: 0 1px 0 #fff;
-    -moz-text-shadow: 0 1px 0 #fff;
-    -webkit-text-shadow: 0 1px 0 #fff;
-    -khtml-text-shadow: 0 1px 0 #fff;
-    -o-text-shadow: 0 1px 0 #fff;
-    -ms-text-shadow: 0 1px 0 #fff;
 }
 
 .django-powered {
@@ -264,22 +249,10 @@ a,
     -khtml-text-shadow: 0 1px 0 #333;
     -o-text-shadow: 0 1px 0 #333;
     -ms-text-shadow: 0 1px 0 #333;
-    transition: all 1s ease;
-    -webkit-transition: all 1s ease;
-    -khtml-transition: all 1s ease;
-    -moz-transition: all 1s ease;
-    -o-transition: all 1s ease;
-    -ms-transition: all 1s ease;
 }
 
 .django-powered:hover {
     color: #fff;
-    transition: all 0.3s ease;
-    -webkit-transition: all 0.3s ease;
-    -khtml-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    -ms-transition: all 0.3s ease;
 }
 
 .powered {
@@ -299,22 +272,10 @@ a,
   -khtml-text-shadow: 0 0 1px #000;
   -o-text-shadow: 0 0 1px #000;
   -ms-text-shadow: 0 0 1px #000;
-  transition: all 1s ease;
-  -webkit-transition: all 1s ease;
-  -khtml-transition: all 1s ease;
-  -moz-transition: all 1s ease;
-  -o-transition: all 1s ease;
-  -ms-transition: all 1s ease;
 }
 
 .soul:hover {
     color: #fff;
-    transition: all 0.3s ease;
-    -webkit-transition: all 0.3s ease;
-    -khtml-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    -ms-transition: all 0.3s ease;
 }
 
 #id_body {
@@ -458,12 +419,6 @@ a,
     font-size: 30px;
     padding: 9px;
     color: #000;
-    transition: all 1s ease;
-    -webkit-transition: all 1s ease;
-    -khtml-transition: all 1s ease;
-    -moz-transition: all 1s ease;
-    -o-transition: all 1s ease;
-    -ms-transition: all 1s ease;
     text-shadow: 0 1px 0 #444, 0 0 10px #B400FF, 0 0 10px #B400FF, 0 0 10px #B400FF, 0 0 8px #B400FF, 0 0 8px #B400FF, 0 0 8px #B400FF;
     -moz-text-shadow: 0 1px 0 #444, 0 0 10px #B400FF, 0 0 10px #B400FF, 0 0 10px #B400FF, 0 0 8px #B400FF, 0 0 8px #B400FF, 0 0 8px #B400FF;
     -webkit-text-shadow: 0 1px 0 #444, 0 0 10px #B400FF, 0 0 10px #B400FF, 0 0 10px #B400FF, 0 0 8px #B400FF, 0 0 8px #B400FF, 0 0 8px #B400FF;
@@ -479,21 +434,6 @@ a,
 
 .email img {
     position: absolute;
-    transition: all 1s ease;
-    -webkit-transition: all 1s ease;
-    -khtml-transition: all 1s ease;
-    -moz-transition: all 1s ease;
-    -o-transition: all 1s ease;
-    -ms-transition: all 1s ease;
-}
-
-.email:hover img {
-    transition: all 0.3s ease;
-    -webkit-transition: all 0.3s ease;
-    -khtml-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    -ms-transition: all 0.3s ease;
 }
 
 .hover-img:hover {
@@ -514,12 +454,6 @@ a,
     margin-left: -2px;
     padding: 16px 16px 0 22px !important;
     font-family: 'newpushkinbook';
-    transition: all 0.5s ease;
-    -webkit-transition: all 0.5s ease;
-    -khtml-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    -ms-transition: all 0.5s ease;
 }
 
 .blog-list-footer span {

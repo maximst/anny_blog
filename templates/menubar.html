@@ -21,7 +21,7 @@ $(document).ready(function() {
 </script>
 
 <div class="navbar navbar-inverse navbar-fixed-top">
-  <div class="django-powered">
+  <div class="django-powered transition">
     <div class="powered">Powered by</div>
     Django
   </div>
@@ -49,11 +49,11 @@ $(document).ready(function() {
           <li><a class="animate-link" href="{% url "login" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}">Войти</a></li>
           <li><a class="animate-link" href="{% url "registration" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}">Регистрация</a></li>
         {% endif %}
-        <li><a class="email animate-link" href="mailto:{{ admin.1 }}" title="Написать письмо {{ admin.0 }}"><img src="{{ static_prefix }}img/email_hover.png" alt="Написать {{ admin.0 }}" /><img class="hover-img" src="{{ static_prefix }}img/email.png" alt="Написать {{ admin.0 }}" /></a></li>
-        <li><div id="digital_watch" class="animate-link">00:00</div></li>
+        <li><a class="email animate-link" href="mailto:{{ admin.1 }}" title="Написать письмо {{ admin.0 }}"><img src="{{ static_prefix }}img/email_hover.png" alt="Написать {{ admin.0 }}" /><img class="hover-img transition" src="{{ static_prefix }}img/email.png" alt="Написать {{ admin.0 }}" /></a></li>
+        <li><div id="digital_watch" class="animate-link transition">00:00</div></li>
       </ul>
       </span>
-      <div class="soul">
+      <div class="soul transition">
         Необходимо помнить о красоте душевной!
       </div>
       </nav>
