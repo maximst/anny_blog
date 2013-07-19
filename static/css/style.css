@@ -44,15 +44,6 @@ a,
     -ms-transform: scale(1.1);
 }
 
-.shadow-hover1:hover {
-    box-shadow: 0 1px 3px #000;
-    -moz-box-shadow: 0 1px 3px #000;
-    -webkit-box-shadow: 0 1px 3px #000;
-    -khtml-box-shadow: 0 1px 3px #000;
-    -o-box-shadow: 0 1px 3px #000;
-    -ms-box-shadow: 0 1px 3px #000;
-}
-
 
 @font-face {
   font-family: 'newpushkinbook';
