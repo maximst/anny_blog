@@ -22,7 +22,7 @@ a {
     -ms-transition: all 1s ease;
 }
 
-.animate-link:hover {
+.animate-link:hover, .transform:hover {
     transform: scale(1.2);
     -moz-transform: scale(1.2);
     -webkit-transform: scale(1.2);
