@@ -4,7 +4,9 @@ body {
     /*cursor: url("../img/cursor.cur"), default;*/
 }
 
-a:hover {
+a:hover,
+#digital_watch:hover,
+.transition:hover {
     transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
     -khtml-transition: all 0.3s ease;
@@ -13,7 +15,8 @@ a:hover {
     -ms-transition: all 0.3s ease;
 }
 
-a {
+a,
+.transition {
     transition: all 1s ease;
     -webkit-transition: all 1s ease;
     -khtml-transition: all 1s ease;
@@ -22,22 +25,14 @@ a {
     -ms-transition: all 1s ease;
 }
 
-.animate-link:hover, .transform:hover {
+.animate-link:hover,
+.transform:hover {
     transform: scale(1.2);
     -moz-transform: scale(1.2);
     -webkit-transform: scale(1.2);
     -khtml-transform: scale(1.2);
     -o-transform: scale(1.2);
     -ms-transform: scale(1.2);
-}
-
-#digital_watch:hover {
-    transition: all 0.3s ease;
-    -webkit-transition: all 0.3s ease;
-    -khtml-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    -ms-transition: all 0.3s ease;
 }
 
 @font-face {
