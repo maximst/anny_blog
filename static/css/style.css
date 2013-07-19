@@ -460,50 +460,6 @@ a,
     margin: 4px;
 }
 
-.vkontakte, .facebook {
-/*    width: 22px;
-    padding: 9px 3px !important;*/
-   /* border: 2px solid #000000;
-    box-shadow: 0 1px 0 #333333, 0 1px 0 #333333 inset;
-    -moz-box-shadow: 0 1px 0 #333333, 0 1px 0 #333333 inset;
-    -webkit-box-shadow: 0 1px 0 #333333, 0 1px 0 #333333 inset;
-    -khtml-box-shadow: 0 1px 0 #333333, 0 1px 0 #333333 inset;
-    -o-box-shadow: 0 1px 0 #333333, 0 1px 0 #333333 inset;
-    -ms-box-shadow: 0 1px 0 #333333, 0 1px 0 #333333 inset;
-    color: #000000 !important;
-    font-size: 26px;
-    height: 22px;
-    margin: 4px;
-    padding: 4px 0 0 !important;
-    text-align: center;
-    text-shadow: 0 1px 1px #444444 !important;
-    -moz-text-shadow: 0 1px 1px #444444 !important;
-    -webkit-text-shadow: 0 1px 1px #444444 !important;
-    -khtml-text-shadow: 0 1px 1px #444444 !important;
-    -o-text-shadow: 0 1px 1px #444444 !important;
-    -ms-text-shadow: 0 1px 1px #444444 !important;
-    width: 28px;
-    border-radius: 4px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -khtml-border-radius: 4px;
-    -o-border-radius: 4px;
-    -ms-border-radius: 4px;*/
-}
-
-.vkontakte:hover, .facebook:hover {
-
-/*    padding: 4px 10px 3px 4px !important;*/
-   /* color: #fff !important;
-    border-color: #fff;
-    text-shadow: 0 1px 1px #000 !important;
-    -moz-text-shadow: 0 1px 1px #000 !important;
-    -webkit-text-shadow: 0 1px 1px #000 !important;
-    -khtml-text-shadow: 0 1px 1px #000 !important;
-    -o-text-shadow: 0 1px 1px #000 !important;
-    -ms-text-shadow: 0 1px 1px #000 !important;*/
-}
-
 .thumbnail-img:hover {
     text-decoration: none !important;
 }
