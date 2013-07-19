@@ -7,6 +7,8 @@
 
 {% block content %}
 
+<div class="content-container">
+
 {% for row in content %}
 
 <div id="preview-{{ row.id }}" class="fp-list blog-list content-list {% if row.linebreack %}linebreack{% endif %}">
@@ -97,5 +99,7 @@
 
 
 {% endfor %}
+
+</div>
 
 {% endblock %}

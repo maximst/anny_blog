@@ -148,7 +148,10 @@ a {
 
 .blog-list {
     margin: 5px;
-    padding-top: 3px;
+}
+.content-container,
+.blog-detail {
+    padding-top: 5px;
 }
 
 .blog-list-footer {
@@ -602,12 +605,11 @@ a {
 }
 
 #vk_like, .fb-like {
-    float: right;
     display: inline !important;
     clear: none !important;
 }
 
 .fb-like {
-    margin: 0 0 0 16px;
+    margin: 0 16px 0 -30px;
     top: -1px;
 }
