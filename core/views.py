@@ -105,8 +105,10 @@ def registration_thanks(request):
 
 def laminat(request):
     import math
+
     if request.method != 'POST':
-	return render(request, 'laminat.html')
+        return render(request, 'laminat.html')
+
     board = map(float, (request.POST.get('board_w'), request.POST.get('board_h')))
     room = map(float, (request.POST.get('room_w'), request.POST.get('room_h')))
 
@@ -116,8 +118,8 @@ def laminat(request):
     
     context = {
         'board_count': board_count.__int__(),
-        'board': board,
-        'room': room,
+        'board': map(int, board),
+        'room': map(int, room),
     }
 
     return render(request, 'laminat.html', context)
