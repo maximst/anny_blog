@@ -5,7 +5,16 @@
 
 {% if board_count %}
 
-<h3 style="color: red;">Количество целых досок: {{ board_count }}</h3>
+<h4 style="color: red;">Количество целых досок: </h4>
+<h5>{{ board_count }}</h5>
+<h4 style="color: red;">Отходы:</h4>
+<h5>Площадь: {{ waste }} м<sup>2</sup></h5>
+<h5>Куски: </h5>
+{% for w in waste_boards %}
+{% if 0.0 not in w.0 %}
+  <h5>{{ w.0|join:" x " }} мм. * {{ w.1 }} шт.</h5>
+{% endif %}
+{% endfor %}
 
 {% endif %}
 

@@ -105,6 +105,8 @@ def registration_thanks(request):
 
 def laminat(request):
     import math
+    
+    _mm_to_m = lambda x: x / 1000.0
 
     if request.method != 'POST':
         return render(request, 'laminat.html')
@@ -112,14 +114,23 @@ def laminat(request):
     board = map(float, (request.POST.get('board_w'), request.POST.get('board_h')))
     room = map(float, (request.POST.get('room_w'), request.POST.get('room_h')))
 
-    w, l = [math.ceil(x[0] / x[1]) for x in zip(room, board)]
+    w, l = [x[0] / x[1] for x in zip(room, board)]
+    W, L = math.ceil(w), math.ceil(l)
+    print w,l 
+    print W, L
 
-    board_count = w * l
+    board_count = W * L
+    waste = (_mm_to_m(board[0]) * _mm_to_m(board[1]) * board_count) - (_mm_to_m(room[0]) * _mm_to_m(room[1]))
+    waste_boards = []
+    waste_boards.append([[round(board[0] * (W - w)), board[1]], int(L)])
+    waste_boards.append([[board[0], round(board[1] * (L - l))], int(W)])
     
     context = {
         'board_count': board_count.__int__(),
         'board': map(int, board),
         'room': map(int, room),
+        'waste': round(waste, 2),
+        'waste_boards': waste_boards,
     }
 
     return render(request, 'laminat.html', context)
