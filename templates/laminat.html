@@ -13,19 +13,25 @@
 {% csrf_token %}
 <table>
 <tr>
-    <td>Размер доски 1: &nbsp;</td>
+    <td colspan="2" align="center"><h5>Доска</h5></td>
+</tr>
+<tr>
+    <td>Размер 1: &nbsp;</td>
     <td> <input type="text" name="board_w" value="{{ board.0 }}" /> мм.</td>
 </tr>
 <tr>
-    <td>Размер доски 2: &nbsp;</td>
+    <td>Размер 2: &nbsp;</td>
     <td> <input type="text" name="board_h" value="{{ board.1 }}" /> мм.</td>
 </tr>
 <tr>
-    <td>Размер комнаты 1: &nbsp;</td>
+    <td colspan="2" align="center"><h5>Комната</h5></td>
+</tr>
+<tr>
+    <td>Размер 1: &nbsp;</td>
     <td> <input type="text" name="room_w" value="{{ room.0 }}" /> мм.</td>
 </tr>
 <tr>
-    <td>Размер комнаты 2: &nbsp;</td>
+    <td>Размер 2: &nbsp;</td>
     <td> <input type="text" name="room_h" value="{{ room.1 }}" /> мм.</td>
 </tr>
 </table>
