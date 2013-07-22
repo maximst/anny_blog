@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.contrib import auth
 
 from blog.views import blog_list, blog_detail, tags
-from core.views import vote, logout, registration, registration_thanks
+from core.views import vote, logout, registration, registration_thanks, laminat
 from user_profile.views import profile
 
 from sitemap import (BlogSitemap, CommentSitemap, BlogImageSitemap,
@@ -44,4 +44,5 @@ urlpatterns = patterns('',
     url(r'^captcha/(?P<code>[\da-f]{32})/$', 'supercaptcha.draw'),
     #url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
     #{'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+    url(r'^laminat/$', laminat, name='laminat'),
 )
