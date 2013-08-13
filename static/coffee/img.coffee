@@ -12,4 +12,5 @@ $ () =>
         '-ms-transform': 'scale(0.1)'
 
     $('.blog-image').css css
+    setTimeout('$(".blog-image").addClass("show-image");', 20000)
     $('.blog-image').load show_image
