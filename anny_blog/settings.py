@@ -199,7 +199,7 @@ LOGIN_URL = '/accounts/login/'
 
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.facebook.FacebookBackend',
-    'social_auth.backends.contrib.vkontakte.VKontakteOAuth2Backend',
+    'social_auth.backends.contrib.vk.VKOAuth2Backend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
