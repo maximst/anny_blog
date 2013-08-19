@@ -51,7 +51,7 @@ def set_user_profile(backend, details, response, social_user, uid, \
             uprof.bdate = date(bdate[2], bdate[0], bdate[1])
             uprof.save()
 
-        if usa.provider == 'vkontakte-oauth2':
+        if usa.provider == 'vk-oauth':
             vk_api = vkontakte.API(token=usa.extra_data['access_token'])
             result = vk_api.users.get(fields='sex,bdate,photo_100,country,city',
                                                                   uids=usa.uid)

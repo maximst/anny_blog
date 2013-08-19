@@ -10,7 +10,8 @@ from tag.models import ArticleTag
 from core.models import Log
 
 def log_write(request):
-    if 'YandexMetrika' in request.META['HTTP_USER_AGENT']:
+    user_agent = request.META.get('HTTP_USER_AGENT')
+    if user_agent is not None and 'YandexMetrika' in user_agent:
         return None
     log_row = Log(
         ip = request.META.get('REMOTE_ADDR', '127.0.0.1'),
@@ -21,7 +22,7 @@ def log_write(request):
         query_post = request.POST.__str__(),
         sessionid = request.COOKIES.get('sessionid', ''),
         http_referer = request.META.get('HTTP_REFERER', ''),
-        http_user_agent = request.META.get('HTTP_USER_AGENT', ''),
+        http_user_agent = user_agent,
     )
     if request.user.is_authenticated():
         log_row.user = request.user
@@ -80,7 +81,7 @@ def blog_list(request):
 def tags(request, tag=None):
     log_write(request)
     if tag:
-        contents = Blog.objects.filter(tags__name__in=[tag])\
+        contents = Blog.objects.filter(tags__slug__in=[tag])\
                                     .order_by('-create_time')
     else:
         contents = ArticleTag.objects.all()
