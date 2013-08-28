@@ -12,8 +12,18 @@ from voting.models import Vote
 register = template.Library()
 
 @register.filter
+def plus(value, arg):
+    if (type(value) in (int, float) and type(arg) in (int, float)) \
+        or (arg.isdigit() and value.isdigit()):
+        return int(value) + int(arg)
+    return value
+
+@register.filter
 def diff(value, arg):
-    return int(value) - arg
+    if (type(value) in (int, float) and type(arg) in (int, float)) \
+        or (arg.isdigit() and value.isdigit()):
+        return int(value) - int(arg)
+    return value
 
 @register.inclusion_tag('menubar.html', takes_context=True)
 def menubar(context):

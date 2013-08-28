@@ -3,21 +3,51 @@
 <div class="pagination">
   <ul>
     <li{% if not content.has_previous %} class="disabled"{% endif %}><a href="?p={% if content.has_previous %}{{ content.previous_page_number }}{% endif %}">Пред.</a></li>
+
     {% if content.has_previous %}
       {% if content.previous_page_number != content.paginator.page_range.0 %}
         <li><a href="?p={{ content.paginator.page_range.0 }}">{{ content.paginator.page_range.0 }}</a></li>
-        <li class="disabled"><a>...</a></li>
+        {% if content.previous_page_number > 3 %}
+          <li class="disabled"><a>...</a></li>
+        {% endif %}
       {% endif %}
+
+      {% if content.previous_page_number > 2 %}
+        {% if content.number >= content.paginator.num_pages|diff:1 %}
+          {% if content.number == content.paginator.num_pages %}
+            <li><a href="?p={{ content.previous_page_number|diff:3 }}">{{ content.previous_page_number|diff:3 }}</a></li>
+          {% endif %}
+          <li><a href="?p={{ content.previous_page_number|diff:2 }}">{{ content.previous_page_number|diff:2 }}</a></li>
+        {% endif %}
+        <li><a href="?p={{ content.previous_page_number|diff:1 }}">{{ content.previous_page_number|diff:1 }}</a></li>
+      {% endif %}
+
       <li><a href="?p={{ content.previous_page_number }}">{{ content.previous_page_number }}</a></li>
     {% endif %}
+
     <li class="active"><a href="?p={{ content.number }}">{{ content.number }}</a></li>
+
     {% if content.has_next %}
       <li><a href="?p={{ content.next_page_number }}">{{ content.next_page_number }}</a></li>
+
+      {% if content.next_page_number <  content.paginator.num_pages|diff:2 %}
+        <li><a href="?p={{ content.next_page_number|plus:1 }}">{{ content.next_page_number|plus:1 }}</a></li>
+        {% if content.number <= 2 %}
+          <li><a href="?p={{ content.next_page_number|plus:2 }}">{{ content.next_page_number|plus:2 }}</a></li>
+          {% if content.number == 1 %}
+            <li><a href="?p={{ content.next_page_number|plus:3 }}">{{ content.next_page_number|plus:3 }}</a></li>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+
       {% if content.next_page_number != content.paginator.num_pages %}
-        <li class="disabled"><a>...</a></li>
+        {% if content.next_page_number <  content.paginator.num_pages|diff:1 %}
+          <li class="disabled"><a>...</a></li>
+        {% endif %}
         <li><a href="?p={{ content.paginator.num_pages }}">{{ content.paginator.num_pages }}</a></li>
       {% endif %}
     {% endif %}
+
     <li{% if not content.has_next %} class="disabled"{% endif %}><a href="?p={% if content.has_next %}{{ content.next_page_number }}{% endif %}">След.</a></li>
   </ul>
 </div>
