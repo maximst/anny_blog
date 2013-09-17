@@ -13,7 +13,7 @@
       {% endif %}
 
       {% if content.previous_page_number > 2 %}
-        {% if content.number >= content.paginator.num_pages|diff:1 %}
+        {% if content.number >= content.paginator.num_pages|diff:1 and content.number|diff:3 != 1 %}
           {% if content.number == content.paginator.num_pages %}
             <li><a href="?p={{ content.previous_page_number|diff:3 }}">{{ content.previous_page_number|diff:3 }}</a></li>
           {% endif %}
@@ -30,7 +30,7 @@
     {% if content.has_next %}
       <li><a href="?p={{ content.next_page_number }}">{{ content.next_page_number }}</a></li>
 
-      {% if content.next_page_number <  content.paginator.num_pages|diff:2 %}
+      {% if content.next_page_number < content.paginator.num_pages|diff:2 %}
         <li><a href="?p={{ content.next_page_number|plus:1 }}">{{ content.next_page_number|plus:1 }}</a></li>
         {% if content.number <= 2 %}
           <li><a href="?p={{ content.next_page_number|plus:2 }}">{{ content.next_page_number|plus:2 }}</a></li>
