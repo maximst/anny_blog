@@ -25,6 +25,7 @@
     <script type="text/javascript" src="{{ static_prefix }}{% coffeescript 'coffee/ajax.coffee' %}"></script>
 <!--    <script type="text/javascript" src="{{ static_prefix }}{% coffeescript 'coffee/img.coffee' %}"></script>-->
     <script type="text/javascript" src="//vk.com/js/api/openapi.js?97"></script>
+    <script type="text/javascript" src="//vk.com/js/api/openapi.js?101"></script>
     <script type="text/javascript">
         VK.init({apiId: 3520788, onlyWidgets: true});
     </script>
@@ -95,14 +96,18 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     <div class="content">
     <div class="adsense">
       <script type="text/javascript"><!--
-	google_ad_client = "ca-pub-8023676454479864";
-	/* Anny */
-	google_ad_slot = "4244532633";
-	google_ad_width = 728;
-	google_ad_height = 90;
-	//-->
+        google_ad_client = "ca-pub-8023676454479864";
+        /* Anny */
+        google_ad_slot = "4244532633";
+        google_ad_width = 728;
+        google_ad_height = 90;
+        //-->
       </script>
       <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+      <div id="vk_groups"></div>
+      <script type="text/javascript">
+      VK.Widgets.Group("vk_groups", {mode: 1, width: "210", height: "20"}, 58771103);
+      </script>
       {% load linkexchange_tags %}
       {{ linkexchange_blocks.0|safe }}{{ linkexchange_blocks.1|safe }}
     </div>
