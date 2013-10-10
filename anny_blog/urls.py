@@ -6,6 +6,7 @@ from django.contrib import auth
 
 from blog.views import blog_list, blog_detail, tags
 from core.views import vote, logout, registration, registration_thanks, laminat
+from tag.views import tags_autocomplite
 from user_profile.views import profile
 
 from sitemap import (BlogSitemap, CommentSitemap, BlogImageSitemap,
@@ -38,6 +39,7 @@ urlpatterns = patterns('',
                                             name='registration-thanks'),
     url(r'^accounts/social/', include('social_auth.urls')),
     url(r'^tag/(?P<tag>.+)/$', tags, name='tags'),
+    url(r'^tag_autocomplite/$', tags_autocomplite, name='tags_autocomplite'),
     url(r'^tag/$', tags, name='tags'),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap',
                                             {'sitemaps': sitemaps}),
