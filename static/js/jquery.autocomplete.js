@@ -735,4 +735,4 @@
             }
         });
     };
-}));
+}))(django.jQuery.noConflict());
