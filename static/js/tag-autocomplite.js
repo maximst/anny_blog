@@ -1,8 +1,8 @@
 (function($) {
   $('#id_tags').autocomplete({
-      serviceUrl: '/tag_autocomplite/',
+      serviceUrl: '/tag_autocomplite',
       minChars: 2,
-      delimiter: /,\s*/,
+      delimiter: /(,)\s*/,
       maxHeight: 400,
       width: 300,
       zIndex: 9999,
