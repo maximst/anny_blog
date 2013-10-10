@@ -16,7 +16,7 @@ class BlogAdmin(admin.ModelAdmin):
     class Media:
         from django.conf import settings
         static_url = getattr(settings, 'STATIC_URL', '/static')
-        js = [static_url + 'js/jquery.autocomplete.js', static_url + 'js/tag-autocomplete.js']
+        js = [static_url + 'js/jquery.autocomplete.js', static_url + 'js/tag-autocomplite.js']
 
 
 class CommentAdmin(admin.ModelAdmin):
