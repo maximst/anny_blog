@@ -10,6 +10,8 @@
 /*jslint  browser: true, white: true, plusplus: true */
 /*global define, window, document, jQuery */
 
+var jQuery = django.jQuery, $ = jQuery;
+
 // Expose plugin as an AMD module if AMD loader is present:
 (function (factory) {
     'use strict';
@@ -735,4 +737,4 @@
             }
         });
     };
-}))(django.jQuery.noConflict());
+}));
