@@ -1,6 +1,6 @@
 (function($) {
   $('#id_tags').autocomplete({
-      serviceUrl: 'service/autocomplete.ashx',
+      serviceUrl: '/tags_autocomplite/',
       minChars: 2,
       delimiter: /,\s*/,
       maxHeight: 400,
