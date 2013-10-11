@@ -3,6 +3,11 @@
     border: 1px solid #999999;
     overflow: auto;
     box-shadow: #333 0 1px 4px;
+    -khtml-box-shadow: #333 0 1px 4px;
+    -moz-box-shadow: #333 0 1px 4px;
+    -webkit-box-shadow: #333 0 1px 4px;
+    -o-box-shadow: #333 0 1px 4px;
+    -ms-box-shadow: #333 0 1px 4px;
 }
 
 .autocomplete-suggestions strong {
