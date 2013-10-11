@@ -1,0 +1,14 @@
+.autocomplete-suggestions {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #999999;
+    overflow: auto;
+    box-shadow: #333 0 1px 4px;
+}
+
+.autocomplete-suggestions strong {
+    color: #00aaff;
+}
+
+.autocomplete-selected {
+    background: none repeat scroll 0 0 #def;
+}

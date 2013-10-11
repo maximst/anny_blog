@@ -1,3 +1,5 @@
+var jQuery = jQuery || django.jQuery.noConflict(false), $ = jQuery;
+
 /**
 *  Ajax Autocomplete for jQuery, version 1.2.7
 *  (c) 2013 Tomas Kirda
@@ -9,8 +11,6 @@
 
 /*jslint  browser: true, white: true, plusplus: true */
 /*global define, window, document, jQuery */
-
-var jQuery = django.jQuery, $ = jQuery;
 
 // Expose plugin as an AMD module if AMD loader is present:
 (function (factory) {
