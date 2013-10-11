@@ -11,7 +11,7 @@ def tags_autocomplite(request):
     if not request.is_ajax() or query is None:
         return HttpResponse(status=400)
 
-    tags = ArticleTag.objects.filter(name__contains=query)
+    tags = ArticleTag.objects.filter(name__icontains=query)
 
     response = {
         'query': query,
