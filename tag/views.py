@@ -4,8 +4,11 @@ from django.utils import simplejson as json
 
 from models import ArticleTag
 
+from time import time
+
 @login_required
 def tags_autocomplite(request):
+    t = time()
     query = request.GET.get('query')
 
     if not request.is_ajax() or query is None:
@@ -17,5 +20,7 @@ def tags_autocomplite(request):
         'query': query,
         'suggestions': [tag.name for tag in tags],
     }
+
+    response['query_time'] = time() - t,
 
     return HttpResponse(json.dumps(response), mimetype="application/json")
