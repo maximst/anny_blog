@@ -149,6 +149,7 @@ INSTALLED_APPS = (
     'tag',
     'core',
     'user_profile',
+    'radio',
 )
 
 # A sample logging configuration. The only tangible logging
