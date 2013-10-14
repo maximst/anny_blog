@@ -16,3 +16,4 @@ LinkExchange.Django
 LinkExchange
 sape
 supercaptcha
+BeautifulSoup
