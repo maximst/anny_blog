@@ -3,6 +3,7 @@ from BeautifulSoup import BeautifulSoup
 import os
 import sys
 import vkontakte
+from os import system
 
 add_path = '/'.join(os.path.split(os.path.abspath(__file__))[0].split('/')[:-1])
 sys.path.append(add_path)
@@ -11,7 +12,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "anny_blog.settings")
 #from django.core.wsgi import get_wsgi_application
 #application = get_wsgi_application()
 from django.conf import settings
-from django.core.files.temp import NamedTemporaryFile
+from django.core.files import File
 from radio.models import Audio
 
 
@@ -50,9 +51,27 @@ def vk_login():
 
 def add_song(song):
     tmp_file = os.path.join(Audio.file_dir(), 'tmp', song['aid'].__str__())
+
     fd_mp3 = open(tmp_file, 'w+')
     result = requests.get(song['url'])
     fd_mp3.write(result.content)
+    fd_mp3.close()
+
+    ogg_file = os.path.join(Audio.file_dir(), 'tmp',
+                            '%s.ogg' % song['aid'].__str__())
+    system('avconv -y -i %s -acodec libvorbis -ar 44100 -aq 2.3 %s' \
+                                                % (tmp_file, ogg_file))
+
+    fd_ogg = open(ogg_file)
+    song.pop('owner_id', None)
+    song.pop('url', None)
+
+    audio = Audio(**song)
+    audio.file.save('%s.ogg' % song['aid'].__str__(), File(fd_ogg))
+    audio.save()
+
+    os.remove(tmp_file)
+    os.remove(ogg_file)
 
 def get_audio():
     token = vk_login()
