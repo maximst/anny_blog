@@ -5,11 +5,11 @@ from BeautifulSoup import BeautifulSoup
 
 
 def ajax_navigation(fn):
-    def wrapper(*args, **kwargs):
-      if not args[0].is_ajax():
-          return fn(*args, **kwargs)
+    def wrapper(request, *args, **kwargs):
+      if not request.is_ajax():
+          return fn(request, *args, **kwargs)
 
-      response = fn(*args, **kwargs)
+      response = fn(request, *args, **kwargs)
       soup = BeautifulSoup(response.content)
       content = soup.find('div', {'id': 'container', 'class': 'container'})
       #TODO: Add title, description, keywords and image
