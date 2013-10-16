@@ -8,6 +8,7 @@ from forms import CommentForm
 
 from tag.models import ArticleTag
 from core.models import Log
+from core.decorators import ajax_navigation
 
 def log_write(request):
     user_agent = request.META.get('HTTP_USER_AGENT')
@@ -29,6 +30,7 @@ def log_write(request):
 
     log_row.save()
 
+@ajax_navigation
 def blog_detail(request, slug):
     log_write(request)
     user = request.user
@@ -51,6 +53,7 @@ def blog_detail(request, slug):
     return render(request, 'blog/blog_detail.html', contents)
 
 
+@ajax_navigation
 def blog_list(request):
     log_write(request)
     contents = Blog.objects.all().order_by('-create_time')
@@ -78,6 +81,7 @@ def blog_list(request):
     return render(request, 'blog/blog_list.html', {'content': content})
 
 
+@ajax_navigation
 def tags(request, tag=None):
     log_write(request)
     if tag:

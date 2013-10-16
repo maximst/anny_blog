@@ -21,3 +21,12 @@ class Audio(models.Model):
     @classmethod
     def file_dir(cls):
         return os.path.join(settings.MEDIA_ROOT, cls.DIR)
+
+    def player(self):
+        if self.file:
+            return u'<audio src="%s" controls preload="metadata"></audio>' % self.file.url
+        else:
+            return 'none'
+
+    player.short_description = 'Play'
+    player.allow_tags = True

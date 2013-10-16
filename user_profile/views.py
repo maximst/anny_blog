@@ -7,9 +7,11 @@ from django.core.urlresolvers import reverse
 
 from models import UserProfile
 from forms import ProfileForm
+from core.decorators import ajax_navigation
 
 
 @login_required
+@ajax_navigation
 def profile(request):
     user = request.user
     if request.method == 'POST':
