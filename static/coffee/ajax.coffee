@@ -22,6 +22,7 @@ hide_div = (event) ->
 
 $ () =>
   $(document).click hide_div
-  $('.down_vote').click vote
-  $('.up_vote').click vote
+
+$(document).on 'click', '.down_vote', vote
+$(document).on 'click', '.up_vote', vote
 
