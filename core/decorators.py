@@ -11,7 +11,7 @@ def ajax_navigation(fn):
 
       response = fn(request, *args, **kwargs)
       soup = BeautifulSoup(response.content)
-      content = soup.find('div', {'id': 'container', 'class': 'container'})
+      content = soup.find('div', {'id': 'container'})
       #TODO: Add title, description, keywords and image
       response = {
           'content': content.__str__(),

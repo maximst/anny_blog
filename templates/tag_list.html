@@ -3,7 +3,7 @@
 {% block content %}
 
 {% for row in content %}
-    <a href="{% url "tags" tag=row.slug %}" title="Go to: {{ row.name }}">{{ row.name }}</a>
+    <a class="ajax-nav" href="{% url "tags" tag=row.slug %}" title="Go to: {{ row.name }}">{{ row.name }}</a>
 {% endfor %}
 
 {% endblock %}

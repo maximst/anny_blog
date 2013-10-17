@@ -13,7 +13,6 @@ set_page = (page) ->
 
 
 $(document).ready () ->
-  console.log 'start'
   window.onpopstate = (event) ->
     if event.state.type.length > 0
       if NavigationCache[event.state.page].length > 0
@@ -21,11 +20,8 @@ $(document).ready () ->
 
   return null
 
-$(document).on 'click', 'a', () ->
+$(document).on 'click', '.ajax-nav', () ->
   url = $(this).attr 'href'
   console.log url
-  if url[0] == '/' or 'follow-chic.com' in url
-    set_page url
-    return false
-
-  true
+  set_page url
+  false

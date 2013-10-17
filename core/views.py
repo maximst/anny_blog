@@ -7,9 +7,11 @@ from django.shortcuts import render_to_response, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.contrib.auth import logout as django_logout
+from django.contrib.auth.views import login
 from django.utils import simplejson as json
 from django.core.mail import EmailMessage
 from django.forms import ValidationError
+
 
 from voting.models import Vote
 from forms import RegistrationForm

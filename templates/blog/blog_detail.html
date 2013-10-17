@@ -54,14 +54,14 @@
         <small>
           Тэги:
           {% for t in content.tags.all %}
-            <a href="/tag/{{ t.slug }}">{{ t.name }}</a>{% if not forloop.last %}, {% endif %}
+            <a class="ajax-nav" href="/tag/{{ t.slug }}">{{ t.name }}</a>{% if not forloop.last %}, {% endif %}
           {% endfor %}
         </small>
         </span>
         {% endif %}
         <div class="btn-group">
           {% comment %}{% if user.is_authenticated %}{% endcomment %}
-            <a class="btn" href="{% if user.is_authenticated %}#comment_form{% else %}{% url "login" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}#comment_form{% endif %}">Добавить коментарий</a>
+            <a class="btn ajax-nav" href="{% if user.is_authenticated %}#comment_form{% else %}{% url "login" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}#comment_form{% endif %}">Добавить коментарий</a>
           {% comment %}{% endif %}{% endcomment %}
           {% comment %}        <small><a class="btn" href="#">{% if content.user.first_name or content.user.last_name %}{{ content.user.first_name }} {{ content.user.last_name }}{% else %}{{ content.user.username }}{% endif %} blog</a></small>{% endcomment %}
         </div>
@@ -118,8 +118,8 @@
       <a href="{% url "socialauth_begin" "facebook" %}?next={{ request.META.PATH_INFO }}" class="facebook" title="Войти через facebook"><img src="{{ static_prefix }}img/facebook.png" alt="FB" border="0" width="22" height="22" /></a>
       <a href="{% url "socialauth_begin" "vk-oauth" %}?next={{ request.META.PATH_INFO }}" class="vkontakte" title="Войти через vkontakte"><img src="{{ static_prefix }}img/vkontakte.png" alt="VK" border="0" width="22" height="22" /></a>
       </br>
-      <a href="{% url "login" %}?next={{ request.META.PATH_INFO }}">Войти</a>
-      <a href="{% url "registration" %}?next={{ request.META.PATH_INFO }}">Регистрация</a>
+      <a class="ajax-nav" href="{% url "login" %}?next={{ request.META.PATH_INFO }}">Войти</a>
+      <a class="ajax-nav" href="{% url "registration" %}?next={{ request.META.PATH_INFO }}">Регистрация</a>
     {% endif %}
     </div>
 {% endblock %}

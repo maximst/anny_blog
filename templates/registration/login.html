@@ -27,6 +27,6 @@
 <input type="submit" value="login" class="btn" />
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
-<a href="{% url "registration" %}?next={{ request.META.PATH_INFO }}">Регистрация</a><br />
+<a class="ajax-nav" href="{% url "registration" %}?next={{ request.META.PATH_INFO }}">Регистрация</a><br />
 {% endblock %}
 
