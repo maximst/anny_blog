@@ -1,25 +1,13 @@
-PLAYLIST = [
-  {
-    aid: 354456564,
-    artist: 'Test',
-    title: 'Loreт Ipsum',
-    ogg: '/media/radio/354456564.ogg',
-    mp3: '/media/radio/354456564.mp3'
-  },
-  {
-    aid: 6366467878,
-    artist: 'Test',
-    title: 'Loreт Ipsum',
-    ogg: '/media/radio/6366467878.ogg',
-    mp3: '/media/radio/6366467878.mp3'
-  },
-]
-
 play_pause = () ->
   if player.paused
     player.play()
   else
     player.pause()
+
+next_track = (e) ->
+  player.src = next
+  player.play()
+
 
 
 $(document).ready () ->
