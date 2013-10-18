@@ -1,3 +1,4 @@
+#!-*-coding: utf8-*-
 from django.utils import simplejson as json
 from django.http import HttpResponse
 
@@ -21,9 +22,13 @@ def ajax_navigation(fn):
       response = {
           'content': content.__str__()[20:-6],
           'title': title.text,
-          'description': dict(description.attrs)['content'],
           'keywords': dict(keywords.attrs)['content']
       }
+
+      if description is None:
+          response['description'] = 'Шик по последней моде! Следи за модой!'
+      else:
+          response['description'] = dict(description.attrs)['content']
 
       if image is None:
           response['image'] = ''
