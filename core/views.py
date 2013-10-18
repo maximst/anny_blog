@@ -15,6 +15,7 @@ from django.forms import ValidationError
 
 from voting.models import Vote
 from forms import RegistrationForm
+from decorators import ajax_navigation
 
 
 def homepage(request):
@@ -67,6 +68,7 @@ def vote(request, app, model, pk, vote):
     else:
         return redirect(redirect_url)
 
+@ajax_navigation
 def registration(request):
     if request.user.is_authenticated():
         return redirect('/')
@@ -104,7 +106,7 @@ def registration(request):
 def registration_thanks(request):
     return render(request, 'registration/registration_thanks.html')
 
-
+@ajax_navigation
 def laminat(request):
     import math
     

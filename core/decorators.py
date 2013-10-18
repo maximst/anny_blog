@@ -10,16 +10,25 @@ def ajax_navigation(fn):
           return fn(request, *args, **kwargs)
 
       response = fn(request, *args, **kwargs)
+
       soup = BeautifulSoup(response.content)
       content = soup.find('div', {'id': 'container'})
-      #TODO: Add title, description, keywords and image
+      title = soup.find('title')
+      description = soup.find('meta', {'name': 'description'})
+      keywords = soup.find('meta', {'name': 'keywords'})
+      image = soup.find('link', {'rel': 'image_src'})
+
       response = {
-          'content': content.__str__(),
-          'title': 'Anny',
-          'description': '',
-          'keywords': '',
-          'image': '',
+          'content': content.__str__()[20:-6],
+          'title': title.text,
+          'description': dict(description.attrs)['content'],
+          'keywords': dict(keywords.attrs)['content']
       }
+
+      if image is None:
+          response['image'] = ''
+      else:
+          response['image'] = dict(image.attrs)['href']
 
       return HttpResponse(json.dumps(response), mimetype="application/json")
     return wrapper
