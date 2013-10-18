@@ -13,20 +13,30 @@ class Audio(models.Model):
     genre = models.IntegerField(blank=True, null=True)
     duration = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
-    file = models.FileField(upload_to=DIR)
+    ogg = models.FileField(upload_to=DIR)
+    mp3 = models.FileField(upload_to=DIR)
 
     class Meta:
         app_label = 'radio'
+
+    def delete(self, *args, **kwargs):
+        ogg_storage, ogg_path = self.ogg.storage, self.ogg.path
+        mp3_storage, mp3_path = self.mp3.storage, self.mp3.path
+
+        super(Audio, self).delete(*args, **kwargs)
+
+        ogg_storage.delete(ogg_path)
+        mp3_storage.delete(mp3_path)
 
     @classmethod
     def file_dir(cls):
         return os.path.join(settings.MEDIA_ROOT, cls.DIR)
 
     def player(self):
-        if self.file:
-            return u'<audio src="%s" controls preload="metadata"></audio>' % self.file.url
+        if self.ogg:
+            return u'<audio id="%i" src="%s" controls preload="metadata"></audio>' % (self.id, self.ogg.url)
         else:
-            return 'none'
+            return u'none'
 
     player.short_description = 'Play'
     player.allow_tags = True
