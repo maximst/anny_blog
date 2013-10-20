@@ -30,8 +30,10 @@ set_page = (page) ->
     NavigationCache[page] = data.content
     history.pushState {page: page, type: 'page'}, document.title, page
 
-    yaCounter20829157.hit(PAGE, data.title);
+    yaCounter20829157.hit PAGE, data.title
 
+    FB.XFBML.parse()
+    $('.fb-like span').css 'width', '105px'
 
 $(document).ready () ->
   window.onpopstate = (event) ->

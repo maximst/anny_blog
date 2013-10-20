@@ -1,19 +1,15 @@
 play_pause = () ->
-  if player.paused
-    player.play()
+  if $('radio').paused
+    $('radio').play()
   else
-    player.pause()
+    $('radio') .pause()
 
 next_track = (e) ->
   player.src = next
   player.play()
 
 
-
-$(document).ready () ->
-  player = Audio()
-  player.id = 'radio'
-
 $(document).on 'click', '#play_pause', play_pause
 
-player.addEventListener 'ended', next_track
+$(document).ready () ->
+  $('radio').addEventListener 'ended', next_track

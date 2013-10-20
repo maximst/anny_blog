@@ -5,6 +5,7 @@
 <meta charset="utf-8">
 {% load static %}
 {% load coretags %}
+{% load radiotags %}
 {% load coffeescript %}
 {% get_static_prefix as static_prefix %}
 
@@ -68,7 +69,7 @@
       <nav>{% breadcrump %}</nav>
 
 	  <div id="fb-root"></div>
-	  <script>
+	  <script >
 	    (function(d, s, id) {
 	      var js, fjs = d.getElementsByTagName(s)[0];
 	      if (d.getElementById(id)) return;
@@ -139,12 +140,22 @@
     <footer class="footer shadowed-text">
       Powered by Django.
     </footer>
+    <a id="play_pause" href="#">p</a>
   </div>
 </div>
 
 <aside>
   <div class="background"><img class="background-image" src="{{ static_prefix }}img/background_bw.jpeg"></div>
 </aside>
+
+<script type="text/javascript">
+  var PLAYLIST = {% radio_playlist %};
+</script>
+
+<audio id="radio" preload="auto" style="position: absolute; z-index: -1000;">
+  <source src="" type="audio/ogg" id="radio_mp3">
+  <source src="" type="audio/mp3" id="radio_ogg">
+</audio>
 
 </body>
 </html>
