@@ -60,7 +60,7 @@ def add_song(song):
 
     ogg_file = os.path.join(Audio.file_dir(), 'tmp',
                             '%s.ogg' % song['aid'].__str__())
-    system('avconv -y -i %s -acodec libvorbis -ar 44100 -aq 2.3 %s' \
+    system('ffmpeg -y -i %s -acodec libvorbis -ar 44100 -aq 2.3 %s' \
                                                 % (mp3_file, ogg_file))
 
     fd_ogg = open(ogg_file)
