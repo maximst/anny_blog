@@ -37,9 +37,10 @@ set_page = (page) ->
 
 $(document).ready () ->
   window.onpopstate = (event) ->
-    if event.state.type.length > 0
-      if NavigationCache[event.state.page].length > 0
-        $('#container').html NavigationCache[event.state.page]
+    if event.state
+      if event.state.type.length > 0
+        if NavigationCache[event.state.page].length > 0
+          $('#container').html NavigationCache[event.state.page]
 
   return null
 
