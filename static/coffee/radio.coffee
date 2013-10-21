@@ -49,6 +49,7 @@ set_track = (track, radio) ->
 
 
 get_from_coocies = () ->
+  #TODO: defined this function
   return [null, null]
 
 next_track = (e) ->
@@ -59,4 +60,6 @@ next_track = (e) ->
 
 $(document).on 'click', '#play_pause', play_pause
 
-$(document).on 'ended', '#radio', next_track
+$(document).ready () ->
+  radio = document.getElementById 'radio'
+  radio.addEventListener 'ended', next_track
