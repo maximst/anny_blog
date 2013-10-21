@@ -141,7 +141,6 @@
     <footer class="footer shadowed-text">
       Powered by Django.
     </footer>
-    <a id="play_pause" href="#">p</a>
   </div>
 </div>
 
@@ -151,9 +150,18 @@
 
 <script type="text/javascript">
   var PLAYLIST = {% radio_playlist %};
+  function cron() {
+    radio = document.getElementById('radio');
+
+    if (!radio.paused) {
+      document.cookie = "radio_current_time=" + radio.currentTime + "; path=/";
+    }
+
+    setTimeout('cron();', 1000);
+  }
 </script>
 
-<audio id="radio" preload="auto" style="position: absolute; z-index: -1000;"></audio>
+<audio id="radio" preload="metadata" style="position: absolute; z-index: -1000;"></audio>
 
 </body>
 </html>

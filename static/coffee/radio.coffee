@@ -1,10 +1,13 @@
 play_pause = () ->
   radio = document.getElementById 'radio'
-  find_track radio
   if radio.paused
+    find_track radio
     radio.play()
+    set_cookie 'radio_pause', 0
   else
     radio.pause()
+    set_cookie 'radio_pause', 1
+    set_cookie 'radio_current_time', radio.currentTime
   false
 
 find_track = (radio) ->
@@ -19,12 +22,10 @@ find_track = (radio) ->
   else
     [current_time, id] = get_from_coocies()
     if id
+      _id = id * 1
       for track in PLAYLIST
-        if track.id == id
+        if track.id == _id
           set_track track, radio
-          if current_time is undefined
-            current_time = 0
-          radio.currentTime = current_time
           return null
 
   track = get_random_track()
@@ -45,21 +46,48 @@ set_track = (track, radio) ->
   else
     radio.src = track.mp3
 
+  set_cookie 'radio_track_id', track.id
+  #set_cookie 'radio_current_time', radio.currentTime
+
   console.log "NOW PLAYING: \"#{track.full_title}\""
+
+get_cookie = (name) ->
+  parts = document.cookie.split "#{name}="
+  if parts.length == 2
+    return parts.pop().split(";").shift()
+
+  null
+
+set_cookie = (name, value) ->
+  document.cookie = name+"="+value+"; path=/"
 
 
 get_from_coocies = () ->
-  #TODO: defined this function
-  return [null, null]
+  data = [null, null]
+  id = get_cookie 'radio_track_id'
+  current_time = get_cookie 'radio_current_time'
+  if current_time
+    data[0] = current_time
+  if id
+    data[1] = id
+
+  data
 
 next_track = (e) ->
   track = get_random_track()
   set_track track, this
   this.play()
 
-
 $(document).on 'click', '#play_pause', play_pause
 
 $(document).ready () ->
   radio = document.getElementById 'radio'
   radio.addEventListener 'ended', next_track
+  state = get_cookie 'radio_pause'
+  if state == "0"
+    find_track radio
+    current_time = get_cookie 'radio_current_time'
+    if current_time
+      setTimeout "document.getElementById('radio').currentTime = #{current_time};", 100
+    radio.play()
+  cron()
