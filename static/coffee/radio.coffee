@@ -26,6 +26,8 @@ find_track = (radio) ->
       for track in PLAYLIST
         if track.id == _id
           set_track track, radio
+          if current_time
+            setTimeout "document.getElementById('radio').currentTime = #{current_time};", 100
           return null
 
   track = get_random_track()
@@ -86,8 +88,5 @@ $(document).ready () ->
   state = get_cookie 'radio_pause'
   if state == "0"
     find_track radio
-    current_time = get_cookie 'radio_current_time'
-    if current_time
-      setTimeout "document.getElementById('radio').currentTime = #{current_time};", 100
     radio.play()
   cron()
