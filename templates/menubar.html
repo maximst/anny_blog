@@ -49,7 +49,12 @@ $(document).ready(function() {
           <li><a class="animate-link ajax-nav" href="{% url "login" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}">Войти</a></li>
           <li><a class="animate-link ajax-nav" href="{% url "registration" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}">Регистрация</a></li>
         {% endif %}
-        <li><a class="email animate-link" href="mailto:{{ admin.1 }}" title="Написать письмо {{ admin.0 }}"><img src="{{ static_prefix }}img/email_hover.png" alt="Написать {{ admin.0 }}" /><img class="hover-img transition" src="{{ static_prefix }}img/email.png" alt="Написать {{ admin.0 }}" /></a></li>
+        <li>
+          <a class="email animate-link" href="mailto:{{ admin.1 }}" title="Write a letter to {{ admin.0 }} or developer of site.">
+            <img src="{{ static_prefix }}img/email_hover.png" alt="Write a letter to {{ admin.0 }} or developer of site." />
+            <img class="hover-img transition" src="{{ static_prefix }}img/email.png" alt="Write a letter to {{ admin.0 }} or developer of site." />
+          </a>
+        </li>
         <li><div id="digital_watch" class="animate-link transition">00:00</div></li>
         <li>
           <a href="#" id="play_pause" class="email animate-link radio-button" title="Play radio Anny">
