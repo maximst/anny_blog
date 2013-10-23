@@ -32,7 +32,8 @@ find_track = (radio) ->
             setTimeout "document.getElementById('radio').currentTime = #{current_time};", 100
           return null
 
-  track = get_random_track()
+  #track = get_random_track()
+  track = PLAYLIST[0]
   set_track track, radio
 
 
