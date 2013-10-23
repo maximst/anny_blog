@@ -52,6 +52,7 @@ set_track = (track, radio) ->
 
   set_cookie 'radio_track_id', track.id
   #set_cookie 'radio_current_time', radio.currentTime
+  radio.dataset.id = track.id
 
   console.log "NOW PLAYING: \"#{track.full_title}\""
 
@@ -78,7 +79,15 @@ get_from_coocies = () ->
   data
 
 next_track = (e) ->
-  track = get_random_track()
+  #track = get_random_track()
+  max = PLAYLIST.length - 1
+  current_track = this.dataset.id * 1
+  for track in PLAYLIST
+    if current_track == track.id
+      next_track = _i + 1
+  if next_track > _i
+    next_track = 0
+  track = PLAYLIST[next_track]
   set_track track, this
   this.play()
 

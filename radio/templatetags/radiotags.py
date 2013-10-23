@@ -8,7 +8,7 @@ register = template.Library()
 
 @register.simple_tag
 def radio_playlist():
-    songs = Audio.objects.all()
+    songs = Audio.objects.all().order_by('?')
     playlist = []
     for song in songs:
         playlist.append({
@@ -22,4 +22,4 @@ def radio_playlist():
             'mp3': song.mp3.url
         })
 
-    return json.dumps(playlist)
+    return json.dumps(playlist, indent=4)

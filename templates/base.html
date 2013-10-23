@@ -157,11 +157,11 @@
       document.cookie = "radio_current_time=" + radio.currentTime + "; path=/";
     }
 
-    setTimeout('cron();', 1000);
+    setTimeout('cron();', 500);
   }
 </script>
 
-<audio id="radio" preload="metadata" style="position: absolute; z-index: -1000;"></audio>
+<audio id="radio" data-id="0" preload="metadata" style="position: absolute; z-index: -1000;"></audio>
 
 </body>
 </html>
