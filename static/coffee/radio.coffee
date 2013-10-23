@@ -4,10 +4,12 @@ play_pause = () ->
     find_track radio
     radio.play()
     set_cookie 'radio_pause', 0
+    $('#radio-img').attr 'src', '/static/img/radio_play.png'
   else
     radio.pause()
     set_cookie 'radio_pause', 1
     set_cookie 'radio_current_time', radio.currentTime
+    $('#radio-img').attr 'src', '/static/img/radio.png'
   false
 
 find_track = (radio) ->
@@ -89,4 +91,5 @@ $(document).ready () ->
   if state == "0"
     find_track radio
     radio.play()
+    $('#radio-img').attr 'src', '/static/img/radio_play.png'
   cron()

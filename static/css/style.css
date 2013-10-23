@@ -533,3 +533,15 @@ a,
     display: inline;
     margin-left: 70px;
 }
+
+.hover-radio-img {
+  opacity: 0;
+}
+
+.hover-radio-img:hover {
+  opacity: 1;
+}
+
+.radio-button {
+  margin: -5px 2px 0 0;
+}

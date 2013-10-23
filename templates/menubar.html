@@ -51,7 +51,12 @@ $(document).ready(function() {
         {% endif %}
         <li><a class="email animate-link" href="mailto:{{ admin.1 }}" title="Написать письмо {{ admin.0 }}"><img src="{{ static_prefix }}img/email_hover.png" alt="Написать {{ admin.0 }}" /><img class="hover-img transition" src="{{ static_prefix }}img/email.png" alt="Написать {{ admin.0 }}" /></a></li>
         <li><div id="digital_watch" class="animate-link transition">00:00</div></li>
-        <li><a href="#" id="play_pause" class="animate-link">RADIO</a></li>
+        <li>
+          <a href="#" id="play_pause" class="email animate-link radio-button" title="Play radio Anny">
+            <img src="{{ static_prefix }}img/radio.png" alt="Play radio Anny" id='radio-img' />
+            <img class="hover-radio-img transition" src="{{ static_prefix }}img/radio_hover.png" alt="Play radio Anny" />
+          </a>
+        </li>
       </ul>
       </span>
       <div class="soul transition">
