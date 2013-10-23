@@ -86,7 +86,7 @@ next_track = (e) ->
   for track in PLAYLIST
     if current_track == track.id
       next_track = _i + 1
-  if next_track >= max
+  if next_track > max
     next_track = 0
   track = PLAYLIST[next_track]
   set_track track, this
