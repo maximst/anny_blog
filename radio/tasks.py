@@ -3,7 +3,7 @@ from BeautifulSoup import BeautifulSoup
 import os
 import sys
 import vkontakte
-from os import system
+import commands
 from datetime import datetime
 
 add_path = '/'.join(os.path.split(os.path.abspath(__file__))[0].split('/')[:-1])
@@ -61,21 +61,27 @@ def add_song(song):
     ogg_file = os.path.join(Audio.file_dir(), 'tmp',
                             '%s.ogg' % song['aid'].__str__())
 
-    convert = True
-    while convert:
-        result = os.popen('ffmpeg -y -i %s -acodec libvorbis -ar 44100 -aq 2.3 %s' \
-                                                % (mp3_file, ogg_file)).read()
+    converted = False
+    takes = 10
+    take = 0
+
+    while not converted and take < takes:
+        command = 'ffmpeg -y -i %s -acodec libvorbis -ar 44100 -aq 2.3 %s' \
+                                                % (mp3_file, ogg_file)
+        print '[%s] INFO: Convert "%s"' % (datetime.utcnow(), command)
+        result = commands.getoutput(command)
+
         try:
-          fd_ogg = open(ogg_file)
-          fd_mp3 = open(mp3_file)
+            fd_ogg = open(ogg_file)
+            fd_mp3 = open(mp3_file)
         except IOError as e:
-          print result
-          print e
-          print 'MP3: ', mp3_file
-          print 'OGG: ', ogg_file
-          convert = True
+            print '[%s] ERROR: Exception "%s"\n Command"%s\n%s"' % (datetime.utcnow(),
+                                                                    e, command,
+                                                                    result)
         else:
-          convert = False
+            converted = True
+
+        take += 1
 
     song.pop('owner_id', None)
     song.pop('url', None)
@@ -101,10 +107,11 @@ def get_audio():
 
     for audio in vk_audio:
         if audio['aid'] not in db_aids:
-            print '[%s] INFO: Create audio instance %s-%s ...' % (datetime.utcnow(),
+            print '[%s] INFO: Create audio instance %s - %s ...' % (datetime.utcnow(),
                                                                 audio['artist'],
                                                                 audio['title'])
             add_song(audio)
+            print '[%s] INFO: Done ...' % datetime.utcnow()
 
     # Delete removed vk songs
     [a.delete() for a in db_audio if a.aid not in vk_aids]
