@@ -60,11 +60,19 @@ def add_song(song):
 
     ogg_file = os.path.join(Audio.file_dir(), 'tmp',
                             '%s.ogg' % song['aid'].__str__())
-    system('ffmpeg -y -i %s -acodec libvorbis -ar 44100 -aq 2.3 %s' \
-                                                % (mp3_file, ogg_file))
 
-    fd_ogg = open(ogg_file)
-    fd_mp3 = open(mp3_file)
+    conwert = True
+    while convert:
+        system('ffmpeg -y -i %s -acodec libvorbis -ar 44100 -aq 2.3 %s' \
+                                                % (mp3_file, ogg_file))
+        try:
+          fd_ogg = open(ogg_file)
+          fd_mp3 = open(mp3_file)
+        except IOError:
+          convert = True
+        else:
+          convert = False
+
     song.pop('owner_id', None)
     song.pop('url', None)
 
