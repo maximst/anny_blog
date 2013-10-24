@@ -55,6 +55,7 @@ def add_song(song):
 
     fd_mp3 = open(mp3_file, 'w+')
     result = requests.get(song['url'])
+    print 'result: ', sys.getsizeof(result)
     fd_mp3.write(result.content)
     fd_mp3.close()
 
@@ -96,6 +97,9 @@ def add_song(song):
 
     os.remove(mp3_file)
     os.remove(ogg_file)
+    print 'result: ', sys.getsizeof(result)
+    print 'mp3: ', sys.getsizeof(fd_mp3)
+    print 'ogg: ', sys.getsizeof(fd_ogg)
 
 def get_audio():
     token = vk_login()
