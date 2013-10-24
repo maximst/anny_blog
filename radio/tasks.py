@@ -63,12 +63,16 @@ def add_song(song):
 
     convert = True
     while convert:
-        system('ffmpeg -y -i %s -acodec libvorbis -ar 44100 -aq 2.3 %s' \
-                                                % (mp3_file, ogg_file))
+        result = os.popen('ffmpeg -y -i %s -acodec libvorbis -ar 44100 -aq 2.3 %s' \
+                                                % (mp3_file, ogg_file)).read()
         try:
           fd_ogg = open(ogg_file)
           fd_mp3 = open(mp3_file)
-        except IOError:
+        except IOError as e:
+          print result
+          print e
+          print 'MP3: ', mp3_file
+          print 'OGG: ', ogg_file
           convert = True
         else:
           convert = False
