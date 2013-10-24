@@ -74,7 +74,7 @@ def add_song(song):
         try:
             fd_ogg = open(ogg_file)
             fd_mp3 = open(mp3_file)
-        except IOError as e:
+        except Exception as e:
             print '[%s] ERROR: Exception "%s"\n Command"%s\n%s"' % (datetime.utcnow(),
                                                                     e, command,
                                                                     result)
