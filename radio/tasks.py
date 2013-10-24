@@ -1,4 +1,5 @@
 import requests
+import urllib2
 from BeautifulSoup import BeautifulSoup
 import os
 import sys
@@ -54,10 +55,11 @@ def add_song(song):
     mp3_file = os.path.join(Audio.file_dir(), 'tmp', '%i.mp3' % song['aid'])
 
     fd_mp3 = open(mp3_file, 'w+')
-    result = requests.get(song['url'])
-    print 'result: ', sys.getsizeof(result)
-    fd_mp3.write(result.content)
+    result = urllib2.urlopen(song['url'])
+    fd_mp3.write(result.read())
     fd_mp3.close()
+    result = None
+    del result
 
     ogg_file = os.path.join(Audio.file_dir(), 'tmp',
                             '%s.ogg' % song['aid'].__str__())
@@ -97,9 +99,6 @@ def add_song(song):
 
     os.remove(mp3_file)
     os.remove(ogg_file)
-    print 'result: ', sys.getsizeof(result)
-    print 'mp3: ', sys.getsizeof(fd_mp3)
-    print 'ogg: ', sys.getsizeof(fd_ogg)
 
 def get_audio():
     token = vk_login()
