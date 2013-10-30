@@ -32,8 +32,8 @@ find_track = (radio) ->
           if current_time
             try
               radio.currentTime = current_time
-            catch
-              return null
+            catch error
+              console.log error
           return null
 
   #track = get_random_track()
