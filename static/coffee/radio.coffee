@@ -107,6 +107,7 @@ $('#radio').ready () ->
     current_time = get_cookie 'radio_current_time'
 
     setTimeout (->
+      radio = document.getElementById 'radio'
       now_current_time = get_cookie 'radio_current_time'
       diff = (now_current_time * 1.0) - (current_time * 1.0)
 
