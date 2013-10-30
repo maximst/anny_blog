@@ -29,7 +29,7 @@ find_track = (radio) ->
         if track.id == _id
           set_track track, radio
           if current_time
-            document.getElementById('radio').currentTime = current_time
+            setTimeout "document.getElementById('radio').currentTime = #{current_time};", 200
           return null
 
   #track = get_random_track()
