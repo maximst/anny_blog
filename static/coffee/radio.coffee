@@ -110,5 +110,5 @@ $('#radio').ready () ->
         find_track radio
         radio.play()
         $('#radio-img').attr 'src', '/static/img/radio_play.png'
+        cron()
     ), 600
-  cron()
