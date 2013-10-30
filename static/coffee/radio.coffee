@@ -17,12 +17,12 @@ find_track = (radio) ->
     if radio.currentTime
       return null
     else
-      [current_time, id] = get_from_coocies()
+      [current_time, id] = get_from_cookies()
       if current_time
         radio.currentTime = current_time
       return null
   else
-    [current_time, id] = get_from_coocies()
+    [current_time, id] = get_from_cookies()
     if id
       _id = id * 1
       for track in PLAYLIST
@@ -68,7 +68,7 @@ set_cookie = (name, value) ->
   document.cookie = name+"="+value+"; path=/"
 
 
-get_from_coocies = () ->
+get_from_cookies = () ->
   data = [null, null]
   id = get_cookie 'radio_track_id'
   current_time = get_cookie 'radio_current_time'
@@ -94,12 +94,21 @@ next_track = (e) ->
 
 $(document).on 'click', '#play_pause', play_pause
 
-$(document).ready () ->
+$('#radio').ready () ->
   radio = document.getElementById 'radio'
   radio.addEventListener 'ended', next_track
   state = get_cookie 'radio_pause'
+
   if state == "0"
-    find_track radio
-    radio.play()
-    $('#radio-img').attr 'src', '/static/img/radio_play.png'
+    current_time = get_cookie 'radio_current_time'
+
+    setTimeout (->
+      now_current_time = get_cookie 'radio_current_time'
+      diff = (now_current_time * 1.0) - (current_time * 1.0)
+
+      if not diff
+        find_track radio
+        radio.play()
+        $('#radio-img').attr 'src', '/static/img/radio_play.png'
+    ), 1000
   cron()
