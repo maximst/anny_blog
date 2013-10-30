@@ -115,8 +115,7 @@ $('#radio').ready () ->
           find_track radio
           current_time = get_cookie 'radio_current_time'
           console.log current_time
-          setTimeout "document.getElementById('radio').currentTime = #{current_time};", 50
-          setTimeout "document.getElementById('radio').play();", 100
+          setTimeout "document.getElementById('radio').currentTime = #{current_time}; document.getElementById('radio').play();", 50
         catch error
           console.log error
         $('#radio-img').attr 'src', '/static/img/radio_play.png'
