@@ -34,7 +34,7 @@ find_track = (radio) ->
               radio.currentTime = current_time
             catch error
               console.log error
-              set_time()
+              document.addEventListener 'DOMContentLoaded', set_time
           return null
 
   #track = get_random_track()
@@ -42,6 +42,7 @@ find_track = (radio) ->
   set_track track, radio
 
 set_time = () ->
+  console.log 11111111
   current_time = get_cookie 'radio_current_time'
   radio = document.getElementById 'radio'
   radio.currentTime = current_time
