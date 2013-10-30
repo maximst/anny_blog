@@ -29,7 +29,7 @@ find_track = (radio) ->
         if track.id == _id
           set_track track, radio
           if current_time
-            setTimeout "document.getElementById('radio').currentTime = #{current_time};", 200
+            setTimeout "document.getElementById('radio').currentTime = #{current_time};", 100
           return null
 
   #track = get_random_track()
@@ -108,6 +108,8 @@ $('#radio').ready () ->
 
       if not diff
         find_track radio
+        current_time = get_cookie 'radio_current_time'
+        radio.currentTime = current_time
         radio.play()
         $('#radio-img').attr 'src', '/static/img/radio_play.png'
         cron()
