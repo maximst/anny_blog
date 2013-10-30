@@ -107,7 +107,6 @@ $('#radio').ready () ->
     current_time = get_cookie 'radio_current_time'
 
     setTimeout (->
-      radio = document.getElementById 'radio'
       now_current_time = get_cookie 'radio_current_time'
       diff = (now_current_time * 1.0) - (current_time * 1.0)
 
@@ -115,7 +114,7 @@ $('#radio').ready () ->
         try
           find_track radio
           current_time = get_cookie 'radio_current_time'
-          radio.currentTime = current_time
+          setTimeout (-> document.getElementById('radio').currentTime = current_time), 10
           console.log radio.currentTime
           radio.play()
         catch error
