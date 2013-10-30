@@ -28,8 +28,8 @@ find_track = (radio) ->
       for track in PLAYLIST
         if track.id == _id
           set_track track, radio
-          if current_time
-            document.getElementById('radio').currentTime = current_time
+          if current_time and radio
+            radio.currentTime = current_time
           return null
 
   #track = get_random_track()
@@ -108,8 +108,9 @@ $('#radio').ready () ->
 
       if not diff
         find_track radio
-        current_time = get_cookie 'radio_current_time'
-        radio.currentTime = current_time
+        console.log get_cookie 'radio_current_time'
+        radio.currentTime = get_cookie 'radio_current_time'
+        console.log radio.currentTime
         radio.play()
         $('#radio-img').attr 'src', '/static/img/radio_play.png'
         cron()
