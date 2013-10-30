@@ -107,6 +107,7 @@ $('#radio').ready () ->
       diff = (now_current_time * 1.0) - (current_time * 1.0)
 
       if not diff
+        console.log radio
         find_track radio
         console.log get_cookie 'radio_current_time'
         radio.currentTime = get_cookie 'radio_current_time'
