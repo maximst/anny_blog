@@ -28,7 +28,10 @@ find_track = (radio) ->
       for track in PLAYLIST
         if track.id == _id
           set_track track, radio
+          console.log 1
+          console.log radio
           if current_time and radio
+            console.log 2
             radio.currentTime = current_time
           return null
 
