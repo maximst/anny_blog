@@ -34,12 +34,17 @@ find_track = (radio) ->
               radio.currentTime = current_time
             catch error
               console.log error
+              set_time()
           return null
 
   #track = get_random_track()
   track = PLAYLIST[0]
   set_track track, radio
 
+set_time = () ->
+  current_time = get_cookie 'radio_current_time'
+  radio = document.getElementById 'radio'
+  radio.currentTime = current_time
 
 get_random_track = () ->
   max = PLAYLIST.length - 1
@@ -111,14 +116,8 @@ $('#radio').ready () ->
       diff = (now_current_time * 1.0) - (current_time * 1.0)
 
       if not diff
-        try
-          find_track radio
-          current_time = get_cookie 'radio_current_time'
-          console.log current_time
-          command = "document.getElementById('radio').currentTime = #{current_time}; document.getElementById('radio').play();"
-          setTimeout command, 110
-        catch error
-          console.log error
+        find_track radio
+        radio.play()
         $('#radio-img').attr 'src', '/static/img/radio_play.png'
         cron()
     ), 550
