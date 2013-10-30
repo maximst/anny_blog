@@ -29,11 +29,11 @@ find_track = (radio) ->
         if track.id == _id
           set_track track, radio
 
-          if current_time and radio
-            $(document).ready () ->
-              console.log 1
+          if current_time
+            try
               radio.currentTime = current_time
-              console.log 2
+            catch
+              return null
           return null
 
   #track = get_random_track()
