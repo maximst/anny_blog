@@ -49,7 +49,7 @@
   function cron() {
     radio = document.getElementById('radio');
 
-    if (!radio.paused) {
+    if (radio.currentTime) {
       document.cookie = "radio_current_time=" + radio.currentTime + "; path=/";
     }
 
