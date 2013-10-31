@@ -113,10 +113,7 @@ $('#radio').ready () ->
 
       if not diff
         find_track radio
-        radio.addEventListener 'canplay', ->
-          this.currentTime = get_cookie 'radio_current_time'
-          this.play()
-          this.removeEventListener 'canplay', arguments.callee, false
         $('#radio-img').attr 'src', '/static/img/radio_play.png'
+        radio.play()
     ), 600
   cron()
