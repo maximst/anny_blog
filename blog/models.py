@@ -75,8 +75,8 @@ class Blog(models.Model):
         elif 'vimeo' in url.netloc:
             digits = map(str, range(10))
             video_id = ''.join(filter(lambda i: i in digits, list(url.path)))
-            return ('<iframe src="%s://player.vimeo.com/video/%s" '
-                    'width="400" height="300" frameborder="0" '
+            return ('<iframe src="%s://player.vimeo.com/video/%s?wmode=transparent" '
+                    'width="400" height="300" frameborder="0" wmode="Opaque" '
                     'webkitAllowFullScreen mozallowfullscreen '
                     'allowFullScreen></iframe>') % (url.scheme, video_id)
 
