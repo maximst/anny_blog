@@ -116,7 +116,7 @@ $('#radio').ready () ->
         radio.addEventListener 'canplay', ->
           this.currentTime = get_cookie 'radio_current_time'
           this.play()
-          cron()
           this.removeEventListener 'canplay', arguments.callee, false
         $('#radio-img').attr 'src', '/static/img/radio_play.png'
     ), 600
+  cron()
