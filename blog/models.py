@@ -67,7 +67,8 @@ class Blog(models.Model):
         if 'youtube' in url.netloc:
             query = parse_qs(url.query)
             return ('<iframe width="400" height="300" '
-                    'src="%s://%s/embed/%s?feature=player_detailpage" '
+                    'src="%s://%s/embed/%s'
+                    '?feature=player_detailpage&wmode=transparent" '
                     'frameborder="0" '
                     'allowfullscreen></iframe>') % (url.scheme, url.netloc,
                                                               query['v'][0])
