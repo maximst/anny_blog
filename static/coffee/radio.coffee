@@ -32,10 +32,18 @@ find_track = (radio) ->
           if current_time
             try
               radio.currentTime = current_time
+              radio.volume = 1
             catch error
-              radio.addEventListener 'canplay', ->
-                this.currentTime = get_cookie 'radio_current_time'
-                this.removeEventListener 'canplay', arguments.callee, false
+              setTimeout (->
+                try
+                  radio.currentTime = get_cookie 'radio_current_time'
+                  radio.volume = 1
+                catch error
+                  radio.addEventListener 'canplay', ->
+                    this.currentTime = get_cookie 'radio_current_time'
+                    this.volume = 1
+                    this.removeEventListener 'canplay', arguments.callee, false
+              ), 100
           return null
 
   #track = get_random_track()
@@ -113,6 +121,7 @@ $('#radio').ready () ->
 
       if not diff
         find_track radio
+        radio.volume = 0
         $('#radio-img').attr 'src', '/static/img/radio_play.png'
         radio.play()
     ), 600
