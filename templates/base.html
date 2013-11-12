@@ -20,10 +20,12 @@
     <meta name='yandex-verification' content='7ac77779f12b7717' />
     <link rel="author" title="Maxim Starodubcev" href="mailto: (author) maxim@trambroid.com">
 
+    {% compress js inline %}
     <script type="text/javascript" src="{{ static_prefix }}js/jquery.js"></script>
     <script type="text/javascript" src="{{ static_prefix }}js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{ static_prefix }}js/jquery.prettyPhoto.js"></script>
     <script type="text/javascript" src="{{ static_prefix }}js/jquery-ui.js"></script>
+    {% endcompress %}
     {% compress js inline %}
     <script type="text/coffeescript" src="{{ static_prefix }}coffee/ajax.coffee"></script>
     <script type="text/coffeescript" src="{{ static_prefix }}coffee/navigation.coffee"></script>
@@ -40,7 +42,9 @@
     <link rel="stylesheet" href="{{ static_prefix }}css/bootstrap-responsive.min.css" type="text/css"/>
     <link rel="stylesheet" href="{{ static_prefix }}css/prettyPhoto.css" type="text/css"/>
     {% endcompress %}
+    {% compress css inline %}
     <link rel="stylesheet" href="{{ static_prefix }}css/style.css" type="text/css"/>
+    {% endcompress %}
 </head>
 
 <body>
