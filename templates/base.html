@@ -7,6 +7,7 @@
 {% load coretags %}
 {% load radiotags %}
 {% load coffeescript %}
+{% load compress %}
 {% get_static_prefix as static_prefix %}
 
 <head>
@@ -18,25 +19,31 @@
     {% meta "image" %}
     <meta name='yandex-verification' content='7ac77779f12b7717' />
     <link rel="author" title="Maxim Starodubcev" href="mailto: (author) maxim@trambroid.com">
-    <script type="text/javascript" src="{{ static_prefix }}js/bootstrap.min.js"></script>
+
+    {% compress js inline %}
     <script type="text/javascript" src="{{ static_prefix }}js/jquery.js"></script>
-    <script type="text/javascript" src="{{ static_prefix }}js/jquery-ui.js"></script>
+    {% endcompress %}
+
+    {% compress js %}
+    <script type="text/javascript" src="{{ static_prefix }}js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{ static_prefix }}js/jquery.prettyPhoto.js"></script>
-<!--    <script type="text/javascript" src="{% get_static_prefix %}js/ajax.js"></script>-->
-    <script type="text/javascript" src="{{ static_prefix }}{% coffeescript 'coffee/ajax.coffee' %}"></script>
-    <script type="text/javascript" src="{{ static_prefix }}{% coffeescript 'coffee/navigation.coffee' %}"></script>
-    <script type="text/javascript" src="{{ static_prefix }}{% coffeescript 'coffee/radio.coffee' %}"></script>
-<!--    <script type="text/javascript" src="{{ static_prefix }}{% coffeescript 'coffee/img.coffee' %}"></script>-->
+    <script type="text/javascript" src="{{ static_prefix }}js/jquery-ui.js"></script>
+    <script type="text/coffeescript" src="{{ static_prefix }}coffee/ajax.coffee"></script>
+    <script type="text/coffeescript" src="{{ static_prefix }}coffee/navigation.coffee"></script>
+    <script type="text/coffeescript" src="{{ static_prefix }}coffee/radio.coffee"></script>
+    {% endcompress %}
     <script type="text/javascript" src="//vk.com/js/api/openapi.js?97"></script>
     <script type="text/javascript" src="//vk.com/js/api/openapi.js?101"></script>
     <script type="text/javascript">
         VK.init({apiId: 3520788, onlyWidgets: true});
     </script>
+    {% compress css inline %}
     <link rel="stylesheet" href="{{ static_prefix }}css/bootstrap.min.css" type="text/css"/>
     <link rel="stylesheet" href="{{ static_prefix }}css/bootstrap-responsive.min.css" type="text/css"/>
     <link rel="stylesheet" href="{{ static_prefix }}css/prettyPhoto.css" type="text/css"/>
     <link rel="stylesheet" href="{{ static_prefix }}css/style.css" type="text/css"/>
     <link rel="stylesheet" href="{{ static_prefix }}css/jquery-ui.min.css" type="text/css"/>
+    {% endcompress %}
 </head>
 
 <body>

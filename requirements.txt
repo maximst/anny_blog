@@ -17,3 +17,4 @@ LinkExchange
 sape
 supercaptcha
 BeautifulSoup
+django_compressor

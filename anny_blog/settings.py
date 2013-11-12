@@ -91,6 +91,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -144,6 +145,7 @@ INSTALLED_APPS = (
     'linkexchange_django',
     'sape.django',
     'supercaptcha',
+    'compressor',
 
     'blog',
     'tag',
@@ -246,6 +248,10 @@ LINKEXCHANGE_CONFIG = autopath('anny_blog', 'linkexchange.cfg')
 SAPE_DATABASE = autopath('sape')
 SAPE_USER = '1ace11f022c3a648b3cc382788c589cd'
 SAPE_HOST = HOSTNAME
+
+COMPRESS_PRECOMPILERS = (
+    ('text/coffeescript', 'coffee --compile --stdio'),
+)
 
 THUMBNAIL_QUALITY = 80
 
