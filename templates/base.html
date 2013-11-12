@@ -22,6 +22,8 @@
 
     {% compress js inline %}
     <script type="text/javascript" src="{{ static_prefix }}js/jquery.js"></script>
+    {% endcompress %}
+    {% compress js inline %}
     <script type="text/javascript" src="{{ static_prefix }}js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{ static_prefix }}js/jquery.prettyPhoto.js"></script>
     <script type="text/javascript" src="{{ static_prefix }}js/jquery-ui.js"></script>
