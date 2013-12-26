@@ -9,6 +9,8 @@ from blog.models import Blog
 
 from voting.models import Vote
 
+import urllib2
+
 register = template.Library()
 
 @register.filter
@@ -126,3 +128,14 @@ def meta(context, t, *args):
 @register.simple_tag
 def get_settings():
     return settings
+
+@register.simple_tag(takes_context=True)
+def setlinks(context):
+    request = context['request']
+    url = 'http://%s%s' % (request.META['HTTP_HOST'], request.META['PATH_INFO'])
+    setlinks_url = 'http://show.setlinks.ru/page.php?host=follow-chic.com&start=1&count=20&p=6d6e10342d591fd102032427afb42eca&uri=%s' % url
+    result = urllib2.urlopen(setlinks_url)
+
+    if result.code == 200:
+        return result.read()
+    return None
