@@ -133,7 +133,12 @@ def get_settings():
 def setlinks(context):
     request = context['request']
     url = 'http://%s%s' % (request.META['HTTP_HOST'], request.META['PATH_INFO'])
-    setlinks_url = 'http://show.setlinks.ru/page.php?host=follow-chic.com&start=1&count=20&p=6d6e10342d591fd102032427afb42eca&uri=%s' % url
+    setlinks_url = ('http://show.setlinks.ru/page.php?'
+                    'host=follow-chic.com'
+                    '&start=1'
+                    '&count=20'
+                    '&p=6d6e10342d591fd102032427afb42eca'
+                    '&uri=%s') % url
     result = urllib2.urlopen(setlinks_url)
 
     if result.code == 200:
