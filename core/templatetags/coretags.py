@@ -132,13 +132,13 @@ def get_settings():
 @register.simple_tag(takes_context=True)
 def setlinks(context):
     request = context['request']
-    url = 'http://%s%s' % (request.META['HTTP_HOST'], request.META['PATH_INFO'])
+
     setlinks_url = ('http://show.setlinks.ru/page.php?'
                     'host=follow-chic.com'
                     '&start=1'
                     '&count=20'
                     '&p=6d6e10342d591fd102032427afb42eca'
-                    '&uri=%s') % url
+                    '&uri=%s') % request.META['PATH_INFO']
     result = urllib2.urlopen(setlinks_url)
 
     if result.code == 200:
