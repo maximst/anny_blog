@@ -6,6 +6,9 @@ $(document).ready () ->
 
 set_page = (page) ->
   PAGE = page
+
+  $('.preloader').show()
+
   $.get page, (data) ->
     if typeof data != 'object'
       window.location = PAGE
@@ -34,6 +37,7 @@ set_page = (page) ->
 
     FB.XFBML.parse()
     $('.fb-like span').css 'width', '105px'
+    $('.preloader').hide()
 
 $(document).ready () ->
   window.onpopstate = (event) ->
