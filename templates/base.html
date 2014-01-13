@@ -87,7 +87,8 @@
       </script>
       <br />
       {% load linkexchange_tags %}
-      {{ linkexchange_blocks.0|safe }}{{ linkexchange_blocks.1|safe }}
+      {{ linkexchange_blocks.0|safe }}
+      {% comment %}{{ linkexchange_blocks.1|safe }}{% endcomment %}
       <span style="font-size: 10px; padding: 0;">{% setlinks %}</span>
     </div>
     <div id="container">
