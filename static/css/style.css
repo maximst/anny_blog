@@ -578,6 +578,9 @@ a,
     margin:0 auto;
     -moz-animation:spin .5s infinite linear;
     -webkit-animation:spin .5s infinite linear;
+    -o-animation: spin .5s infinite linear;
+    -ms-animation: spin .5s infinite linear;
+    animation: spin .5s infinite linear;
 }
 .ball1 {
     background-color: rgba(0,0,0,0);
@@ -594,6 +597,9 @@ a,
     top:-50px;
     -moz-animation:spinoff .5s infinite linear;
     -webkit-animation:spinoff .5s infinite linear;
+    -o-animation:spinoff .5s infinite linear;
+    -ms-animation:spinoff .5s infinite linear;
+    animation:spinoff .5s infinite linear;
 }
 @-moz-keyframes spin {
     0% { -moz-transform:rotate(0deg); }
