@@ -56,7 +56,10 @@ a,
   url('../fonts/digital7-webfont.svg#digital-7_monomono') format('svg');
   font-weight: normal;
   font-style: normal;
-  
+}
+
+.text-center {
+    text-align: center;
 }
 
 .text-left {
