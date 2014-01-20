@@ -138,8 +138,11 @@ def setlinks(context):
                     '&start=1'
                     '&count=20'
                     '&p=6d6e10342d591fd102032427afb42eca'
-                    '&uri=%s') % request.META['PATH_INFO']
-    result = urllib2.urlopen(setlinks_url)
+                    '&uri=%s') % request.META.get('PATH_INFO', '')
+    try:
+        result = urllib2.urlopen(setlinks_url)
+    except:
+        return None
 
     if result.code == 200:
         return result.read()
