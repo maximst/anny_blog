@@ -132,18 +132,22 @@ def get_settings():
 @register.simple_tag(takes_context=True)
 def setlinks(context):
     request = context['request']
+    url = request.META.get('PATH_INFO', '')
+    query_string = request.META.get('QUERY_STRING')
+    if query_string:
+        url += '?%s' % query_string
 
     setlinks_url = ('http://show.setlinks.ru/page.php?'
                     'host=follow-chic.com'
                     '&start=1'
                     '&count=20'
                     '&p=6d6e10342d591fd102032427afb42eca'
-                    '&uri=%s') % request.META.get('PATH_INFO', '')
+                    '&uri=%s') % url
     try:
         result = urllib2.urlopen(setlinks_url)
     except:
         return None
-
-    if result.code == 200:
-        return result.read()
+    else:
+        if result.code == 200:
+            return result.read()
     return None

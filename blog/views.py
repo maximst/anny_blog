@@ -55,7 +55,7 @@ def blog_detail(request, slug):
 
 @ajax_navigation
 def blog_list(request):
-    log_write(request)
+    #log_write(request)
     contents = Blog.objects.all().order_by('-create_time')
     if not contents:
         return render(request, 'blog/blog_list.html', {'content': contents})
