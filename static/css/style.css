@@ -4,6 +4,10 @@ body {
     /*cursor: url("../img/cursor.cur"), default;*/
 }
 
+a:focus {
+    outline: none;
+}
+
 a:hover,
 #digital_watch:hover,
 .transition:hover {
