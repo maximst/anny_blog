@@ -72,7 +72,7 @@ def vksearch(request):
 
     if not audio_list:
         return render(request, 'vksearch/vksearch.htm', context)
-    paginator = Paginator(audio_list, 50)
+    paginator = Paginator(audio_list, 25)
 
     page = request.GET.get('p')
     try:
