@@ -8,6 +8,7 @@ from blog.views import blog_list, blog_detail, tags
 from core.views import vote, logout, registration, registration_thanks, laminat
 from tag.views import tags_autocomplite
 from user_profile.views import profile
+from vksearch.views import vksearch
 
 from sitemap import (BlogSitemap, CommentSitemap, BlogImageSitemap,
                                                   ArticleTagSitemap)
@@ -47,6 +48,7 @@ urlpatterns = patterns('',
     #url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
     #{'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
     url(r'^laminat/$', laminat, name='laminat'),
+    url(r'^vksearch/$', vksearch, name='vksearch')
 )
 
 if settings.DEBUG:

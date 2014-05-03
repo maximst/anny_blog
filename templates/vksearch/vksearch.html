@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+{% if show_login %}
+    <h4>Please log in</h4>
+    <a href="{% url "socialauth_begin" "vk-oauth" %}?{{ redirect_querystring }}"
+        class="vkontakte"
+        title="Login via vkontakte">
+        <img src="{{ static_prefix }}img/vkontakte.png" alt="VK" border="0" width="22" height="22" />
+        Login
+    </a>
+{% else %}
+    <form method="GET" action="">
+        {{ form.query }}
+        <input type="submit" value="Поиск" class="btn"></input>
+    </form>
+{% endif %}
+
+{% if content %}
+    {% include "paginator.html" %}
+    <ul>
+        {% for audio in content %}
+            {% if forloop.counter == 1 and audio.is_self %}
+                <h5>Мои аудиозаписи</h5>
+            {% endif %}
+            {% if audio.breakline %}
+                <h5>Аудиозаписи других пользователей</h5>
+            {% endif %}
+            <li>
+            {{ audio.breakline }}
+                <a href="{{ audio.url }}">{{ audio.artist }} - {{ audio.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}
+
+ 

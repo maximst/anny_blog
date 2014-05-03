@@ -241,7 +241,7 @@ FACEBOOK_EXTENDED_PERMISSIONS = ['user_birthday']
 
 VK_APP_ID = '3222058'
 VK_API_SECRET = '40uiMRels7fjeAQgypOg'
-#VK_EXTRA_SCOPE = ['photos', ]
+VK_EXTRA_SCOPE = ['audio', ]#'photos']
 
 COFFEESCRIPT_ROOT = autopath('static')
 LINKEXCHANGE_CONFIG = autopath('anny_blog', 'linkexchange.cfg')
