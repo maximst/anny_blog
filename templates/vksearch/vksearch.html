@@ -30,7 +30,7 @@
             {% endif %}
             <li>
                 <a href="{{ audio.url }}">{{ audio.artist }} - {{ audio.title }}</a>
-                <audio src="{{ audio.url }}" controls preload="none">
+                <audio src="{{ audio.url }}" controls preload="metadata">
             </li>
         {% endfor %}
     </ul>
