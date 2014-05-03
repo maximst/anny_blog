@@ -29,7 +29,7 @@
                 <h5>Аудиозаписи других пользователей</h5>
             {% endif %}
             <li>
-                <audio src="{{ audio.url }}" controls preload="metadata" />
+                <audio src="{{ audio.url }}" controls preload="metadata"></audio>
                 <a href="{{ audio.url }}">{{ audio.artist }} - {{ audio.title }}</a>
             </li>
         {% endfor %}
