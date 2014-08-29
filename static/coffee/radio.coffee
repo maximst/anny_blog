@@ -1,5 +1,6 @@
 class Radio
   init: ->
+    @playList = window.PLAYLIST
     @initRadioPlayer()
     state = @getCookie('radio_pause')
 
@@ -52,7 +53,7 @@ class Radio
       cookies = @getFromCookies()
       if cookies.trackId
         _id = cookies.trackId * 1
-        for track in PLAYLIST
+        for track in @playList
           if track.id == _id
             @setTrack(track)
 
@@ -66,13 +67,13 @@ class Radio
             return null
 
     #track = @getRandomTrack()
-    track = PLAYLIST[0]
+    track = @playList[0]
     @setTrack(track)
 
   getRandomTrack: ->
-    max = PLAYLIST.length - 1
+    max = @playList.length - 1
     numTrack = Math.floor(Math.random() * (max - 0 + 1)) + 0
-    track = PLAYLIST[numTrack]
+    track = @playList[numTrack]
     return track
 
   setTrack: (track) ->
@@ -117,14 +118,14 @@ class Radio
 
   nextTrack: (e) =>
     #track = @getRandomTrack()
-    max = PLAYLIST.length - 1
+    max = @playList.length - 1
     current_track = @radio.dataset.id * 1
-    for track in PLAYLIST
+    for track in @playList
       if current_track == track.id
         next_track = _i + 1
     if next_track > max
       next_track = 0
-    track = PLAYLIST[next_track]
+    track = @playList[next_track]
     @setTrack(track)
     @radio.play()
 
