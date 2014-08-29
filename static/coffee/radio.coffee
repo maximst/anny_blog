@@ -1,122 +1,133 @@
-play_pause = () ->
-  radio = document.getElementById 'radio'
-  if radio.paused
-    find_track radio
-    radio.play()
-    set_cookie 'radio_pause', 0
-    $('#radio-img').attr 'src', '/static/img/radio_play.png'
-  else
-    radio.pause()
-    set_cookie 'radio_pause', 1
-    set_cookie 'radio_current_time', radio.currentTime
-    $('#radio-img').attr 'src', '/static/img/radio.png'
-  false
+class Radio
+  init: ->
+    @initRadioPlayer()
+    state = @getCookie('radio_pause')
 
-find_track = (radio) ->
-  if radio.src
-    if radio.currentTime
-      return null
+    if state == "0"
+      current_time = @getCookie('radio_current_time')
+
+      setTimeout (=>
+        now_current_time = @getCookie('radio_current_time')
+        diff = (now_current_time * 1.0) - (current_time * 1.0)
+
+        if not diff
+          @findTrack()
+          @radio.addEventListener 'canplay', =>
+            @radio.currentTime = @getCookie('radio_current_time')
+            @radio.play()
+            @radio.removeEventListener 'canplay', arguments.callee, false
+          @radioImg.setAttribute('src', '/static/img/radio_play.png')
+      ), 600
+    cron()
+    document.getElementById('play_pause').addEventListener('click', @playPause)
+
+  initRadioPlayer: ->
+    @radio = document.getElementById('radio')
+    @radioImg = document.getElementById('radio-img')
+    @radio.addEventListener('ended', @nextTrack)
+
+  playPause: =>
+    if @radio.paused
+      @findTrack()
+      @radio.play()
+      @setCookie('radio_pause', 0)
+      @radioImg.setAttribute('src', '/static/img/radio_play.png')
     else
-      [current_time, id] = get_from_cookies()
-      if current_time
-        radio.currentTime = current_time
-      return null
-  else
-    [current_time, id] = get_from_cookies()
-    if id
-      _id = id * 1
-      for track in PLAYLIST
-        if track.id == _id
-          set_track track, radio
+      @radio.pause()
+      @setCookie('radio_pause', 1)
+      @setCookie('radio_current_time', @radio.currentTime)
+      @radioImg.setAttribute('src', '/static/img/radio.png')
+    false
 
-          if current_time
-            try
-              radio.currentTime = current_time
-            catch error
-              radio.addEventListener 'canplay', ->
-                this.currentTime = get_cookie 'radio_current_time'
-                this.removeEventListener 'canplay', arguments.callee, false
-          return null
+  findTrack: ->
+    if @radio.src
+      if @radio.currentTime
+        return null
+      else
+        cookies = @getFromCookies()
+        if cookies.currentTime
+          @radio.currentTime = cookies.currentTime
+        return null
+    else
+      cookies = @getFromCookies()
+      if cookies.trackId
+        _id = cookies.trackId * 1
+        for track in PLAYLIST
+          if track.id == _id
+            @setTrack(track)
 
-  #track = get_random_track()
-  track = PLAYLIST[0]
-  set_track track, radio
+            if cookies.currentTime
+              try
+                @radio.currentTime = cookies.currentTime
+              catch error
+                @radio.addEventListener 'canplay', =>
+                  @radio.currentTime = @getCookie('radio_current_time')
+                  @radio.removeEventListener 'canplay', arguments.callee, false
+            return null
 
-get_random_track = () ->
-  max = PLAYLIST.length - 1
-  num_track = Math.floor(Math.random() * (max - 0 + 1)) + 0
-  track = PLAYLIST[num_track]
-  return track
+    #track = @getRandomTrack()
+    track = PLAYLIST[0]
+    @setTrack(track)
 
-set_track = (track, radio) ->
-  if radio.canPlayType 'audio/ogg; codecs="vorbis"'
-    radio.src = track.ogg
-    if radio.duration == NaN
-      radio.src = track.mp3
-  else
-    radio.src = track.mp3
+  getRandomTrack: ->
+    max = PLAYLIST.length - 1
+    numTrack = Math.floor(Math.random() * (max - 0 + 1)) + 0
+    track = PLAYLIST[numTrack]
+    return track
 
-  set_cookie 'radio_track_id', track.id
-  #set_cookie 'radio_current_time', radio.currentTime
-  radio.dataset.id = track.id
+  setTrack: (track) ->
+    if @radio.canPlayType 'audio/ogg; codecs="vorbis"'
+      @radio.src = track.ogg
+      if @radio.duration == NaN
+        @radio.src = track.mp3
+    else
+      @radio.src = track.mp3
 
-  console.log "NOW PLAYING: \"#{track.full_title}\""
+    @setCookie('radio_track_id', track.id)
+    #@setCookie('radio_current_time', @radio.currentTime)
+    @radio.dataset.id = track.id
+    @initRadioPlayer()
 
-get_cookie = (name) ->
-  parts = document.cookie.split "#{name}="
-  if parts.length == 2
-    return parts.pop().split(";").shift()
+    console.log "NOW PLAYING: \"#{track.full_title}\""
 
-  null
+  getCookie: (name) ->
+    parts = document.cookie.split "#{name}="
+    if parts.length == 2
+      return parts.pop().split(";").shift()
 
-set_cookie = (name, value) ->
-  document.cookie = name+"="+value+"; path=/"
+    null
+
+  setCookie: (name, value) ->
+    document.cookie = name+"="+value+"; path=/"
 
 
-get_from_cookies = () ->
-  data = [null, null]
-  id = get_cookie 'radio_track_id'
-  current_time = get_cookie 'radio_current_time'
-  if current_time
-    data[0] = current_time
-  if id
-    data[1] = id
+  getFromCookies: ->
+    data =
+      currentTime: null
+      trackId: null
 
-  data
+    trackId = @getCookie('radio_track_id')
+    currentTime = @getCookie('radio_current_time')
+    if currentTime
+      data.currentTime = currentTime
+    if trackId
+      data.trackId = trackId
 
-next_track = (e) ->
-  #track = get_random_track()
-  max = PLAYLIST.length - 1
-  current_track = this.dataset.id * 1
-  for track in PLAYLIST
-    if current_track == track.id
-      next_track = _i + 1
-  if next_track > max
-    next_track = 0
-  track = PLAYLIST[next_track]
-  set_track track, this
-  this.play()
+    data
 
-$(document).on 'click', '#play_pause', play_pause
+  nextTrack: (e) =>
+    #track = @getRandomTrack()
+    max = PLAYLIST.length - 1
+    current_track = @radio.dataset.id * 1
+    for track in PLAYLIST
+      if current_track == track.id
+        next_track = _i + 1
+    if next_track > max
+      next_track = 0
+    track = PLAYLIST[next_track]
+    @setTrack(track)
+    @radio.play()
 
-$('#radio').ready () ->
-  radio = document.getElementById 'radio'
-  radio.addEventListener 'ended', next_track
-  state = get_cookie 'radio_pause'
-
-  if state == "0"
-    current_time = get_cookie 'radio_current_time'
-
-    setTimeout (->
-      now_current_time = get_cookie 'radio_current_time'
-      diff = (now_current_time * 1.0) - (current_time * 1.0)
-
-      if not diff
-        find_track radio
-        radio.addEventListener 'canplay', ->
-          this.currentTime = get_cookie 'radio_current_time'
-          this.play()
-          this.removeEventListener 'canplay', arguments.callee, false
-        $('#radio-img').attr 'src', '/static/img/radio_play.png'
-    ), 600
-  cron()
+window.radioApp = new Radio
+document.addEventListener 'DOMContentLoaded', () ->
+  window.radioApp.init()
