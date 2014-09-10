@@ -85,6 +85,18 @@ class Blog(models.Model):
             self.preview = self.body
         return super(Blog, self).save()
 
+    @property
+    def num_comments(self):
+        return self.comment_set.count()
+
+    @property
+    def images(self):
+        return self.blogimage_set.order_by('order', 'pk')
+
+    @property
+    def front_images(self):
+        return self.blogimage_set.filter(front_page=True).order_by('order', 'pk')
+
 
 class Comment(models.Model):
     title = models.CharField(max_length=64, blank=True, default='')
@@ -107,10 +119,3 @@ class BlogImage(models.Model):
     image = models.ImageField(upload_to='images')
     front_page = models.BooleanField(default=True)
     order = models.IntegerField(default=0, blank=True, choices=ORDER_CHOICES)
-
-
-Blog.num_comments = property(lambda b: Comment.objects.filter(blog=b).count())
-Blog.images = property(lambda b: BlogImage.objects.filter(blog=b)\
-                                              .order_by('order', 'pk'))
-Blog.front_images = property(lambda b: BlogImage.objects.filter(blog=b,
-                              front_page=True).order_by('order', 'pk'))

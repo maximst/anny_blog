@@ -18,3 +18,4 @@ sape
 supercaptcha
 BeautifulSoup
 django_compressor
+django-redis

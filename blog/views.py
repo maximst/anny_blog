@@ -2,6 +2,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.context_processors import csrf
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.decorators.cache import cache_page
+from django.conf import settings
 
 from models import Blog, Comment
 from forms import CommentForm
@@ -31,6 +33,7 @@ def log_write(request):
     log_row.save()
 
 @ajax_navigation
+@cache_page
 def blog_detail(request, slug):
     log_write(request)
     user = request.user
@@ -54,7 +57,9 @@ def blog_detail(request, slug):
 
 
 @ajax_navigation
+@cache_page
 def blog_list(request):
+    print 'NO CACHE'
     #log_write(request)
     contents = Blog.objects.all().order_by('-create_time')
     if not contents:
@@ -82,6 +87,7 @@ def blog_list(request):
 
 
 @ajax_navigation
+@cache_page
 def tags(request, tag=None):
     log_write(request)
     if tag:

@@ -259,6 +259,21 @@ AVATAR_SIZE = (100, 100)
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * (1024 * 1024)
 
+CACHE_TIMEOUT = 60 * 15
+
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.cache.RedisCache',
+        'LOCATION': '127.0.0.1:6379:1',
+        'TIMEOUT': CACHE_TIMEOUT,
+        'KEY_PREFIX': '',
+        "OPTIONS": {
+            "CLIENT_CLASS": "redis_cache.client.DefaultClient",
+        }
+    },
+}
+
+
 try:
     from local_settings import *
 except ImportError:
