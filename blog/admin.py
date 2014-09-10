@@ -1,5 +1,20 @@
 from django.contrib import admin
 from models import Blog, Comment, BlogImage
+from django.core.cache import cache
+
+
+class BaseModelAdmin(admin.ModelAdmin):
+    def save_model(self, *args, **kwargs):
+        cache.clear()
+        return super(BaseModelAdmin, self).save_model(*args, **kwargs)
+
+    def save_related(self, *args, **kwargs):
+        cache.clear()
+        return super(BaseModelAdmin, self).save_related(*args, **kwargs)
+
+    def delete_model(self, *args, **kwargs):
+        cache.clear()
+        return super(BaseModelAdmin, self).delete_model(*args, **kwargs)
 
 
 class BlogImageInline(admin.TabularInline):
@@ -7,7 +22,7 @@ class BlogImageInline(admin.TabularInline):
   extra = 0
 
 
-class BlogAdmin(admin.ModelAdmin):
+class BlogAdmin(BaseModelAdmin):
     list_display = ('__unicode__', 'user', 'create_time', 'front_page',
                                                     'on_top', 'deleted')
     prepopulated_fields = {'slug': ('title',)}
@@ -27,7 +42,7 @@ class BlogAdmin(admin.ModelAdmin):
         }
 
 
-class CommentAdmin(admin.ModelAdmin):
+class CommentAdmin(BaseModelAdmin):
     list_display = ('__unicode__', 'create_time', 'ip')
 
 admin.site.register(Blog, BlogAdmin)
