@@ -33,7 +33,7 @@ def log_write(request):
     log_row.save()
 
 @ajax_navigation
-@cache_page
+@cache_page(settings.CACHE_TIMEOUT)
 def blog_detail(request, slug):
     log_write(request)
     user = request.user
@@ -57,9 +57,8 @@ def blog_detail(request, slug):
 
 
 @ajax_navigation
-@cache_page
+@cache_page(settings.CACHE_TIMEOUT)
 def blog_list(request):
-    print 'NO CACHE'
     #log_write(request)
     contents = Blog.objects.all().order_by('-create_time')
     if not contents:
@@ -87,7 +86,7 @@ def blog_list(request):
 
 
 @ajax_navigation
-@cache_page
+@cache_page(settings.CACHE_TIMEOUT)
 def tags(request, tag=None):
     log_write(request)
     if tag:
