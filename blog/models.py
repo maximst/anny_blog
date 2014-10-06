@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from tag.models import ArticleTaggedItem, TaggableManagerN
+from poll.models import Poll
 
 from urlparse import urlparse, parse_qs
 
@@ -36,6 +37,7 @@ class Blog(models.Model):
     image_rows = models.PositiveIntegerField(max_length=2, default=1,
                                choices=IMAGE_ROWS_CHOICES)
     video = models.URLField(default='', blank=True)
+    poll = models.ForeignKey(Poll, blank=True, null=True)
 
     def __unicode__(self):
         return u'%s' % self.title
