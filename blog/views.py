@@ -11,6 +11,8 @@ from forms import CommentForm
 from tag.models import ArticleTag
 from core.models import Log
 from core.decorators import ajax_navigation
+from poll.forms import PollVoiceForm
+
 
 def log_write(request):
     user_agent = request.META.get('HTTP_USER_AGENT')
@@ -32,16 +34,27 @@ def log_write(request):
 
     log_row.save()
 
+
 @ajax_navigation
 @cache_page(settings.CACHE_TIMEOUT)
+
 def blog_detail(request, slug):
     log_write(request)
     user = request.user
 
     content = get_object_or_404(Blog, slug=slug)
     comments = Comment.objects.filter(blog=content)
-    contents = {'content': content, 'comments': comments}
-    contents.update(csrf(request))
+    context = {'content': content, 'comments': comments}
+    context.update(csrf(request))
+
+    if content.poll:
+        context['poll'] = content.poll
+        if content.poll.voices.filter(user=user,
+            pollchoice__poll=content.poll).exists():
+            context['voices'] = content.poll.get_voices_dict(user)
+        else:
+            form = PollVoiceForm(poll=content.poll)
+            context['form'] = form
 
     if request.method == 'POST' and user.is_authenticated():
         comment_form = CommentForm(request.POST)
@@ -51,9 +64,9 @@ def blog_detail(request, slug):
             return redirect(request.META['HTTP_REFERER'])
     else:
         comment_form = CommentForm()
-    contents['comment_form'] = comment_form
+    context['comment_form'] = comment_form
 
-    return render(request, 'blog/blog_detail.html', contents)
+    return render(request, 'blog/blog_detail.html', context)
 
 
 @ajax_navigation

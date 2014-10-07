@@ -1,14 +1,15 @@
 from django import forms
-from models import PollChoice, PollVoice
+from models import PollVoice
 
 
 class PollVoiceForm(forms.ModelForm):
-    model = PollVoice
+    class Meta:
+        model = PollVoice
 
     def __init__(self, *args, **kwargs):
+        poll = kwargs.pop('poll', None)
         super(PollVoiceForm, self).__init__(*args, **kwargs)
-        poll_id = kwargs.get('poll_id')
-        if poll_id is not None:
-            self.fields['pollchoice'].queryset = PollChoice.objects\
-                                            .filter(poll_id=poll_id)
 
+        if poll is not None:
+            choices = poll.choices.values_list('id', 'choice')
+            self.fields['pollchoice'].widget = forms.RadioSelect(choices=choices)

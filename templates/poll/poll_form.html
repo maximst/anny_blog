@@ -1,0 +1,22 @@
+{% if poll %}
+<div class="poll">
+    <div>{{ poll.question }}</div>
+    <ul class="poll-variants">
+        {% if voices %}
+            {% for voice in voices %}
+                <li>
+                    <div class="poll-choice">
+                        {{ voice.pollchoice__choice }}
+                        {{ voice.voices }} ({{ voice.percent }}%)
+                    </div>
+                    <div class="poll-progress border-radius-3 border-1 inline-block white-gradient-inner">
+                        <div class="poll-progressbar purple-gradient border-radius-3" style="width: {{ voice.int_percent }}%;"></div>
+                    </div>
+                </li>
+            {% endfor %}
+        {% else %}
+            {{ form.pollchoice }}
+        {% endif %}
+    </ul>
+</div>
+{% endif %}
