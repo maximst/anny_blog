@@ -3,11 +3,11 @@ from django.contrib.contenttypes.models import ContentType
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.http import Http404, HttpResponse
-from django.shortcuts import render_to_response, redirect, render
+from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.contrib.auth import logout as django_logout
-from django.contrib.auth.views import login
+from django.core.cache import cache
 from django.utils import simplejson as json
 from django.core.mail import EmailMessage
 from django.forms import ValidationError
@@ -19,8 +19,8 @@ from decorators import ajax_navigation
 
 
 def homepage(request):
-    model = ContentType.objects.get(app_label='content',
-                                    model=settings.DISPLAY_CONTENT_TYPES[0])
+    #model = ContentType.objects.get(app_label='content',
+    #                                model=settings.DISPLAY_CONTENT_TYPES[0])
     return None
 
 def logout(request):
@@ -28,6 +28,7 @@ def logout(request):
     if not redirect_url or reverse('login') in redirect_url:
         redirect_url = '/'
     django_logout(request)
+    cache.clear()
     return redirect(redirect_url)
 
 def profile(request):
@@ -50,6 +51,7 @@ def vote(request, app, model, pk, vote):
         raise Http404()
 
     Vote.objects.record_vote(obj, user, int(vote))
+    cache.clear()
 
     if not redirect_url or reverse('login') in redirect_url:
         try:
@@ -70,6 +72,7 @@ def vote(request, app, model, pk, vote):
 
 @ajax_navigation
 def registration(request):
+    cache.clear()
     if request.user.is_authenticated():
         return redirect('/')
 
@@ -109,7 +112,7 @@ def registration_thanks(request):
 @ajax_navigation
 def laminat(request):
     import math
-    
+
     _mm_to_m = lambda x: x / 1000.0
 
     if request.method != 'POST':
@@ -128,7 +131,7 @@ def laminat(request):
     waste_boards = []
     waste_boards.append([[round(board[0] * (W - w)), board[1]], int(L)])
     waste_boards.append([[board[0], round(board[1] * (L - l))], int(W)])
-    
+
     context = {
         'board_count': board_count.__int__(),
         'board': map(int, board),

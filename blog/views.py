@@ -37,7 +37,6 @@ def log_write(request):
 
 @ajax_navigation
 @cache_page(settings.CACHE_TIMEOUT)
-
 def blog_detail(request, slug):
     log_write(request)
     user = request.user
