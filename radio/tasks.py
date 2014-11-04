@@ -46,7 +46,14 @@ def vk_login():
         post_data['pass'] = settings.VK_PASS
 
         r = requests.post(action, data=post_data)
-        query = r.url.split('#')[1]
+        try:
+            query = r.url.split('#')[1]
+        except IndexError:
+            soup = BeautifulSoup(r.text)
+            form = soup.find('form')
+            action = dict(form.attrs)['action']
+            r = requests.post(action, data={'code': settings.VK_PHONE})
+            query = r.url.split('#')[1]
         args = dict(item.split('=') for item in query.split('&'))
 
         return args['access_token']
