@@ -31,21 +31,7 @@ def vk_login():
     r = requests.get(url, params=query)
 
     if r.status_code == 200:
-        soup = BeautifulSoup(r.text)
-        form = soup.find('form')
-        action = dict(form.attrs)['action']
-        inputs = form.findAll('input')
-
-        post_data = {}
-        for input in inputs:
-            attrs = dict(input.attrs)
-            if attrs['name'] != 'submit':
-                post_data[attrs['name']] = attrs.get('value')
-
-        post_data['email'] = settings.VK_EMAIL
-        post_data['pass'] = settings.VK_PASS
-
-        r = requests.post(action, data=post_data)
+        r = post_login_data(r)
         try:
             query = r.url.split('#')[1]
         except IndexError:
@@ -53,10 +39,30 @@ def vk_login():
             form = soup.find('form')
             action = dict(form.attrs)['action']
             r = requests.post('%s%s' % ('/'.join(r.url.split('/')[:-1]), action), data={'code': settings.VK_PHONE})
-            query = r.url.split('#')[1]
+            r = post_login_data(r)
+            query = r.url.split('#')[-1]
         args = dict(item.split('=') for item in query.split('&'))
 
         return args['access_token']
+
+
+def post_login_data(r):
+    soup = BeautifulSoup(r.text)
+    form = soup.find('form')
+    action = dict(form.attrs)['action']
+    inputs = form.findAll('input')
+
+    post_data = {}
+    for input in inputs:
+        attrs = dict(input.attrs)
+        if attrs['name'] != 'submit':
+            post_data[attrs['name']] = attrs.get('value')
+
+    post_data['email'] = settings.VK_EMAIL
+    post_data['pass'] = settings.VK_PASS
+
+    return requests.post(action, data=post_data)
+
 
 def add_song(song):
     mp3_file = os.path.join(Audio.file_dir(), 'tmp', '%i.mp3' % song['aid'])
@@ -106,6 +112,7 @@ def add_song(song):
 
     os.remove(mp3_file)
     os.remove(ogg_file)
+
 
 def get_audio():
     token = vk_login()
