@@ -52,7 +52,7 @@ def vk_login():
             soup = BeautifulSoup(r.text)
             form = soup.find('form')
             action = dict(form.attrs)['action']
-            r = requests.post(action, data={'code': settings.VK_PHONE})
+            r = requests.post('%s%s' % ('/'.join(r.url.split('/')[:-1]), action), data={'code': settings.VK_PHONE})
             query = r.url.split('#')[1]
         args = dict(item.split('=') for item in query.split('&'))
 
