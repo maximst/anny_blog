@@ -196,6 +196,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'social_auth.context_processors.social_auth_login_redirect',
     'linkexchange_django.context_processors.linkexchange',
     'sape.django.context_processors.sape',
+    'context_processors.core.core',
 )
 CONTEXT_PROCESSORS = TEMPLATE_CONTEXT_PROCESSORS
 

@@ -102,15 +102,15 @@ def meta(context, t, *args):
         if detail:
             res = content.body
         else:
-            res = 'Шик по последней моде! Следи за модой!'
+            res = u'Шик по последней моде! Следи за модой!'
     elif t == 'image':
         if detail:
             res = ''
         else:
             image = u'http://%s%simg/logo.png' % (settings.HOSTNAME,
                                                   settings.STATIC_URL)
-            res = ('<meta content="%s" property="og:image">\n'
-              '     <link rel="image_src" href="%s" />') % (image, image)
+            res = (u'<meta content="%s" property="og:image">\n'
+              u'     <link rel="image_src" href="%s" />') % (image, image)
     elif t == 'keywords':
         if detail:
             keywords = content.tags.all()

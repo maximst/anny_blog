@@ -12,6 +12,9 @@ def ajax_navigation(fn):
           return fn(request, *args, **kwargs)
 
       cache_key = 'ajax_%s' % request.META['PATH_INFO']
+      if request.META.get('QUERY_STRING'):
+          cache_key += '?%s' % request.META['QUERY_STRING']
+
       cached_content = cache.get(cache_key)
       if cached_content:
           print 'Response from cache: ', cache_key
@@ -34,7 +37,7 @@ def ajax_navigation(fn):
       }
 
       if description is None:
-          response['description'] = 'Шик по последней моде! Следи за модой!'
+          response['description'] = u'Шик по последней моде! Следи за модой!'
       else:
           response['description'] = dict(description.attrs)['content']
 
