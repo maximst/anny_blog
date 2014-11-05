@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load coretags %}
+{% load polltags %}
 {% load thumbnail %}
 {% load tz %}
 {% get_current_timezone as TIME_ZONE %}
@@ -13,7 +14,9 @@
       <div class="blog-author content-author">{% if content.user.profile.sex == 1 %}<b style="color: #f0a; font-size: 16px;">♀</b>{% endif %} {% if content.user.profile.sex == 2 %}<b style="color: #0af; font-size: 16px;">♂</b>{% endif %} {% comment %}{% if content.user.profile.year_old %} Возраст: {{ content.user.profile.year_old }} {% endif %}{% endcomment %} {% timezone TIME_ZONE %}{{ content.create_time }}{% endtimezone %} {% if content.user.first_name or content.user.last_name %}{{ content.user.first_name }} {{ content.user.last_name }}{% else %}{{ content.user.username }}{% endif %} добавил{% if content.user.profile.sex == 1 %}а{% endif %} запись</div>
         {% vote %}
         <br />
-        {% include "poll/poll_form.html" %}
+        {% if content.poll %}
+            {% poll content.poll %}
+        {% endif %}
         <div class="blog-detail-body-content content-detail-body-content">
           {{ content.body|safe }}
         </div>
@@ -109,16 +112,23 @@
           {{ comment_form.as_p }}
           {% csrf_token %}
           <div class="text-left">
-            <input type="submit" class="btn" value="Отправить"></input>
+            <input type="submit" class="btn" value="Отправить" />
           </div>
         </form>
       </div>
     {% else %}
       Пожалуйста войдите, что-бы оставить коментарий:
-      </br>
-      <a href="{% url "socialauth_begin" "facebook" %}?next={{ request.META.PATH_INFO }}" class="facebook" title="Войти через facebook"><img src="{{ static_prefix }}img/facebook.png" alt="FB" border="0" width="22" height="22" /></a>
-      <a href="{% url "socialauth_begin" "vk-oauth" %}?next={{ request.META.PATH_INFO }}" class="vkontakte" title="Войти через vkontakte"><img src="{{ static_prefix }}img/vkontakte.png" alt="VK" border="0" width="22" height="22" /></a>
-      </br>
+      <br />
+      <a href="{% url "socialauth_begin" "facebook" %}?next={{ request.META.PATH_INFO }}" class="facebook" title="Войти через facebook">
+          <img src="{{ static_prefix }}img/facebook.png" alt="FB" border="0" width="22" height="22" />
+          Войти через facebook
+      </a>
+      <br />
+      <a href="{% url "socialauth_begin" "vk-oauth" %}?next={{ request.META.PATH_INFO }}" class="vkontakte" title="Войти через vkontakte">
+          <img src="{{ static_prefix }}img/vkontakte.png" alt="VK" border="0" width="22" height="22" />
+          Войти через vkontakte
+      </a>
+      <br />
       <a class="ajax-nav" href="{% url "login" %}?next={{ request.META.PATH_INFO }}">Войти</a>
       <a class="ajax-nav" href="{% url "registration" %}?next={{ request.META.PATH_INFO }}">Регистрация</a>
     {% endif %}

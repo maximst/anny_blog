@@ -17,26 +17,33 @@ class Poll(models.Model):
 
     @property
     def choices(self):
-        return PollChoice.objects.filter(poll=self)
+        return PollChoice.objects.filter(poll=self).order_by('order')
 
     def get_voices_dict(self, user=None):
-        voices = self.voices.values('pollchoice')\
-            .annotate(voices=models.Count('pollchoice')).values('pollchoice_id',
-                                                        'pollchoice__choice',
-                                                        'voices')
-        sum_count = sum(v['voices'] for v in voices)
-        user_choice_ids = self.voices.filter(user=user)\
-                                    .values_list('pollchoice_id', flat=True)
-        for i, value in enumerate(voices):
-            voices[i]['is_self_voice'] = False
-            if value['pollchoice_id'] in user_choice_ids:
-                voices[i]['is_self_voice'] = True
+        voices_list = []
+        choices = self.choices
+        voices = dict(self.voices.values('pollchoice').annotate(voices=models.Count('pollchoice'))\
+                                                        .values_list('pollchoice_id', 'voices'))
+        sum_count = sum(voices.values())
+        user_choice_ids = self.voices.filter(user=user).values_list('pollchoice_id', flat=True)
 
-            percent = round((100.0 / sum_count) * value['voices'], 2)
-            voices[i]['percent'] = percent
-            voices[i]['int_percent'] = percent.__int__()
+        for choice in choices:
+            voices_count = voices.get(choice.id, 0)
+            percent = round((100.0 / sum_count) * voices_count, 2)
+            voice = {
+                'choice': choice.choice,
+                'voices': voices_count,
+                'percent': percent,
+                'int_percent': percent.__int__(),
+                'is_self_voice': False
+            }
 
-        return voices
+            if choice.id in user_choice_ids:
+                voice['is_self_voice'] = True
+
+            voices_list.append(voice)
+
+        return voices_list
 
 
 class PollChoice(models.Model):

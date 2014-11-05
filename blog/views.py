@@ -46,15 +46,6 @@ def blog_detail(request, slug):
     context = {'content': content, 'comments': comments}
     context.update(csrf(request))
 
-    if content.poll:
-        context['poll'] = content.poll
-        if content.poll.voices.filter(user=user,
-            pollchoice__poll=content.poll).exists():
-            context['voices'] = content.poll.get_voices_dict(user)
-        else:
-            form = PollVoiceForm(poll=content.poll)
-            context['form'] = form
-
     if request.method == 'POST' and user.is_authenticated():
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():

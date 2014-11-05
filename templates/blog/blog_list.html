@@ -2,6 +2,7 @@
 {% load l10n %}
 {% load thumbnail %}
 {% load coretags %}
+{% load polltags %}
 {% load tz %}
 {% get_current_timezone as TIME_ZONE %}
 
@@ -18,6 +19,9 @@
   {% vote_list row.pk %}
   <div class="blog-list-body content-list-body">
   <article>
+    {% if row.poll %}
+        {% poll row.poll %}
+    {% endif %}
     {{ row.preview|safe }}
   </article>
   </div>

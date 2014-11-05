@@ -9,6 +9,7 @@ from core.views import vote, logout, registration, registration_thanks, laminat
 from tag.views import tags_autocomplite
 from user_profile.views import profile
 from vksearch.views import vksearch
+from poll.views import vote as poll_vote
 
 from sitemap import (BlogSitemap, CommentSitemap, BlogImageSitemap,
                                                   ArticleTagSitemap)
@@ -48,7 +49,8 @@ urlpatterns = patterns('',
     #url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
     #{'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
     url(r'^laminat/$', laminat, name='laminat'),
-    url(r'^vksearch/$', vksearch, name='vksearch')
+    url(r'^vksearch/$', vksearch, name='vksearch'),
+    url(r'^poll-vote/$', poll_vote, name='poll-vote')
 )
 
 if settings.DEBUG:

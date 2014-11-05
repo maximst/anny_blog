@@ -6,7 +6,7 @@
             {% for voice in voices %}
                 <li>
                     <div class="poll-choice">
-                        {{ voice.pollchoice__choice }}
+                        {{ voice.choice }}
                         {{ voice.voices }} ({{ voice.percent }}%)
                     </div>
                     <div class="poll-progress border-radius-3 border-1 inline-block white-gradient-inner">
@@ -15,7 +15,29 @@
                 </li>
             {% endfor %}
         {% else %}
-            {{ form.pollchoice }}
+            <form method="POST" action="{% url 'poll-vote' %}?next={{ request.META.PATH_INFO }}">
+                {% csrf_token %}
+                {{ form.pollchoice }}
+                <input type="hidden" name="poll_id" value="{{ form.poll.id }}" />
+                {% if request.user and request.user.is_authenticated %}
+                    <input type="submit" value="Голосовать" class="btn" />
+                {% else %}
+                    Пожалуйста войдите, что-бы оставить коментарий:
+                    <br />
+                    <a href="{% url "socialauth_begin" "facebook" %}?next={{ request.META.PATH_INFO }}" class="facebook" title="Войти через facebook">
+                        <img src="{{ static_prefix }}img/facebook.png" alt="FB" border="0" width="22" height="22" />
+                        Войти через facebook
+                    </a>
+                    <br />
+                    <a href="{% url "socialauth_begin" "vk-oauth" %}?next={{ request.META.PATH_INFO }}" class="vkontakte" title="Войти через vkontakte">
+                        <img src="{{ static_prefix }}img/vkontakte.png" alt="VK" border="0" width="22" height="22" />
+                        Войти через vkontakte
+                    </a>
+                    <br />
+                    <a class="ajax-nav" href="{% url "login" %}?next={{ request.META.PATH_INFO }}">Войти</a>
+                    <a class="ajax-nav" href="{% url "registration" %}?next={{ request.META.PATH_INFO }}">Регистрация</a>
+                {% endif %}
+            </form>
         {% endif %}
     </ul>
 </div>
