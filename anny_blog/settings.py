@@ -111,6 +111,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'core.middleware.MySocialAuthExceptionMiddleware',
 )
 
 ROOT_URLCONF = 'anny_blog.urls'
@@ -139,7 +140,7 @@ INSTALLED_APPS = (
     'south',
     'voting',
     'taggit',
-    'social_auth',
+    'social.apps.django_app.default',
     'coffeescript',
     'sorl.thumbnail',
     'linkexchange_django',
@@ -191,9 +192,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.core.context_processors.tz',
     'django.contrib.auth.context_processors.auth',
-    'social_auth.context_processors.social_auth_backends',
-    'social_auth.context_processors.social_auth_by_type_backends',
-    'social_auth.context_processors.social_auth_login_redirect',
+    'django.contrib.messages.context_processors.messages',
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
     'linkexchange_django.context_processors.linkexchange',
     'sape.django.context_processors.sape',
     'context_processors.core.core',
@@ -203,8 +204,8 @@ CONTEXT_PROCESSORS = TEMPLATE_CONTEXT_PROCESSORS
 LOGIN_URL = '/accounts/login/'
 
 AUTHENTICATION_BACKENDS = (
-    'social_auth.backends.facebook.FacebookBackend',
-    'social_auth.backends.contrib.vk.VKOAuth2Backend',
+    'social.backends.facebook.FacebookOAuth2',
+    'social.backends.vk.VKOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -224,26 +225,19 @@ LOGIN_REDIRECT_URL = '/accounts/profile/'
 LOGIN_ERROR_URL    = '/accounts/login-error/'
 
 SOCIAL_AUTH_PIPELINE = (
-    'social_auth.backends.pipeline.social.social_auth_user',
-    #'social_auth.backends.pipeline.associate.associate_by_email',
-    'social_auth.backends.pipeline.user.get_username',
-    'social_auth.backends.pipeline.user.create_user',
-    'social_auth.backends.pipeline.social.associate_user',
-    'social_auth.backends.pipeline.social.load_extra_data',
-    'social_auth.backends.pipeline.user.update_user_details',
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details',
     'user_profile.pipeline.set_user_profile'
 )
 
 SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
-
-FACEBOOK_APP_ID = '365616846862745'
-FACEBOOK_API_SECRET = '8b2297f7819263e8e7ba1293d1acbe28'
-FACEBOOK_PROFILE_EXTRA_PARAMS = {'locale': 'ru_RU'}
-FACEBOOK_EXTENDED_PERMISSIONS = ['user_birthday']
-
-VK_APP_ID = '3222058'
-VK_API_SECRET = '40uiMRels7fjeAQgypOg'
-VK_EXTRA_SCOPE = ['audio', ]#'photos']
 
 COFFEESCRIPT_ROOT = autopath('static')
 LINKEXCHANGE_CONFIG = autopath('anny_blog', 'linkexchange.cfg')
@@ -261,7 +255,7 @@ AVATAR_SIZE = (100, 100)
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * (1024 * 1024)
 
-CACHE_TIMEOUT = 60 * 15
+CACHE_TIMEOUT = 0 #60 * 15
 
 CACHES = {
     'default': {
@@ -275,9 +269,12 @@ CACHES = {
     },
 }
 
+SOUTH_MIGRATION_MODULES = {
+    'default': 'social.apps.django_app.default.south_migrations'
+}
 
 try:
-    from local_settings import *
+    from .local_settings import *
 except ImportError:
     pass
 

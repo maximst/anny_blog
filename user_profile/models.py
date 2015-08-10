@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.conf import settings
 
-from social_auth.models import UserSocialAuth
+from social.apps.django_app.default.models import UserSocialAuth
 
 from pytz import all_timezones
 from datetime import date

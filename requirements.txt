@@ -1,10 +1,10 @@
-Django==1.6.8
-#PIL
+Django==1.6.9
+Pillow
 south
 pytz
 django-voting
 django-taggit
-django-social-auth
+python-social-auth
 django-coffeescript
 sorl-thumbnail
 psycopg2
@@ -15,7 +15,7 @@ requests==0.14.2
 LinkExchange.Django
 LinkExchange
 sape
-supercaptcha
+#supercaptcha
 BeautifulSoup
 django_compressor
 django-redis

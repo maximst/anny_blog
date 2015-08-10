@@ -7,11 +7,11 @@
 {% endif %}
     Вы можете войти используя аккаунты социальных сетей
     <br />
-    <a href="{% url "socialauth_begin" "facebook" %}?{{ redirect_querystring }}" class="facebook" title="Login via facebook">
+    <a href="{% url "social:begin" "facebook" %}?{{ redirect_querystring }}" class="facebook" title="Login via facebook">
         <img src="{{ static_prefix }}img/facebook.png" alt="FB" border="0" width="22" height="22" />
         Войти через facebook
     </a>
-    <a href="{% url "socialauth_begin" "vk-oauth" %}?{{ redirect_querystring }}" class="vkontakte" title="Login via vkontakte">
+    <a href="{% url "social:begin" "vk-oauth2" %}?{{ redirect_querystring }}" class="vkontakte" title="Login via vkontakte">
         <img src="{{ static_prefix }}img/vkontakte.png" alt="VK" border="0" width="22" height="22" />
         Войти через vkontakte
     </a>

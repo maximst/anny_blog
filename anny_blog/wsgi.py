@@ -14,7 +14,15 @@ framework.
 
 """
 import os
+import sys
 
+autopath = lambda *dirname: os.path.join(os.path.split(os.path.dirname(__file__)\
+        .replace('\\', '/'))[0], *dirname)
+
+sys.path.append(autopath('..', 'env', 'lib', 'python2.7', 'site-packages'))
+sys.path.append(autopath('anny_blog'))
+sys.path.append(autopath())
+print sys.path
 # We defer to a DJANGO_SETTINGS_MODULE already in the environment. This breaks
 # if running multiple sites in the same mod_wsgi process. To fix this, use
 # mod_wsgi daemon mode with each site in its own daemon process, or use

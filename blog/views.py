@@ -38,7 +38,7 @@ def log_write(request):
 @ajax_navigation
 @cache_page(settings.CACHE_TIMEOUT)
 def blog_detail(request, slug):
-    log_write(request)
+    #log_write(request)
     user = request.user
 
     content = get_object_or_404(Blog, slug=slug)
@@ -91,7 +91,7 @@ def blog_list(request):
 @ajax_navigation
 @cache_page(settings.CACHE_TIMEOUT)
 def tags(request, tag=None):
-    log_write(request)
+    #log_write(request)
     if tag:
         contents = Blog.objects.filter(tags__slug__in=[tag])\
                                     .order_by('-create_time')

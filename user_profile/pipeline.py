@@ -2,6 +2,7 @@ from django.contrib.auth import login
 from django.core.files import File
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.conf import settings
+from django.core.cache import cache
 
 from urllib2 import urlopen
 import vkontakte
@@ -11,11 +12,12 @@ from datetime import date
 from pyfaceb import FBGraph
 
 
-def set_user_profile(backend, details, response, social_user, uid, \
+def set_user_profile(backend, details, response, social, uid, \
       user, *args, **kwargs):
+
     if user:
         uprof = user.profile
-        usa = social_user
+        usa = social
         if usa.provider == 'facebook':
             GENDER = {
                 'male': 2,
@@ -51,7 +53,7 @@ def set_user_profile(backend, details, response, social_user, uid, \
             uprof.bdate = date(bdate[2], bdate[0], bdate[1])
             uprof.save()
 
-        if usa.provider == 'vk-oauth':
+        if usa.provider == 'vk-oauth2':
             vk_api = vkontakte.API(token=usa.extra_data['access_token'])
             result = vk_api.users.get(fields='sex,bdate,photo_100,country,city',
                                                                   uids=usa.uid)
@@ -74,3 +76,5 @@ def set_user_profile(backend, details, response, social_user, uid, \
                 bdate.insert(0, '0')
             uprof.bdate = date(*map(int, bdate))
             uprof.save()
+
+    cache.clear()

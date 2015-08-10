@@ -119,12 +119,12 @@
     {% else %}
       Пожалуйста войдите, что-бы оставить коментарий:
       <br />
-      <a href="{% url "socialauth_begin" "facebook" %}?next={{ request.META.PATH_INFO }}" class="facebook" title="Войти через facebook">
+      <a href="{% url "social:begin" "facebook" %}?next={{ request.META.PATH_INFO }}" class="facebook" title="Войти через facebook">
           <img src="{{ static_prefix }}img/facebook.png" alt="FB" border="0" width="22" height="22" />
           Войти через facebook
       </a>
       <br />
-      <a href="{% url "socialauth_begin" "vk-oauth" %}?next={{ request.META.PATH_INFO }}" class="vkontakte" title="Войти через vkontakte">
+      <a href="{% url "social:begin" "vk-oauth2" %}?next={{ request.META.PATH_INFO }}" class="vkontakte" title="Войти через vkontakte">
           <img src="{{ static_prefix }}img/vkontakte.png" alt="VK" border="0" width="22" height="22" />
           Войти через vkontakte
       </a>

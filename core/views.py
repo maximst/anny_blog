@@ -1,4 +1,6 @@
 #-*-coding: utf8-*-
+import json
+
 from django.contrib.contenttypes.models import ContentType
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -8,7 +10,6 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.contrib.auth import logout as django_logout
 from django.core.cache import cache
-from django.utils import simplejson as json
 from django.core.mail import EmailMessage
 from django.forms import ValidationError
 
@@ -141,3 +142,4 @@ def laminat(request):
     }
 
     return render(request, 'laminat.html', context)
+

@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
+from django.views.generic import TemplateView
 
 from django.contrib import admin
 from django.contrib import auth
@@ -39,7 +40,6 @@ urlpatterns = patterns('',
     url(r'^accounts/registration/$', registration, name='registration'),
     url(r'^accounts/registration_thanks/$', registration_thanks,
                                             name='registration-thanks'),
-    url(r'^accounts/social/', include('social_auth.urls')),
     url(r'^tag/(?P<tag>.+)/$', tags, name='tags'),
     url(r'^tag_autocomplite/$', tags_autocomplite, name='tags_autocomplite'),
     url(r'^tag/$', tags, name='tags'),
@@ -49,8 +49,10 @@ urlpatterns = patterns('',
     #url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
     #{'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
     url(r'^laminat/$', laminat, name='laminat'),
+    url(r'^accounts/login-error/$', TemplateView.as_view(template_name="login-error.html")),
     url(r'^vksearch/$', vksearch, name='vksearch'),
-    url(r'^poll-vote/$', poll_vote, name='poll-vote')
+    url(r'^poll-vote/$', poll_vote, name='poll-vote'),
+    url(r'', include('social.apps.django_app.urls', namespace='social')),
 )
 
 if settings.DEBUG:

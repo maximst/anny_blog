@@ -1,5 +1,5 @@
 #!-*-coding: utf8-*-
-from django.utils import simplejson as json
+import json
 from django.http import HttpResponse
 from django.core.cache import cache
 
