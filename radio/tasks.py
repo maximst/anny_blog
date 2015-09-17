@@ -33,15 +33,19 @@ def vk_login():
 
     if r.status_code == 200:
         r = post_login_data(r)
-        try:
-            query = r.url.split('#')[1]
-        except IndexError:
-            soup = BeautifulSoup(r.text)
-            form = soup.find('form')
-            action = dict(form.attrs)['action']
-            r = requests.post('%s%s' % ('/'.join(r.url.split('/')[:-1]), action), data={'code': settings.VK_PHONE})
-            r = post_login_data(r)
-            query = r.url.split('#')[-1]
+        for i in range(3):
+            try:
+                query = r.url.split('#')[1]
+            except IndexError:
+                soup = BeautifulSoup(r.text)
+                form = soup.find('form')
+                action = dict(form.attrs)['action']
+                r = SESSION.post('%s%s' % ('/'.join(r.url.split('/')[:-1]), action), data={'code': settings.VK_PHONE})
+#                r = post_login_data(r)
+            else:
+                break
+
+        query = r.url.split('#')[-1]
         args = dict(item.split('=') for item in query.split('&'))
 
         return args['access_token']
