@@ -127,11 +127,12 @@ def get_audio():
     token = vk_login()
     vk = vkontakte.API(token=token)
     vk_audio = vk.audio.get(gid=settings.VK_GROUP_ID)
-    vk_aids = [a['aid'] for a in vk_audio]
-    db_audio = Audio.objects.all()
-    db_aids = [a.aid for a in db_audio]
+    vk_aids = []
+    db_aids = Audio.objects.all().values_list('aid', flat=True)
 
     for audio in vk_audio:
+        vk_aids.append(audio['aid'])
+
         if audio['aid'] not in db_aids:
             print '[%s] INFO: Create audio instance %s - %s ...' % (datetime.utcnow(),
                                                                 audio['artist'],
@@ -140,7 +141,7 @@ def get_audio():
             print '[%s] INFO: Done ...' % datetime.utcnow()
 
     # Delete removed vk songs
-    [a.delete() for a in db_audio if a.aid not in vk_aids]
+    Audio.objects.filter().exclude(aid__in=vk_aids).delete()
 
 
 if __name__ == '__main__':
