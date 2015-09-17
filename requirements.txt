@@ -15,7 +15,7 @@ requests==0.14.2
 LinkExchange.Django
 LinkExchange
 sape
-#supercaptcha
+-e git+https://github.com/Marx86/supercaptcha.git#egg=supercaptcha
 BeautifulSoup
 django_compressor
 django-redis

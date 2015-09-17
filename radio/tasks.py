@@ -17,6 +17,7 @@ from django.conf import settings
 from django.core.files import File
 from radio.models import Audio
 
+SESSION = requests.Session()
 
 def vk_login():
     url = 'https://oauth.vk.com/authorize'
@@ -28,7 +29,7 @@ def vk_login():
         'v': '5.2',
         'response_type': 'token',
     }
-    r = requests.get(url, params=query)
+    r = SESSION.get(url, params=query)
 
     if r.status_code == 200:
         r = post_login_data(r)
@@ -61,7 +62,7 @@ def post_login_data(r):
     post_data['email'] = settings.VK_EMAIL
     post_data['pass'] = settings.VK_PASS
 
-    return requests.post(action, data=post_data)
+    return SESSION.post(action, data=post_data)
 
 
 def add_song(song):
@@ -87,6 +88,8 @@ def add_song(song):
         print '[%s] INFO: Convert "%s"' % (datetime.utcnow(), command)
         result = commands.getoutput(command)
 
+        fd_ogg = None
+        fd_mp3 = None
         try:
             fd_ogg = open(ogg_file)
             fd_mp3 = open(mp3_file)
@@ -103,8 +106,10 @@ def add_song(song):
     song.pop('url', None)
 
     audio = Audio(**song)
-    audio.ogg.save('%i.ogg' % song['aid'], File(fd_ogg))
-    audio.mp3.save('%i.mp3' % song['aid'], File(fd_mp3))
+    if fd_ogg:
+        audio.ogg.save('%i.ogg' % song['aid'], File(fd_ogg))
+    if fd_mp3:
+        audio.mp3.save('%i.mp3' % song['aid'], File(fd_mp3))
     audio.save()
 
     fd_ogg.close()
