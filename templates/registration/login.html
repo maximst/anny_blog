@@ -7,18 +7,18 @@
 {% endif %}
     Вы можете войти используя аккаунты социальных сетей
     <br />
-    <a href="{% url "social:begin" "facebook" %}?{{ redirect_querystring }}" class="facebook" title="Login via facebook">
+    <a href="{% url "social:begin" "facebook" %}?{% if request.META.HTTP_REFERER %}{{ request.META.HTTP_REFERER }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}" class="facebook" title="Login via facebook">
         <img src="{{ static_prefix }}img/facebook.png" alt="FB" border="0" width="22" height="22" />
         Войти через facebook
     </a>
-    <a href="{% url "social:begin" "vk-oauth2" %}?{{ redirect_querystring }}" class="vkontakte" title="Login via vkontakte">
+    <a href="{% url "social:begin" "vk-oauth2" %}?{% if request.META.HTTP_REFERER %}{{ request.META.HTTP_REFERER }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}" class="vkontakte" title="Login via vkontakte">
         <img src="{{ static_prefix }}img/vkontakte.png" alt="VK" border="0" width="22" height="22" />
         Войти через vkontakte
     </a>
     <br />
     <br />
     Или войти используя форму входа
-    <form method="post" action="{% url "login" %}">
+    <form method="post" action="{% url "login" %}?{% if request.META.HTTP_REFERER %}{{ request.META.HTTP_REFERER }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}">
         {% csrf_token %}
         <table>
         <tr>
