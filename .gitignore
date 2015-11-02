@@ -4,4 +4,9 @@
 local_settings.py
 *~
 static/COFFEESCRIPT_CACHE
+static/CACHE
+media/*
 .directory
+anny_blog/logging.cfg
+sape
+staticfiles

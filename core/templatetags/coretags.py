@@ -9,6 +9,7 @@ from blog.models import Blog
 
 from voting.models import Vote
 
+import urllib
 import urllib2
 
 register = template.Library()
@@ -137,14 +138,18 @@ def setlinks(context):
     if query_string:
         url += '?%s' % query_string
 
-    setlinks_url = ('http://show.setlinks.ru/page.php?'
-                    'host=follow-chic.com'
-                    '&start=1'
-                    '&count=20'
-                    '&p=6d6e10342d591fd102032427afb42eca'
-                    '&uri=%s') % url
+
+    setlinks_querystring = urllib.urlencode({
+        'host': 'follow-chic.com',
+        'start': '1',
+        'count': '20',
+        'p': '6d6e10342d591fd102032427afb42eca',
+        'uri': url.encode('utf-8'),
+    })
+    setlinks_url = 'http://show.setlinks.ru/page.php?%s' % setlinks_querystring
+
     try:
-        result = urllib2.urlopen(setlinks_url)
+        result = urllib2.urlopen(setlinks_url, timeout=5)
     except:
         return None
     else:

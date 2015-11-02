@@ -91,9 +91,12 @@
       </script>
     </div>
     <div id="container">
-      <div class="text-center" style="margin: -7px;">
+      <div class="text-center advertisement-links" style="margin: -7px;">
+          <strong>Реклама: </strong>
           {% load linkexchange_tags %}
-          {{ linkexchange_blocks.0|safe }}
+          {% for link in linkexchange_blocks %}
+              {% if link != '<div></div>' %}{{ link|safe }}{% endif %}
+          {% endfor %}
           {% comment %}{{ linkexchange_blocks.1|safe }}{% endcomment %}
           <span style="font-size: 10px; padding: 0;">{% setlinks %}</span>
       </div>
