@@ -145,6 +145,9 @@ INSTALLED_APPS = (
     'sape.django',
     'supercaptcha',
     'compressor',
+    'filer',
+    'mptt',
+    'easy_thumbnails',
 
     'blog',
     'tag',
@@ -255,7 +258,8 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * (1024 * 1024)
 
 
 SOUTH_MIGRATION_MODULES = {
-    'default': 'social.apps.django_app.default.south_migrations'
+    'default': 'social.apps.django_app.default.south_migrations',
+#    'easy_thumbnails': 'easy_thumbnails.south_migrations',
 }
 
 try:

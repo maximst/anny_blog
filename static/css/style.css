@@ -1,11 +1,20 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
+    margin-bottom: 70px;
+    background: #111;
+    /*
     background: #a4948c;
-    background: -moz-linear-gradient(left, #775d65 0%, #ad9c98 14%, #e0d5c5 64%, #e0d5c5 64%, #e0d5c5 80%, #c9b7ad 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#775d65), color-stop(14%,#ad9c98), color-stop(64%,#e0d5c5), color-stop(64%,#e0d5c5), color-stop(80%,#e0d5c5), color-stop(100%,#c9b7ad)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(left, #775d65 0%,#ad9c98 14%,#e0d5c5 64%,#e0d5c5 64%,#e0d5c5 80%,#c9b7ad 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(left, #775d65 0%,#ad9c98 14%,#e0d5c5 64%,#e0d5c5 64%,#e0d5c5 80%,#c9b7ad 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(left, #775d65 0%,#ad9c98 14%,#e0d5c5 64%,#e0d5c5 64%,#e0d5c5 80%,#c9b7ad 100%); /* IE10+ */
-    background: linear-gradient(to right, #775d65 0%,#ad9c98 14%,#e0d5c5 64%,#e0d5c5 64%,#e0d5c5 80%,#c9b7ad 100%); /* W3C */
+    background: -moz-linear-gradient(left, #775d65 0%, #ad9c98 14%, #e0d5c5 64%, #e0d5c5 64%, #e0d5c5 80%, #c9b7ad 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#775d65), color-stop(14%,#ad9c98), color-stop(64%,#e0d5c5), color-stop(64%,#e0d5c5), color-stop(80%,#e0d5c5), color-stop(100%,#c9b7ad));
+    background: -webkit-linear-gradient(left, #775d65 0%,#ad9c98 14%,#e0d5c5 64%,#e0d5c5 64%,#e0d5c5 80%,#c9b7ad 100%); 
+    background: -o-linear-gradient(left, #775d65 0%,#ad9c98 14%,#e0d5c5 64%,#e0d5c5 64%,#e0d5c5 80%,#c9b7ad 100%);
+    background: -ms-linear-gradient(left, #775d65 0%,#ad9c98 14%,#e0d5c5 64%,#e0d5c5 64%,#e0d5c5 80%,#c9b7ad 100%);
+    background: linear-gradient(to right, #775d65 0%,#ad9c98 14%,#e0d5c5 64%,#e0d5c5 64%,#e0d5c5 80%,#c9b7ad 100%);
+    */
     font-size: 10pt;
     /*cursor: url("../img/cursor.cur"), default;*/
 }
@@ -314,7 +323,8 @@ a,
   -ms-text-shadow: 0 0 1px #000;
 }
 
-.soul:hover {
+.soul:hover,
+.nav-footer .container div:hover {
     color: #fff;
 }
 
@@ -724,4 +734,77 @@ a,
 
 .advertisement-links a {
     color: #757575;
+}
+
+.nav-footer {
+    border-top: 1px solid #555;
+    bottom: 0;
+    line-height: 0.7em;
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    top: initial;
+    box-shadow: 0 -3px 10px #000;
+    -moz-box-shadow: 0 -3px 10px #000;
+    -webkit-box-shadow: 0 -3px 10px #000;
+    -khtml-box-shadow: 0 -3px 10px #000;
+    -o-box-shadow: 0 -3px 10px #000;
+    -ms-box-shadow: 0 -3px 10px #000;
+}
+
+.nav-footer .container {
+    padding: 3px 0 0 16px;
+    height: 50px;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.nav-footer .container div {
+    text-align: justify;
+    margin-top: 8px;
+    width: 90px;
+    margin-left: -8px;
+    float: left;
+}
+
+.nav-footer .container ul {
+    display: inline;
+    width: 90%;
+    padding-left: 1%;
+    height: 44px;
+}
+
+.nav-footer .container ul li:first-child {
+    border-left: none;
+}
+
+.nav-footer .container ul li:last-child {
+    border-right: none;
+}
+
+.nav-footer .container ul li {
+    padding: 0 3%;
+    line-height: 0em;
+    border-right: 1px solid #070707;
+    border-left: 1px solid #333;
+}
+
+.nav-footer .container ul li a {
+    padding: 22px 0;
+}
+
+.nav-footer .container div .frow1 {
+    font-size: 2em;
+    letter-spacing: 0.05em;
+    margin-left: -3px;
+}
+
+.nav-footer .container div .frow2 {
+    font-size: 0.7em;
+    letter-spacing: 0.45em;
+}
+
+.nav-footer .container div .frow3 {
+    font-size: 0.7em;
+    letter-spacing: 0.9em;
 }

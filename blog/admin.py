@@ -1,5 +1,6 @@
 from django.contrib import admin
-from models import Blog, Comment, BlogImage
+from filer.admin.fileadmin import FileAdmin
+from models import Blog, Comment, BlogImage, MediaFile
 from django.core.cache import cache
 
 
@@ -47,3 +48,4 @@ class CommentAdmin(BaseModelAdmin):
 
 admin.site.register(Blog, BlogAdmin)
 admin.site.register(Comment, CommentAdmin)
+admin.site.register(MediaFile, FileAdmin)

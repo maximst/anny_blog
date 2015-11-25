@@ -19,3 +19,4 @@ sape
 BeautifulSoup
 django_compressor
 django-redis
+django-filer

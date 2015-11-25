@@ -1,7 +1,7 @@
 <ul class="breadcrumb">
   {% for crump in crumps %}
     <li {% if forloop.last %} class="active"{% endif %}>
-        <a class="ajax-nav" href="{{ crump.0|join:"/" }}">{{ crump.1|capfirst }}</a>{% if not forloop.last %} <span class="divider">/</span>{% endif %}
+        <a class="ajax-nav" href="{{ crump.0|join:"/" }}{% if not forloop.first %}/{% endif %}">{{ crump.1|capfirst }}</a>{% if not forloop.last %} <span class="divider">/</span>{% endif %}
     </li>
   {% endfor %}
 </ul>

@@ -11,6 +11,7 @@ from voting.models import Vote
 
 import urllib
 import urllib2
+import sqlite3
 
 register = template.Library()
 
@@ -130,14 +131,45 @@ def meta(context, t, *args):
 def get_settings():
     return settings
 
+
 @register.simple_tag(takes_context=True)
-def setlinks(context):
+def links(context):
     request = context['request']
     url = request.META.get('PATH_INFO', '')
+    url_list = url.split('://')
+    if len(url_list) > 1:
+        url = '://'.join(url_list[1:])
+
+    if url.startswith('/'):
+        url = u'follow-chic.com%s' % url
+
     query_string = request.META.get('QUERY_STRING')
     if query_string:
         url += '?%s' % query_string
 
+    try:
+        conn = sqlite3.connect(settings.LINKS_DB)
+        sql = conn.cursor()
+        res = sql.execute('SELECT * FROM mainlink WHERE url = ?', (url,))
+
+        links = []
+        for link in res:
+            links.append(u'<li>%s</li>' % link[2])
+
+        return u'<ul class="linx">%s</ul>' % '\n'.join(links)
+    except:
+        return ''
+
+
+@register.simple_tag(takes_context=True)
+def setlinks(context):
+    request = context['request']
+    url = request.META.get('PATH_INFO', '')
+    url_withouth_slash = url.endswith('/') and url[:-1] or url
+    query_string = request.META.get('QUERY_STRING')
+    if query_string:
+        url += '?%s' % query_string
+        url_withouth_slash += '?%s' % query_string
 
     setlinks_querystring = urllib.urlencode({
         'host': 'follow-chic.com',
@@ -146,13 +178,27 @@ def setlinks(context):
         'p': '6d6e10342d591fd102032427afb42eca',
         'uri': url.encode('utf-8'),
     })
+
+    setlinks_querystring_withouth_slash = urllib.urlencode({
+        'host': 'follow-chic.com',
+        'start': '1', 
+        'count': '20',   
+        'p': '6d6e10342d591fd102032427afb42eca',
+        'uri': url_withouth_slash.encode('utf-8'),
+    })
+
     setlinks_url = 'http://show.setlinks.ru/page.php?%s' % setlinks_querystring
+    setlinks_url_withouth_slash = 'http://show.setlinks.ru/page.php?%s' % setlinks_querystring_withouth_slash
 
     try:
-        result = urllib2.urlopen(setlinks_url, timeout=5)
+        result = urllib2.urlopen(setlinks_url, timeout=3)
+        result = result.code == 200 and result.read() or None
+        if not result:
+            result = urllib2.urlopen(setlinks_url_url_withouth_slash, timeout=3)
+            result = result.code == 200 and result.read() or None
     except:
         return None
     else:
-        if result.code == 200:
-            return result.read()
+        return result
+
     return None

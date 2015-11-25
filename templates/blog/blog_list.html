@@ -78,7 +78,7 @@
         <span class="float-left">
           Тэги:
           {% for t in row.tags.all %}
-            <a class="ajax-nav" href="/tag/{{ t.slug }}">{{ t.name }}</a>{% if not forloop.last %}, {% endif %}
+            <a class="ajax-nav" href="/tag/{{ t.slug }}/">{{ t.name }}</a>{% if not forloop.last %}, {% endif %}
           {% endfor %}
         </span>
       {% endif %}

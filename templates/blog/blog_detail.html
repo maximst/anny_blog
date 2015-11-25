@@ -59,7 +59,7 @@
         <small>
           Тэги:
           {% for t in content.tags.all %}
-            <a class="ajax-nav" href="/tag/{{ t.slug }}">{{ t.name }}</a>{% if not forloop.last %}, {% endif %}
+            <a class="ajax-nav" href="/tag/{{ t.slug }}/">{{ t.name }}</a>{% if not forloop.last %}, {% endif %}
           {% endfor %}
         </small>
         </span>

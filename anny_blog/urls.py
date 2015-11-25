@@ -53,6 +53,7 @@ urlpatterns = patterns('',
     url(r'^vksearch/$', vksearch, name='vksearch'),
     url(r'^poll-vote/$', poll_vote, name='poll-vote'),
     url(r'', include('social.apps.django_app.urls', namespace='social')),
+    url(r'^filer/', include('filer.urls')),
 )
 
 if settings.DEBUG:

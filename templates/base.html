@@ -50,6 +50,7 @@
 <header>
 <!--s_links--><!--f485b75b9228d78ed859121ee216bfc4--><!--/s_links-->
 <!--6d6e10342d591fd102032427afb42eca-->
+<!--2A5094D1CB093199E5A114632383F2AC-->
 {% menubar %}
 </header>
 <script type="text/javascript">
@@ -98,6 +99,7 @@
               {% if link != '<div></div>' %}{{ link|safe }}{% endif %}
           {% endfor %}
           {% comment %}{{ linkexchange_blocks.1|safe }}{% endcomment %}
+          {% links %}
           <span style="font-size: 10px; padding: 0;">{% setlinks %}</span>
       </div>
 
@@ -198,8 +200,31 @@
   </div>
 </div>
 
+<div class="navbar navbar-inverse navbar-fixed-top nav-footer">
+  <div class="navbar-inner">
+    <div class="container">
+      <div class="transition">
+        <span class="frow1">№ 1</span>
+        <br />
+        <span class="frow2">в мире</span>
+        <br />
+        <span class="frow3">моды</span>
+      </div>
+      <ul class="nav">
+        <li><a href="#">Karl Otto Lagerfeld</a></li>
+        <li><a href="#">Roberto Cavalli</a></li>
+        <li><a href="#">Giorgio Armani</a></li>
+        <li><a href="#">Hubert de Givenchy</a></li>
+        <li><a href="#">Yves Saint Laurent</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 <aside>
-  <div class="background"><img class="background-image" src="{{ static_prefix }}img/background_bw.jpeg"></div>
+  <div class="background">
+    <img class="background-image" src="{{ static_prefix }}img/background_bw.jpeg">
+  </div>
   <!--6d6e10342d591fd102032427afb42eca-->
   <div class="preloader hide">
     <div>

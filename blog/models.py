@@ -121,3 +121,13 @@ class BlogImage(models.Model):
     image = models.ImageField(upload_to='images')
     front_page = models.BooleanField(default=True)
     order = models.IntegerField(default=0, blank=True, choices=ORDER_CHOICES)
+
+
+# import the File class to inherit from
+from filer.models.filemodels import File as FilerFile
+
+# we'll need to refer to filer settings
+from filer import settings as filer_settings
+
+class MediaFile(FilerFile):
+    pass
