@@ -1,6 +1,6 @@
 from django.contrib import admin
 from filer.admin.fileadmin import FileAdmin
-from models import Blog, Comment, BlogImage, MediaFile
+from models import Blog, Comment, BlogImage, MediaFile, Article
 from django.core.cache import cache
 
 
@@ -43,9 +43,30 @@ class BlogAdmin(BaseModelAdmin):
         }
 
 
+class ArticleAdmin(BaseModelAdmin):
+    list_display = ('__unicode__', 'user', 'create_time', 'deleted')
+    prepopulated_fields = {'slug': ('title',)}
+
+    class Media:
+        from django.conf import settings
+        static_url = getattr(settings, 'STATIC_URL', '/static')
+        js = [  
+            static_url + 'js/jquery.autocomplete.js',
+            static_url + 'js/tag-autocomplite.js',
+            #static_url + 'js/jquery.js'
+        ]
+
+        css = {
+            'all': (static_url + 'css/tag-autocomplite.css',)
+        }
+
+
+
 class CommentAdmin(BaseModelAdmin):
     list_display = ('__unicode__', 'create_time', 'ip')
 
 admin.site.register(Blog, BlogAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(MediaFile, FileAdmin)
+admin.site.register(Article, ArticleAdmin)
+

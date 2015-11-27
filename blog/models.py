@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
 
 from tag.models import ArticleTaggedItem, TaggableManagerN
 from poll.models import Poll
@@ -131,3 +132,17 @@ from filer import settings as filer_settings
 
 class MediaFile(FilerFile):
     pass
+
+
+class Article(models.Model):
+    title = models.CharField(max_length=128, unique=True)
+    body = RichTextField()
+    slug = models.SlugField(max_length=128, unique=True)
+    deleted = models.BooleanField(default=False)
+    user = models.ForeignKey(User, null=True, default=1)
+    create_time = models.DateTimeField(auto_now=False, auto_now_add=True)
+    edit_time = models.DateTimeField(auto_now=True, auto_now_add=False)
+    tags = TaggableManagerN(through=ArticleTaggedItem)
+
+    def __unicode__(self):
+        return u'%s' % self.title
