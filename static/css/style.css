@@ -808,3 +808,7 @@ a,
     font-size: 0.7em;
     letter-spacing: 0.9em;
 }
+
+.article-detail {
+    margin: 30px;
+}

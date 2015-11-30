@@ -3,6 +3,7 @@ $(document).ready () ->
   NavigationCache[window.location.pathname] = $('#container').html()
   history.pushState {page: window.location.pathname, type: 'page'}, document.title, window.location.pathname
 
+delay = (ms, func) -> setTimeout func, ms
 
 set_page = (page) ->
   PAGE = page
@@ -10,6 +11,8 @@ set_page = (page) ->
   $('.preloader').show()
 
   $.get page, (data) ->
+    delay 30000, -> $('.preloader').hide
+
     if typeof data != 'object'
       window.location = PAGE
 
@@ -29,6 +32,7 @@ set_page = (page) ->
       og_image.attr 'content', data.image
 
     $('#container').html data.content
+    $('.preloader').hide()
 
     NavigationCache[page] = data.content
     history.pushState {page: page, type: 'page'}, document.title, page
@@ -37,7 +41,6 @@ set_page = (page) ->
 
     FB.XFBML.parse()
     $('.fb-like span').css 'width', '105px'
-    $('.preloader').hide()
 
 $(document).ready () ->
   window.onpopstate = (event) ->

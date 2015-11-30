@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load linkexchange_tags %}
+
+{% block content %}
+<div class="article-detail content-detail">
+    <div class="article-detail-header content-detail-header">
+        <h4>{{ content.title }}</h4>
+    </div>
+    <div class="article-detail-body content-detail-body">
+        {{ content.body|safe }}
+    </div>
+</div>
+{% endblock %}

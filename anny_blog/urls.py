@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 from django.contrib import admin
 from django.contrib import auth
 
-from blog.views import blog_list, blog_detail, tags
+from blog.views import blog_list, blog_detail, tags, article, article_list
 from core.views import vote, logout, registration, registration_thanks, laminat
 from tag.views import tags_autocomplite
 from user_profile.views import profile
@@ -27,6 +27,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^blog/(?P<slug>[\w\-]+)/$', blog_detail, name='blog'),
+    url(r'^article/(?P<slug>[\w\-]+)/$', article, name='article'),
+    url(r'^article/$', article_list, name='article-list'),
     url(r'^blog/$', blog_list, name='blog-list'),
     url(r'^$', blog_list, name='home'),
     url(r'^grappelli/', include('grappelli.urls')),

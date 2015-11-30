@@ -1,5 +1,5 @@
 from django.contrib import admin
-from filer.admin.fileadmin import FileAdmin
+from filer.admin.fileadmin import FileAdmin as BaseFileAdmin
 from models import Blog, Comment, BlogImage, MediaFile, Article
 from django.core.cache import cache
 
@@ -64,6 +64,11 @@ class ArticleAdmin(BaseModelAdmin):
 
 class CommentAdmin(BaseModelAdmin):
     list_display = ('__unicode__', 'create_time', 'ip')
+
+
+class FileAdmin(BaseFileAdmin):
+    list_display = ('label', 'file')
+
 
 admin.site.register(Blog, BlogAdmin)
 admin.site.register(Comment, CommentAdmin)

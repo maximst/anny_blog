@@ -5,7 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.cache import cache_page
 from django.conf import settings
 
-from models import Blog, Comment
+from models import Blog, Comment, Article
 from forms import CommentForm
 
 from tag.models import ArticleTag
@@ -33,6 +33,33 @@ def log_write(request):
         log_row.user = request.user
 
     log_row.save()
+
+
+@ajax_navigation
+@cache_page(settings.CACHE_TIMEOUT)
+def article_list(request):
+    contents = Article.objects.all().order_by('-create_time')
+    if not contents:
+        return render(request, 'blog/blog_list.html', {'content': contents})
+    paginator = Paginator(contents, 10)
+
+    page = request.GET.get('p')
+    try:
+        content = paginator.page(page)
+    except PageNotAnInteger:
+        content = paginator.page(1)
+    except EmptyPage:
+        content = paginator.page(paginator.num_pages)
+
+    return render(request, 'blog/blog_list.html', {'content': content})
+
+
+
+@ajax_navigation
+@cache_page(settings.CACHE_TIMEOUT)
+def article(request, slug):
+    article = get_object_or_404(Article, slug=slug)
+    return render(request, 'blog/article.html', {'content': article})
 
 
 @ajax_navigation
