@@ -15,6 +15,7 @@ class Audio(models.Model):
     created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
     ogg = models.FileField(upload_to=DIR)
     mp3 = models.FileField(upload_to=DIR)
+    url = models.CharField(max_length=255, blank=True, default='')
 
     class Meta:
         app_label = 'radio'

@@ -311,6 +311,7 @@ CKEDITOR_CONFIGS = {
         # 'toolbarCanCollapse': True,
         # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
         'tabSpaces': 4,
+        'fillEmptyBlocks': False,
         'extraPlugins': ','.join(
             [
                 # you extra plugins here

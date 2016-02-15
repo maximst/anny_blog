@@ -60,7 +60,7 @@ def post_login_data(r):
     post_data = {}
     for input in inputs:
         attrs = dict(input.attrs)
-        if attrs['name'] != 'submit':
+        if attrs.get('name') and attrs.get('name') != 'submit':
             post_data[attrs['name']] = attrs.get('value')
 
     post_data['email'] = settings.VK_EMAIL
@@ -132,13 +132,15 @@ def get_audio():
 
     for audio in vk_audio:
         vk_aids.append(audio['aid'])
-
+        url = audio['url']
         if audio['aid'] not in db_aids:
             print '[%s] INFO: Create audio instance %s - %s ...' % (datetime.utcnow(),
                                                                 audio['artist'],
                                                                 audio['title'])
             add_song(audio)
             print '[%s] INFO: Done ...' % datetime.utcnow()
+
+        Audio.objects.filter(aid=audio['aid']).update(url=url)
 
     # Delete removed vk songs
     Audio.objects.filter().exclude(aid__in=vk_aids).delete()

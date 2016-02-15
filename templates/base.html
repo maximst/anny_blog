@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
 {% load static %}
 {% load coretags %}
 {% load radiotags %}
 {% load coffeescript %}
 {% load compress %}
 {% get_static_prefix as static_prefix %}
-
 <head>
     <title>{% meta "title" %}</title>
-    <meta content="{% meta "title" %}" property="og:title">
-    <meta content="{% meta "description" %}" property="og:description">
-    <meta content="{% meta "description" %}" name="description">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8" />
+    <meta content="{% meta "title" %}" property="og:title" />
+    <meta content="{% meta "description" %}" property="og:description" />
+    <meta content="{% meta "description" %}" name="description" />
     <meta name="keywords" content="{% meta "keywords" %}мода, стиль, fashion, одежда, модницы, лос, анжелес, обувь, модели, супермодели, сумки, шик, chic, джинсы, victoria's, secret, брюки, юбки, звезды, знаменитости, fashion, style" />
     {% meta "image" %}
     <meta name='yandex-verification' content='7ac77779f12b7717' />
@@ -27,7 +26,7 @@
     <script type="text/javascript" src="{{ static_prefix }}js/jquery.prettyPhoto.js"></script>
     <script type="text/javascript" src="{{ static_prefix }}js/jquery-ui.js"></script>
     {% endcompress %}
-    {% compress js inline %}
+    {% compress js %}
     <script type="text/coffeescript" src="{{ static_prefix }}coffee/ajax.coffee"></script>
     <script type="text/coffeescript" src="{{ static_prefix }}coffee/navigation.coffee"></script>
     <script type="text/coffeescript" src="{{ static_prefix }}coffee/radio.coffee"></script>
@@ -37,13 +36,13 @@
     <script type="text/javascript">
         VK.init({apiId: 3520788, onlyWidgets: true});
     </script>
-    {% compress css inline %}
+    {% compress css %}
     <link rel="stylesheet" href="{{ static_prefix }}css/jquery-ui.min.css" type="text/css"/>
     <link rel="stylesheet" href="{{ static_prefix }}css/bootstrap.min.css" type="text/css"/>
     <link rel="stylesheet" href="{{ static_prefix }}css/bootstrap-responsive.min.css" type="text/css"/>
     <link rel="stylesheet" href="{{ static_prefix }}css/prettyPhoto.css" type="text/css"/>
-    {% endcompress %}
     <link rel="stylesheet" href="{{ static_prefix }}css/style.css" type="text/css"/>
+    {% endcompress %}
 </head>
 
 <body>
@@ -212,7 +211,7 @@
       </div>
       <ul class="nav">
         <li><a href="/article/karl-otto-lagerfeld/" class="ajax-nav">Karl Otto Lagerfeld</a></li>
-        <li><a href="#" class="ajax-nav">Roberto Cavalli</a></li>
+        <li><a href="/article/roberto-cavalli/" class="ajax-nav">Roberto Cavalli</a></li>
         <li><a href="#" class="ajax-nav">Giorgio Armani</a></li>
         <li><a href="#" class="ajax-nav">Hubert de Givenchy</a></li>
         <li><a href="#" class="ajax-nav">Yves Saint Laurent</a></li>

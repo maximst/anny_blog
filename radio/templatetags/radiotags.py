@@ -19,7 +19,8 @@ def radio_playlist():
             'full_title': '%s - %s' % (song.artist, song.title),
             'duration': song.duration,
             'ogg': song.ogg.url,
-            'mp3': song.mp3.url
+            'mp3': song.mp3.url,
+            'url': song.url
         })
 
-    return json.dumps(playlist, indent=4)
+    return json.dumps(playlist)#, indent=4)

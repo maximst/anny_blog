@@ -77,11 +77,12 @@ class Radio
     return track
 
   setTrack: (track) ->
-    if @radio.canPlayType 'audio/ogg; codecs="vorbis"'
-      @radio.src = track.ogg
-      if @radio.duration == NaN
-        @radio.src = track.mp3
+    if @radio.canPlayType 'audio/mpeg; codecs="mp3"'
+      @radio.src = track.url
     else
+      @radio.src = track.ogg
+
+    if @radio.duration == NaN
       @radio.src = track.mp3
 
     @setCookie('radio_track_id', track.id)
