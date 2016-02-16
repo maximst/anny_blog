@@ -29,7 +29,7 @@
     {% for im in row.front_images %}
       {% thumbnail im.image row.image_size as i %}
 <!--	  <div class="thumbnail-container">-->
-            <a rel="prettyPhoto[{{ row.slug }}]" class="thumbnail-img" href="{{ im.image.url }}" title="{{ im.title }}">
+            <a rel="prettyPhoto[{{ row.slug }}]" class="thumbnail-img" href="{{ im.ext_url }}" title="{{ im.title }}">
             {% if row.image_rows != 1 %}
             <div {% if row.image_rows == 2 %}class="img-border"{% endif %} style="height: {{ row.image_width }}px; width: {{ row.image_width }}px;">
             {% endif %}

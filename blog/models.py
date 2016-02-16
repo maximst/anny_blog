@@ -1,11 +1,16 @@
+#-*- coding: utf8 -*-
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 from ckeditor.fields import RichTextField
 
 from tag.models import ArticleTaggedItem, TaggableManagerN
 from poll.models import Poll
 
 from urlparse import urlparse, parse_qs
+import requests
+import urllib
+import os
 
 
 class Blog(models.Model):
@@ -122,6 +127,54 @@ class BlogImage(models.Model):
     image = models.ImageField(upload_to='images')
     front_page = models.BooleanField(default=True)
     order = models.IntegerField(default=0, blank=True, choices=ORDER_CHOICES)
+    ext_url = models.URLField(null=True, blank=True, max_length=2048)
+
+    def __init__(self, *args, **kwargs):
+        super(BlogImage, self).__init__(*args, **kwargs)
+        self._api = requests.Session()
+        self._api.headers.update({'Authorization': 'OAuth {}'.format(settings.YANDEX_TOKEN),
+                                  'Content-Type': 'application/json; charset=utf-8'})
+
+    def _success_wait(self, response):
+        if response.status_code == 202:
+            operation_url = response.json()['href']
+            while response.json().get('status') != 'success':
+                response = self._api.get(operation_url)
+
+    def save_to_yadisk(self):
+        method = lambda path: 'https://cloud-api.yandex.net/v1/disk/resources/{}'.format(path)
+
+        # Create blog directory
+        resp = self._api.put(method(''), params={'path': self.blog.slug})
+        self._success_wait(resp)
+
+        file_name = os.path.basename(self.image.name)
+        full_path = u'{}/{}'.format(self.blog.slug, file_name)
+        full_url = 'http://{}{}'.format(settings.HOSTNAME, self.image.url)
+
+        # Delete old file
+        resp = self._api.delete(method(''), params={'path': full_path, 'permanently': True})
+        self._success_wait(resp)
+
+        # Put file to disk
+        resp = self._api.post(method('upload'), params={'path': full_path, 'url': full_url, 'disable_redirects': True})
+        self._success_wait(resp)
+
+        # Make file public
+        resp = self._api.put(method('publish'), params={'path': full_path})
+        self._success_wait(resp)
+
+        # Get publick link
+        resp = self._api.get(method('download'), params={'path': full_path})
+
+        if resp.status_code == 200:
+            self.ext_url = resp.json()['href']
+            super(BlogImage, self).save()
+
+
+    def save(self, *args, **kwargs):
+        super(BlogImage, self).save(*args, **kwargs)
+        self.save_to_yadisk()
 
 
 # import the File class to inherit from
