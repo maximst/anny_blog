@@ -4,6 +4,8 @@ from django.utils import simplejson as json
 
 from ..models import Audio
 
+from core.templatetags.coretags import ext_media
+
 register = template.Library()
 
 @register.simple_tag
@@ -20,7 +22,8 @@ def radio_playlist():
             'duration': song.duration,
             'ogg': song.ogg.url,
             'mp3': song.mp3.url,
-            'url': song.url
+            'ext_ogg': ext_media(song.ogg.url),
+            'ext_mp3': ext_media(song.mp3.url),
         })
 
     return json.dumps(playlist)#, indent=4)

@@ -44,7 +44,7 @@
         {% if content.next_page_number <  content.paginator.num_pages|diff:1 %}
           <li class="disabled"><a>...</a></li>
         {% endif %}
-        <li><a class="ajax-nav" href="?{{ querystring }}&p={{ content.paginator.num_pages }}">{{ content.paginator.num_pages }}</a></li>
+        <!-- li><a class="ajax-nav" href="?{{ querystring }}&p={{ content.paginator.num_pages }}">{{ content.paginator.num_pages }}</a></li -->
       {% endif %}
     {% endif %}
 

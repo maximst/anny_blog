@@ -28,6 +28,11 @@ class Audio(models.Model):
 
         ogg_storage.delete(ogg_path)
         mp3_storage.delete(mp3_path)
+        try:
+            os.remove(ogg_path)
+            os.remove(mp3_path)
+        except OSError:
+            pass
 
     @classmethod
     def file_dir(cls):

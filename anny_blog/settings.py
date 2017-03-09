@@ -333,6 +333,7 @@ CKEDITOR_CONFIGS = {
     }
 }
 
+EXT_MEDIA_IP = '127.0.0.1'
 
 try:
     from .local_settings import *

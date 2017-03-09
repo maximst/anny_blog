@@ -65,7 +65,10 @@ def article(request, slug):
 @ajax_navigation
 @cache_page(settings.CACHE_TIMEOUT)
 def blog_detail(request, slug):
-    #log_write(request)
+#    try:
+#        log_write(request)
+#    except:
+#        pass
     user = request.user
 
     content = get_object_or_404(Blog, slug=slug)

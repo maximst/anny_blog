@@ -139,7 +139,7 @@ def get_audio():
                                                                 audio['title'])
             add_song(audio)
             print '[%s] INFO: Done ...' % datetime.utcnow()
-
+        print audio['artist'], '-', audio['title'], ':', url 
         Audio.objects.filter(aid=audio['aid']).update(url=url)
 
     # Delete removed vk songs

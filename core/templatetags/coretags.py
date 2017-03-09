@@ -99,7 +99,7 @@ def meta(context, t, *args):
         if detail:
             res = content.title
         else:
-            res = 'Anny'
+            res = 'Anny Star'
     elif t == 'description':
         if detail:
             res = content.body
@@ -150,7 +150,7 @@ def links(context):
     try:
         conn = sqlite3.connect(settings.LINKS_DB)
         sql = conn.cursor()
-        res = sql.execute('SELECT * FROM mainlink WHERE url = ?', (url,))
+        res = sql.execute('SELECT * FROM mainlink WHERE url = ? or url = ?', (url, url[:-1]))
 
         links = []
         for link in res:
@@ -202,3 +202,9 @@ def setlinks(context):
         return result
 
     return None
+
+
+@register.filter
+def ext_media(url):
+    url = url.replace(u'/media/', u'/follow-chic/media/blog/')
+    return u'https://{}{}'.format(settings.EXT_MEDIA_IP, url)

@@ -192,6 +192,10 @@ a,
     -ms-box-shadow: 0 3px 10px #000;
 }
 
+.navbar-inner,
+.navbar-inverse {
+    height: 40px !important;
+}
 
 .breadcrumb {
     z-index: 30;
@@ -245,6 +249,23 @@ a,
 
 .blog-images img {
     margin: 5px;
+}
+
+.blog-images img, #pp_full_res img {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    -khtml-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+
+    -webkit-transition: none;
+    -khtml-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    -ms-transition: none;
+    transition: none;
 }
 
 .blog-images div {
@@ -506,6 +527,12 @@ a,
     font-family: 'newpushkinbook';
 }
 
+.brand img {
+    height: 40px;
+    margin: -8px 30px 0px 40px;
+    transform: scale(1.6);
+}
+
 .blog-list-footer span {
     margin: 4px;
 }
@@ -553,6 +580,8 @@ a,
 #vk_like, .fb-like {
     display: inline !important;
     clear: none !important;
+    width: 190px !important;
+    margin-left: 5px;
 }
 
 .fb-like {

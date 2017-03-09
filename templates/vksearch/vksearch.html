@@ -5,7 +5,7 @@
 
 {% if show_login %}
     <h4>Please log in</h4>
-    <a href="{% url "socialauth_begin" "vk-oauth" %}?{{ redirect_querystring }}"
+    <a href="{% url "social:begin" "vk-oauth2" %}?{{ redirect_querystring }}"
         class="vkontakte"
         title="Login via vkontakte">
         <img src="{{ static_prefix }}img/vkontakte.png" alt="VK" border="0" width="22" height="22" />

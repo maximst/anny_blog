@@ -77,18 +77,23 @@ class Radio
     return track
 
   setTrack: (track) ->
-    if @radio.canPlayType 'audio/mpeg; codecs="mp3"'
-      @radio.src = track.url
+    if @radio.canPlayType 'audio/ogg; codecs="vorbis"'
+      @radio.src = track.ext_ogg
     else
-      @radio.src = track.ogg
+      @radio.src = track.ext_mp3
 
-    if @radio.duration == NaN
-      @radio.src = track.mp3
 
     @setCookie('radio_track_id', track.id)
     #@setCookie('radio_current_time', @radio.currentTime)
     @radio.dataset.id = track.id
     @initRadioPlayer()
+    @radio.onerror = (e) =>
+      e.target.onerror = null
+      if e.target.canPlayType 'audio/ogg; codecs="vorbis"'
+        e.target.src = track.ogg
+      else
+        e.target.src = track.mp3
+      e.target.play()
 
     console.log "NOW PLAYING: \"#{track.full_title}\""
 

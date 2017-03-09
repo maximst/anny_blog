@@ -11,13 +11,12 @@ def ajax_navigation(fn):
       if not request.is_ajax():
           return fn(request, *args, **kwargs)
 
-      cache_key = 'ajax_%s' % request.META['PATH_INFO']
+      cache_key = u'ajax_{}'.format(request.META['PATH_INFO'])
       if request.META.get('QUERY_STRING'):
-          cache_key += '?%s' % request.META['QUERY_STRING']
+          cache_key += u'?{}'.format(request.META['QUERY_STRING'])
 
       cached_content = cache.get(cache_key)
       if cached_content:
-          print 'Response from cache: ', cache_key
           return HttpResponse(json.dumps(cached_content),
                               mimetype="application/json")
 
@@ -47,7 +46,6 @@ def ajax_navigation(fn):
           response['image'] = dict(image.attrs)['href']
 
       if not cached_content:
-          print 'Set cache: ', cache_key
           cache.set(cache_key, response)
 
       return HttpResponse(json.dumps(response), mimetype="application/json")
