@@ -42,6 +42,11 @@ TIME_ZONE = 'Europe/Kiev'
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'ru'
 
+LANGUAGES = (
+    ('ru', 'Russian'),
+    ('en', 'English'),
+)
+
 SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
@@ -148,6 +153,7 @@ INSTALLED_APPS = (
     'filer',
     'mptt',
     'easy_thumbnails',
+    'hvad',
 
     'blog',
     'tag',

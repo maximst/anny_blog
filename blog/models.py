@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
 from ckeditor.fields import RichTextField
+from hvad.models import TranslatableModel, TranslatedFields
 
 from tag.models import ArticleTaggedItem, TaggableManagerN
 from poll.models import Poll
@@ -11,7 +12,7 @@ from core.utils import flip_horizontal
 from urlparse import urlparse, parse_qs
 
 
-class Blog(models.Model):
+class Blog(TranslatableModel):
     IMAGE_ROWS_CHOICES = [(i, i.__str__()) for i in range(1, 11)]
     IMAGE_SIZE = {
         1: 1024,
@@ -26,9 +27,17 @@ class Blog(models.Model):
         10: 80,
     }
 
-    title = models.CharField(max_length=128, unique=True)
-    preview = models.TextField(default='', blank=True)
-    body = models.TextField(default='')
+    translations = TranslatedFields(
+        title = models.CharField(max_length=128),
+        preview = models.TextField(default='', blank=True),
+        body = models.TextField(default=''),
+    )
+
+    name = models.CharField(max_length=128, unique=False)
+
+#    title = models.CharField(max_length=128, unique=True)
+#    preview = models.TextField(default='', blank=True)
+#    body = models.TextField(default='')
     slug = models.SlugField(max_length=128, unique=True)
     deleted = models.BooleanField(default=False)
     user = models.ForeignKey(User, null=True, default=1)

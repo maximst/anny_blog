@@ -1,6 +1,7 @@
 from django.contrib import admin
 from filer.admin.fileadmin import FileAdmin as BaseFileAdmin
 from models import Blog, Comment, BlogImage, MediaFile, Article
+from hvad.admin import TranslatableAdmin
 from django.core.cache import cache
 
 
@@ -23,10 +24,10 @@ class BlogImageInline(admin.TabularInline):
   extra = 0
 
 
-class BlogAdmin(BaseModelAdmin):
+class BlogAdmin(TranslatableAdmin, BaseModelAdmin):
     list_display = ('__unicode__', 'user', 'create_time', 'front_page',
                                                     'on_top', 'deleted')
-    prepopulated_fields = {'slug': ('title',)}
+    prepopulated_fields = {'slug': ('name',)}
     inlines = (BlogImageInline,)
 
     class Media:

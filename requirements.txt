@@ -21,3 +21,4 @@ django_compressor
 django-redis
 django-filer
 django-ckeditor
+django-hvad==1.5.1

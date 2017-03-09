@@ -93,7 +93,7 @@ def blog_detail(request, slug):
 @cache_page(settings.CACHE_TIMEOUT)
 def blog_list(request):
     #log_write(request)
-    contents = Blog.objects.all().order_by('-create_time')
+    contents = Blog.objects.language('all').all().order_by('-create_time')
     if not contents:
         return render(request, 'blog/blog_list.html', {'content': contents})
     paginator = Paginator(contents, 10)
