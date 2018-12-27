@@ -331,11 +331,38 @@ a,
   font-size: 11px;
 }
 
+.soul, .user-menu {
+  padding: 16px 20px 0px 0px;
+  float: right;
+  text-shadow: 0 1px 0 #000;
+  -moz-text-shadow: 0 1px 0 #000;
+  -webkit-text-shadow: 0 1px 0 #000;
+  -khtml-text-shadow: 0 1px 0 #000;
+  -o-text-shadow: 0 1px 0 #000;
+  -ms-text-shadow: 0 1px 0 #000;
+}
+
+.user-menu {
+  padding-top: 10px;
+}
+
+.user-menu .dropdown-menu,
+.user-menu .dropdown-menu:hover {
+  background: #222;
+}
+
+.user-menu a {
+  color: #999;
+}
+
+.user-menu a:hover {
+  text-decoration: none;
+}
+
 .soul {
   font-family: 'newpushkinbook';
   font-size: 23px;
-  padding: 16px 70px 0px 0px;
-  text-align: right;
+  padding-right: 20px;
   text-shadow: 0 0 1px #000;
   -moz-text-shadow: 0 0 1px #000;
   -webkit-text-shadow: 0 0 1px #000;

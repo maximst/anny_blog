@@ -21,10 +21,10 @@ $(document).ready(function() {
 </script>
 
 <div class="navbar navbar-inverse navbar-fixed-top">
-  <div class="django-powered transition">
+  <!--div class="django-powered transition">
     <div class="powered">Powered by</div>
     Django
-  </div>
+  </div-->
 <!--<img class="django-powered" src="{{ static_prefix }}img/django_grey.gif" border="0" alt="Powered by Django." title="Powered by Django." />-->
   <div class="navbar-inner">
     <div class="container">
@@ -37,19 +37,7 @@ $(document).ready(function() {
       </ul>-->
       <span>
       <ul class="nav">
-        {% if user.is_authenticated %}
-          {% if user.is_superuser %}<li><a class="animate-link" href="{% url "admin:index" %}">Админка</a></li>{% endif %}
-          <li><a class="animate-link ajax-nav" href="{% url "profile" %}" title="My profile">{% if user.get_full_name %}{{ user.get_full_name }}{% else %}{{ user.username }}{% endif %}</a></li>
-          <li><a class="animate-link" href="{% url "logout" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}">Выйти</a></li>
-        {% else %}
-          <!--<li class="btn disabled">Вы не вошли.</li>-->
-          
-          <li><a class="animate-link" href="{% url "social:begin" "facebook" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}" class="facebook" title="Login via facebook"><img src="{{ static_prefix }}img/facebook.png" alt="FB" border="0" width="22" height="22" /></a></li>
-          <li><a class="animate-link" href="{% url "social:begin" "vk-oauth2" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}" class="vkontakte" title="Login via vkontakte"><img src="{{ static_prefix }}img/vkontakte.png" alt="VK" border="0" width="22" height="22" /></a></li>
-          <li><a class="animate-link ajax-nav" href="{% url "login" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}">Войти</a></li>
-          <li><a class="animate-link ajax-nav" href="{% url "registration" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}">Регистрация</a></li>
-        {% endif %}
-        <li>
+        <!--li>
           <a class="email animate-link" href="mailto:{{ admin.1 }}" title="Write a letter to {{ admin.0 }} or developer of site">
             <img src="{{ static_prefix }}img/email_hover.png" alt="Write a letter to {{ admin.0 }} or developer of site" />
             <img class="hover-img transition" src="{{ static_prefix }}img/email.png" alt="Write a letter to {{ admin.0 }} or developer of site" />
@@ -61,9 +49,29 @@ $(document).ready(function() {
             <img src="{{ static_prefix }}img/radio.png" alt="Play radio Anny" id='radio-img' />
             <img class="hover-radio-img transition" src="{{ static_prefix }}img/radio_hover.png" alt="Play radio Anny" />
           </a>
-        </li>
+        </li-->
       </ul>
       </span>
+      <div class="dropdown user-menu">
+          {% if user.is_authenticated %}
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">{% if user.get_full_name %}{{ user.get_full_name }}{% else %}{{ user.username }}{% endif %}</a>
+            <ul class="dropdown-menu" role="menu">
+              {% if user.is_superuser %}
+                <li><a class="animate-link" href="{% url "admin:index" %}">Админка</a></li>
+              {% endif %}
+                <li><a class="animate-link ajax-nav" href="{% url "profile" %}" title="My profile">Профиль</a></li>
+                <li><a class="animate-link" href="{% url "logout" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}">Выйти</a></li>
+            </ul>
+          {% else %}
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Войти</a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a class="animate-link ajax-nav" href="{% url "login" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}">Войти</a></li>
+                <li><a class="animate-link" href="{% url "social:begin" "facebook" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}" class="facebook" title="Login via facebook">Войти через Facebook</a></li>
+                <li><a class="animate-link" href="{% url "social:begin" "vk-oauth2" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}" class="vkontakte" title="Login via vkontakte">Войти через Вконтакте</a></li>
+                <li><a class="animate-link ajax-nav" href="{% url "registration" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}">Регистрация</a></li>
+            </ul>
+          {% endif %}
+      </div>
       <div class="soul transition">
         Необходимо помнить о красоте душевной!
       </div>
