@@ -2,24 +2,6 @@
 
 {% get_static_prefix as static_prefix %}
 
-<script type="text/javascript">
-function digitalWatch() {
-    var date = new Date();
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
-    //     var seconds = date.getSeconds();
-    if (hours < 10) hours = "0" + hours;
-    if (minutes < 10) minutes = "0" + minutes;
-    //     if (seconds < 10) seconds = "0" + seconds;
-    document.getElementById("digital_watch").innerHTML = hours + ":" + minutes;/* + ":" + seconds;*/
-    setTimeout("digitalWatch()", 10000);
-}
-
-$(document).ready(function() {
-    digitalWatch();
-});
-</script>
-
 <div class="navbar navbar-inverse navbar-fixed-top">
   <!--div class="django-powered transition">
     <div class="powered">Powered by</div>

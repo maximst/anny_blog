@@ -33,7 +33,6 @@
     {% compress js %}
     <script type="text/coffeescript" src="{{ static_prefix }}coffee/ajax.coffee"></script>
     <script type="text/coffeescript" src="{{ static_prefix }}coffee/navigation.coffee"></script>
-    <script type="text/coffeescript" src="{{ static_prefix }}coffee/radio.coffee"></script>
     {% endcompress %}
     <script type="text/javascript" src="//vk.com/js/api/openapi.js?97"></script>
     <script type="text/javascript" src="//vk.com/js/api/openapi.js?101"></script>
@@ -56,20 +55,6 @@
 <!--2A5094D1CB093199E5A114632383F2AC-->
 {% menubar %}
 </header>
-<script type="text/javascript">
-  var PLAYLIST = {% radio_playlist %};
-  function cron() {
-    radio = document.getElementById('radio');
-
-    if (!radio.paused) {
-      document.cookie = "radio_current_time=" + radio.currentTime + "; path=/";
-    }
-
-    setTimeout('cron();', 500);
-  }
-</script>
-<audio id="radio" data-id="0" preload="metadata" style="position: absolute; z-index: -1000;"></audio>
-
 <div class="container">
 
 <!--www.people-group.net-->
