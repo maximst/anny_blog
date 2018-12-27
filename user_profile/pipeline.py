@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.cache import cache
 
 from urllib2 import urlopen
-import vkontakte
+import vk
 from StringIO import StringIO
 from PIL import Image
 from datetime import date
@@ -54,7 +54,7 @@ def set_user_profile(backend, details, response, social, uid, \
             uprof.save()
 
         if usa.provider == 'vk-oauth2':
-            vk_api = vkontakte.API(token=usa.extra_data['access_token'])
+            vk_api = vk.API(token=usa.extra_data['access_token'])
             result = vk_api.users.get(fields='sex,bdate,photo_100,country,city',
                                                                   uids=usa.uid)
             image_url = result[0]['photo_100']

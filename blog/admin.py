@@ -3,6 +3,7 @@ from filer.admin.fileadmin import FileAdmin as BaseFileAdmin
 from models import Blog, Comment, BlogImage, MediaFile, Article
 from hvad.admin import TranslatableAdmin
 from django.core.cache import cache
+from django.db import transaction
 
 
 class BaseModelAdmin(admin.ModelAdmin):
@@ -13,6 +14,11 @@ class BaseModelAdmin(admin.ModelAdmin):
     def save_related(self, *args, **kwargs):
         cache.clear()
         return super(BaseModelAdmin, self).save_related(*args, **kwargs)
+#        try:
+#            with transaction.atomic():
+#                return super(BaseModelAdmin, self).save_related(*args, **kwargs)
+#        except Exception:
+#            pass
 
     def delete_model(self, *args, **kwargs):
         cache.clear()

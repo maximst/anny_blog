@@ -4,12 +4,12 @@ south
 pytz
 django-voting
 django-taggit
-python-social-auth
+python-social-auth==0.3.6
 django-coffeescript
 sorl-thumbnail
 psycopg2
 django-grappelli
-vkontakte
+vk==2.0.2
 pyfaceb
 requests==0.14.2
 LinkExchange.Django

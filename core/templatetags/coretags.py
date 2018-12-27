@@ -9,6 +9,7 @@ from blog.models import Blog
 
 from voting.models import Vote
 
+import zlib
 import urllib
 import urllib2
 import sqlite3
@@ -134,36 +135,72 @@ def get_settings():
 
 @register.simple_tag(takes_context=True)
 def links(context):
-    request = context['request']
-    url = request.META.get('PATH_INFO', '')
-    url_list = url.split('://')
-    if len(url_list) > 1:
-        url = '://'.join(url_list[1:])
+    request = context.get('request')
+    if request:
+        url = request.META.get('PATH_INFO', '')
+        url_list = url.split('://')
+        if len(url_list) > 1:
+            url = '://'.join(url_list[1:])
 
-    if url.startswith('/'):
-        url = u'follow-chic.com%s' % url
+        if url.startswith('/'):
+            url = u'follow-chic.com%s' % url
 
-    query_string = request.META.get('QUERY_STRING')
-    if query_string:
-        url += '?%s' % query_string
+        query_string = request.META.get('QUERY_STRING')
+        if query_string:
+            url += '?%s' % query_string
+    else:
+        url = u'follow-chic.com/'
 
-    try:
-        conn = sqlite3.connect(settings.LINKS_DB)
-        sql = conn.cursor()
-        res = sql.execute('SELECT * FROM mainlink WHERE url = ? or url = ?', (url, url[:-1]))
+    if url.endswith('/'):
+        alt_url = url[:-1]
+    else:
+        alt_url = '{}/'.format(url)
 
-        links = []
-        for link in res:
-            links.append(u'<li>%s</li>' % link[2])
+    quoted_url = urllib.quote(url.encode('utf-8'))
+    alt_quoted_url = urllib.quote(alt_url.encode('utf-8'))
 
-        return u'<ul class="linx">%s</ul>' % '\n'.join(links)
-    except:
-        return ''
+    conn = sqlite3.connect(settings.LINKS_DB)
+    sql = conn.cursor()
+
+    links = []
+    for provider in ['mainlink', 'linkfeed']:
+        try:
+            res = sql.execute('SELECT * FROM {} WHERE url = ? OR url = ? OR url = ? OR url = ?'.format(provider), (url, alt_url, quoted_url, alt_quoted_url))
+
+            for link in res:
+                links.append(u'<li>%s</li>' % link[2])
+        except Exception:
+            pass
+
+    return u'<ul class="linx cached">%s</ul>' % '\n'.join(links)
 
 
 @register.simple_tag(takes_context=True)
 def setlinks(context):
     request = context['request']
+    full_url = request.build_absolute_uri()
+    crc_uri_1 = str(zlib.crc32(full_url[8:]) % (1<<32))
+    crc_uri_2 = str(zlib.crc32(full_url) % (1<<32))
+    qs = urllib.urlencode({
+        '1': '1',
+        'host': 'follow-chic.com',
+        'p': '6d6e10342d591fd102032427afb42eca',
+    })
+    setlinks_url = 'http://show.setlinks.ru/?%s' % qs
+
+    def _filter(row):
+        row_list = row.split()
+        return row_list and row_list[0] in (crc_uri_1, crc_uri_2) or False
+
+    try:
+        result = urllib2.urlopen(setlinks_url, timeout=3)
+        result = result.code == 200 and result.readlines() or None
+    except:
+        return '<!--6d6e1-->'
+    else:
+        res = result and filter(_filter, result) or None
+        return res and res[0].decode('cp1251').replace(res[0].split()[0], '<!--6d6e1-->') or '<!--6d6e1-->'
+
     url = request.META.get('PATH_INFO', '')
     url_withouth_slash = url.endswith('/') and url[:-1] or url
     query_string = request.META.get('QUERY_STRING')
