@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.conf import settings
 from django.views.generic import TemplateView
 
@@ -25,7 +25,7 @@ sitemaps = {
 
 admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'^blog/(?P<slug>[\w\-]+)/$', blog_detail, name='blog'),
     url(r'^article/(?P<slug>[\w\-]+)/$', article, name='article'),
     url(r'^article/$', article_list, name='article-list'),
@@ -56,7 +56,7 @@ urlpatterns = patterns('',
     url(r'^poll-vote/$', poll_vote, name='poll-vote'),
     url(r'', include('social.apps.django_app.urls', namespace='social')),
     url(r'^filer/', include('filer.urls')),
-)
+]
 
 if settings.DEBUG:
     urlpatterns.append(url(r'^media/(?P<path>.*)$', 'django.views.static.serve',

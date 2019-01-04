@@ -1,6 +1,6 @@
 # -*-coding: utf8-*-
 from django.shortcuts import render, get_object_or_404, redirect
-from django.core.context_processors import csrf
+from django.template.context_processors import csrf
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.cache import cache_page
 from django.conf import settings

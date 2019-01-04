@@ -1,6 +1,6 @@
 # -*-coding: utf8-*-
 from django.shortcuts import render, get_object_or_404, redirect
-from django.core.context_processors import csrf
+from django.template.context_processors import csrf
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse

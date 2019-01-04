@@ -140,7 +140,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.sitemaps',
-    'south',
+    #'south',
     'voting',
     'taggit',
     'social.apps.django_app.default',
@@ -340,6 +340,8 @@ CKEDITOR_CONFIGS = {
 }
 
 EXT_MEDIA_IP = '127.0.0.1'
+
+CACHE_TIMEOUT = 60
 
 try:
     from .local_settings import *
