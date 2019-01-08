@@ -4,12 +4,13 @@ pytz
 -e git+https://github.com/pjdelport/django-voting.git#egg=django-voting
 django-taggit
 python-social-auth==0.3.6
-pip install social-auth-app-django==3.1.0
+social-auth-app-django==3.1.0
 django-coffeescript
 sorl-thumbnail
 psycopg2
 django-grappelli
 vk==2.0.2
+vkontakte==1.3.5
 pyfaceb
 requests==2.20.0
 LinkExchange.Django
@@ -22,3 +23,5 @@ django-redis
 django-filer
 django-ckeditor
 django-hvad==1.8.0
+#django-contrib-comments==1.8.0
+django-comments-xtd==2.3.0

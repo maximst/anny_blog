@@ -140,6 +140,9 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.sitemaps',
+    #'django.contrib.comments',
+    'django_comments',
+    'django_comments_xtd',
     #'south',
     'voting',
     'taggit',
@@ -342,6 +345,8 @@ CKEDITOR_CONFIGS = {
 EXT_MEDIA_IP = '127.0.0.1'
 
 CACHE_TIMEOUT = 60
+
+COMMENTS_APP='django_comments_xtd'
 
 try:
     from .local_settings import *

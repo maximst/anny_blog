@@ -1,6 +1,7 @@
 from django.conf.urls import include, url
 from django.conf import settings
 from django.views.generic import TemplateView
+from django.views.static import serve
 
 from django.contrib import admin
 from django.contrib import auth
@@ -11,7 +12,9 @@ from tag.views import tags_autocomplite
 from user_profile.views import profile
 from vksearch.views import vksearch
 from poll.views import vote as poll_vote
+from supercaptcha import draw
 
+from django.contrib.sitemaps.views import sitemap
 from sitemap import (BlogSitemap, CommentSitemap, BlogImageSitemap,
                                                   ArticleTagSitemap)
 
@@ -34,9 +37,9 @@ urlpatterns = [
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^comments/$', include('django.contrib.comments.urls')),
+    url(r'^comments/$', include('django_comments_xtd.urls')),
     url(r'^vote/(?P<app>[\w\-\_]+)/(?P<model>[\w\_]+)/(?P<pk>\d+)/(?P<vote>([01]))/$', vote, name='vote'),
-    url(r'^accounts/login/$', auth.views.login, name='login'),
+    url(r'^accounts/login/$', auth.login, name='login'),
     url(r'^accounts/logout/$', logout, name='logout'),
     url(r'^accounts/profile/$', profile, name='profile'),
     url(r'^accounts/registration/$', registration, name='registration'),
@@ -45,9 +48,9 @@ urlpatterns = [
     url(r'^tag/(?P<tag>.+)/$', tags, name='tags'),
     url(r'^tag_autocomplite/$', tags_autocomplite, name='tags_autocomplite'),
     url(r'^tag/$', tags, name='tags'),
-    url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap',
-                                            {'sitemaps': sitemaps}),
-    url(r'^captcha/(?P<code>[\da-f]{32})/$', 'supercaptcha.draw'),
+    url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
+                        name='django.contrib.sitemaps.views.sitemap'),
+    url(r'^captcha/(?P<code>[\da-f]{32})/$', draw),
     #url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
     #{'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
     url(r'^laminat/$', laminat, name='laminat'),
@@ -59,5 +62,5 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns.append(url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
+    urlpatterns.append(url(r'^media/(?P<path>.*)$', serve,
                           {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),)
