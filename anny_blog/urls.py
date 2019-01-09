@@ -5,6 +5,7 @@ from django.views.static import serve
 
 from django.contrib import admin
 from django.contrib import auth
+from django.contrib.auth.views import LoginView
 
 from blog.views import blog_list, blog_detail, tags, article, article_list
 from core.views import vote, logout, registration, registration_thanks, laminat
@@ -37,9 +38,9 @@ urlpatterns = [
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^comments/$', include('django_comments_xtd.urls')),
+    url(r'^comments/', include('django_comments_xtd.urls')),
     url(r'^vote/(?P<app>[\w\-\_]+)/(?P<model>[\w\_]+)/(?P<pk>\d+)/(?P<vote>([01]))/$', vote, name='vote'),
-    url(r'^accounts/login/$', auth.login, name='login'),
+    url(r'^accounts/login/$', LoginView.as_view(), name='login'),
     url(r'^accounts/logout/$', logout, name='logout'),
     url(r'^accounts/profile/$', profile, name='profile'),
     url(r'^accounts/registration/$', registration, name='registration'),

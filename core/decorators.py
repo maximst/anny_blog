@@ -1,6 +1,5 @@
 #!-*-coding: utf8-*-
-import json
-from django.http import HttpResponse
+from django.http import JsonResponse
 from django.core.cache import cache
 
 from BeautifulSoup import BeautifulSoup
@@ -17,8 +16,7 @@ def ajax_navigation(fn):
 
       cached_content = cache.get(cache_key)
       if cached_content:
-          return HttpResponse(json.dumps(cached_content),
-                              mimetype="application/json")
+          return JsonResponse(cached_content)
 
       old_response = fn(request, *args, **kwargs)
 
@@ -48,5 +46,5 @@ def ajax_navigation(fn):
       if not cached_content:
           cache.set(cache_key, response)
 
-      return HttpResponse(json.dumps(response), mimetype="application/json")
+      return JsonResponse(response)
     return wrapper

@@ -3,7 +3,7 @@
 {% load static %}
 {% load coretags %}
 {% load radiotags %}
-{% load coffeescript %}
+{% load compile_static %}
 {% load compress %}
 {% get_static_prefix as static_prefix %}
 <head>
@@ -18,9 +18,9 @@
     <meta name='yandex-verification' content='7ac77779f12b7717' />
     <link rel="author" title="Maxim Starodubcev" href="mailto: (author) maxim@trambroid.com">
     <script type="text/javascript">
-        if (window.location.protocol.split(':')[0] == 'http') { 
-            window.location.protocol = 'https';
-        }
+//         if (window.location.protocol.split(':')[0] == 'http') { 
+//             window.location.protocol = 'https';
+//         }
     </script>
     {% compress js %}
     <script type="text/javascript" src="{{ static_prefix }}js/jquery.js"></script>
@@ -31,8 +31,8 @@
     <script type="text/javascript" src="{{ static_prefix }}js/jquery-ui.js"></script>
     {% endcompress %}
     {% compress js %}
-    <script type="text/coffeescript" src="{{ static_prefix }}coffee/ajax.coffee"></script>
-    <script type="text/coffeescript" src="{{ static_prefix }}coffee/navigation.coffee"></script>
+    <script src="{% static "coffee/ajax.coffee"|compile %}"></script>
+    <script src="{% static "coffee/navigation.coffee"|compile %}"></script>
     {% endcompress %}
     <script type="text/javascript" src="//vk.com/js/api/openapi.js?97"></script>
     <script type="text/javascript" src="//vk.com/js/api/openapi.js?101"></script>
@@ -96,10 +96,11 @@
     <div id="container">
       <div class="text-center advertisement-links" style="margin: -7px;">
           <strong>Реклама: </strong>
-          {% load linkexchange_tags %}
+{% comment %}
           {% for link in linkexchange_blocks %}
               {% if link != '<div></div>' %}{{ link|safe }}{% endif %}
           {% endfor %}
+{% endcomment %}
           {% links %}
           <span style="font-size: 10px; padding: 0;">{% setlinks %}</span>
       </div>

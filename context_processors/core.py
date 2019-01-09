@@ -1,4 +1,4 @@
-from django.core.context_processors import request
+from django.template.context_processors import request
 
 def core(request):
     query_string = request.META['QUERY_STRING']

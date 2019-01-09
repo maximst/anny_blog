@@ -5,7 +5,7 @@ pytz
 django-taggit
 python-social-auth==0.3.6
 social-auth-app-django==3.1.0
-django-coffeescript
+django-static-precompiler==1.8.2
 sorl-thumbnail
 psycopg2
 django-grappelli

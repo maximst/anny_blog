@@ -54,9 +54,11 @@ def set_user_profile(backend, details, response, social, uid, \
             uprof.save()
 
         if usa.provider == 'vk-oauth2':
-            vk_api = vk.API(token=usa.extra_data['access_token'])
+            session = vk.Session(access_token=usa.extra_data['access_token'])
+            vk_api = vk.API(session)
             result = vk_api.users.get(fields='sex,bdate,photo_100,country,city',
-                                                                  uids=usa.uid)
+                                                                  uids=usa.uid,
+                                                                  v=5.89)
             image_url = result[0]['photo_100']
             img_temp = StringIO(urlopen(image_url).read())
             img_temp.flush()

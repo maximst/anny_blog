@@ -27,12 +27,12 @@ class BaseModelAdmin(admin.ModelAdmin):
 
 class BlogImageInline(admin.TabularInline):
   model = BlogImage
-  extra = 0
+  extra = 1
 
 
 class BlogAdmin(TranslatableAdmin, BaseModelAdmin):
-    list_display = ('__unicode__', 'user', 'create_time', 'front_page',
-                                                    'on_top', 'deleted')
+    #list_display = ('__unicode__', 'user', 'create_time', 'front_page',
+    #                                                'on_top', 'deleted')
     prepopulated_fields = {'slug': ('name',)}
     inlines = (BlogImageInline,)
 

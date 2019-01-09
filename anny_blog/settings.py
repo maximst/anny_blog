@@ -95,9 +95,8 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.DefaultStorageFinder',
     'compressor.finders.CompressorFinder',
+    #'coffeescript.finders.CoffeescriptFinder',
 )
-
-# Make this unique, and don't share it with anybody.
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -105,6 +104,28 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [autopath('templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.template.context_processors.tz',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
+                #'linkexchange_django.context_processors.linkexchange',
+                #'sape.django.context_processors.sape',
+                'context_processors.core.core',
+            ]
+        },
+    },
+]
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -146,13 +167,15 @@ INSTALLED_APPS = (
     #'south',
     'voting',
     'taggit',
+    'social_django',
     'social.apps.django_app.default',
-    'coffeescript',
+    #'coffeescript',
     'sorl.thumbnail',
-    'linkexchange_django',
-    'sape.django',
+    #'linkexchange_django',
+    #'sape.django',
     'supercaptcha',
     'compressor',
+    'static_precompiler',
     'filer',
     'mptt',
     'easy_thumbnails',
@@ -195,27 +218,11 @@ LOGGING = {
     }
 }
 
-
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.core.context_processors.debug',
-    'django.core.context_processors.request',
-    'django.core.context_processors.tz',
-    'django.contrib.auth.context_processors.auth',
-    'django.contrib.messages.context_processors.messages',
-    'social.apps.django_app.context_processors.backends',
-    'social.apps.django_app.context_processors.login_redirect',
-    'linkexchange_django.context_processors.linkexchange',
-    'sape.django.context_processors.sape',
-    'context_processors.core.core',
-)
-CONTEXT_PROCESSORS = TEMPLATE_CONTEXT_PROCESSORS
-
 LOGIN_URL = '/accounts/login/'
 
 AUTHENTICATION_BACKENDS = (
     'social.backends.facebook.FacebookOAuth2',
-    'social.backends.vk.VKOAuth2',
+    'social_core.backends.vk.VKOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -255,9 +262,9 @@ SAPE_DATABASE = autopath('sape')
 SAPE_USER = '1ace11f022c3a648b3cc382788c589cd'
 SAPE_HOST = HOSTNAME
 
-COMPRESS_PRECOMPILERS = (
-    ('text/coffeescript', 'coffee --compile --stdio'),
-)
+#COMPRESS_PRECOMPILERS = (
+    #('text/coffeescript', 'coffee --compile --stdio'),
+#)
 
 THUMBNAIL_QUALITY = 80
 

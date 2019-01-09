@@ -3,7 +3,6 @@
 {% load polltags %}
 {% load thumbnail %}
 {% load tz %}
-{% load linkexchange_tags %}
 {% get_current_timezone as TIME_ZONE %}
 
 {% block content %}
@@ -19,7 +18,7 @@
             {% poll content.poll %}
         {% endif %}
         <div class="blog-detail-body-content content-detail-body-content">
-          {{ content.body|linkexchange_filter:request|safe }}
+          {{ content.body|safe }}
         </div>
 	<div class="blog-images">
 	  {% for im in content.images %}

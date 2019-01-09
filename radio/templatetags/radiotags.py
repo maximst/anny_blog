@@ -1,6 +1,6 @@
 #!-*-coding: utf8-*-
 from django import template
-from django.utils import simplejson as json
+import json
 
 from ..models import Audio
 
