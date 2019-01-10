@@ -173,10 +173,14 @@ a,
 
 .blog-list {
     margin: 5px;
+    min-width: 260px;
+    border: 1px solid #555;
+    padding: 5px;
+    display: inline-block;
 }
 .content-container,
 .blog-detail {
-    padding-top: 5px;
+    padding-top: 30px;
 }
 
 .blog-list-footer {
@@ -276,10 +280,9 @@ a,
     -khtml-box-shadow: 0 1px 3px #000 inset;
     -o-box-shadow: 0 1px 3px #000 inset;
     -ms-box-shadow: 0 1px 3px #000 inset;
-    display: inline-block;
     background: #777;
     padding: 4px;
-    margin: 7px;
+    margin: 5px;
     overflow: hidden;
     border-radius: 5px;
     -moz-border-radius: 5px;
@@ -867,4 +870,13 @@ a,
 
 .article-detail {
     margin: 30px;
+}
+
+@media (min-width: 1200px) {
+    .container,
+    .navbar-static-top .container,
+    .navbar-fixed-top .container,
+    .navbar-fixed-bottom .container {
+        width: 1190px;
+    }
 }

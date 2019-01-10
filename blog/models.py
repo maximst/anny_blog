@@ -112,6 +112,10 @@ class Blog(TranslatableModel):
     def front_images(self):
         return self.blogimage_set.filter(front_page=True).order_by('order', 'pk')
 
+    @property
+    def front_image(self):
+        return self.front_images.first
+
 
 class Comment(models.Model):
     title = models.CharField(max_length=64, blank=True, default='')

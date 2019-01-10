@@ -8,102 +8,74 @@
 
 {% block content %}
 
-<div class="content-container">
+<div class="content-container row">
+  {% for row in content %}
+    <a class="ajax-nav" href="{% url "blog" slug=row.slug %}" title="Go to: {{ row.title }}">
+        <div id="preview-{{ row.id }}" class="fp-list blog-list content-list linebreack span3">
+            <div class="blog-list-header content-list-header">
+                <h4>{{ row.title|truncatechars_html:25 }}</h4>
+            </div>
+            {% comment %} {% vote_list row.pk %} {% endcomment %}
+            <div class="blog-list-body content-list-body">
+            </div>
+            <div class="blog-images">
+              {% thumbnail row.front_image.image "226x390" upscale=True crop="center" as i %}
+                <div>
+                    <img class="blog-image" src="{{ i.url|ext_media }}" onError="this.onerror=null;this.src='{{ i.url }}';" alt="{{ im.title }}" />
+                </div>
+            </div>
+            <article>
+              {% if row.poll %}
+                {% poll row.poll %}
+              {% endif %}
+                {{ row.preview|safe|truncatechars_html:40 }}
+            </article>
+              {% comment %}
+              {% if row.embed_video %}
+                <div class="video">
+                {{ row.embed_video|safe }}
+                </div>
+              {% endif %}
+              {% endcomment %}
+            <div class="blog-list-footer content-list-footer">
+                <span class="blog-time">
+                    <time>
+                      {% localtime on %}
+                        {% timezone TIME_ZONE %}
+                        {{ row.create_time|date:"d-M Yг. G:i" }}
+                        {% endtimezone %}
+                      {% endlocaltime %}
+                    </time>
+                </span>
+                <span class="link">Читать далее...</span>
+              {% comment %}
+                <span>
+                    <a class="ajax-nav" href="{% if user.is_authenticated %}{% url "blog" slug=row.slug %}#comment_form{% else %}{% url "login" %}?{% url "blog" slug=row.slug %}#comment_form{% endif %}">Оставить коментарий </a>
+                </span>
+                <span>
+                    {{ row.num_comments }} Коментариев
+                </span>
+              {% if row.tags.all %}
+                <span class="float-left">
+                    Тэги:
+                  {% for t in row.tags.all %}
+                    <a class="ajax-nav" href="/tag/{{ t.slug }}/">{{ t.name }}</a>{% if not forloop.last %}, {% endif %}
+                  {% endfor %}
+                </span>
+              {% endif %}
+                <div class="btn-group">
+                    <a class="btn" href="{% url "blog" slug=row.slug %}">Read more</a>
+                    <a class="btn" href="{% url "blog" slug=row.slug %}#comments">{{ row.num_comments }} Comments</a>
 
-{% for row in content %}
-
-<div id="preview-{{ row.id }}" class="fp-list blog-list content-list {% if row.linebreack %}linebreack{% endif %}">
-  <div class="blog-list-header content-list-header">
-    <a class="ajax-nav" href="{% url "blog" slug=row.slug %}" title="Go to: {{ row.title }}"><h4>{{ row.title }}</h4></a>
-  </div>
-  {% vote_list row.pk %}
-  <div class="blog-list-body content-list-body">
-  <article>
-    {% if row.poll %}
-        {% poll row.poll %}
-    {% endif %}
-    {{ row.preview|safe }}
-  </article>
-  </div>
-  <div class="blog-images">
-    {% for im in row.front_images %}
-      {% thumbnail im.image row.image_size as i %}
-<!--	  <div class="thumbnail-container">-->
-            <a rel="prettyPhoto[{{ row.slug }}]" class="thumbnail-img" href="{{ im.image.url|ext_media }}" data-alt-href="{{ im.image.url }}" title="{{ im.title }}">
-            {% if row.image_rows != 1 %}
-            <div {% if row.image_rows == 2 %}class="img-border"{% endif %} style="height: {{ row.image_width }}px; width: {{ row.image_width }}px;">
-            {% endif %}
-
-            {% comment %}<img {% if row.image_rows != 1 %}style="margin:{{ i|margin:row.image_size }}"{% endif %} class="blog-image" src="{{ i.url|ext_media }}" onError="this.onerror=null;this.src='{{ i.url }}';" style="max-width: {{ row.image_size }}px; width: {{ row.image_size_precent }}%;" alt="{{ im.title }}" />{% endcomment %}
-            {% if row.image_rows != 1 %}
-              </div>
-            {% endif %}
-            </a>
-<!--	    <br>
-            {% if im.title %}
-              {{ im.title }}
-            {% else %}
-              &nbsp;
-            {% endif %}
-          </div>-->
-      {% comment %}{% endthumbnail %}{% endcomment %}
-
-      {% if forloop.counter|divisibleby:row.image_rows %}
-        <br />
-      {% endif %}
-    {% endfor %}
-  </div>
-  {% if row.embed_video %}
-    <div class="video">
-      {{ row.embed_video|safe }}
-    </div>
-  {% endif %}
-  <div class="blog-list-footer content-list-footer">
-      <span class="blog-time">
-      <time>
-      {% localtime on %}
-        {% timezone TIME_ZONE %}
-          {{ row.create_time|date:"G:i" }}
-        {% endtimezone %}
-      {% endlocaltime %}
-      </time>
-      </span>
-      <span>
-        <a class="ajax-nav" href="{% if user.is_authenticated %}{% url "blog" slug=row.slug %}#comment_form{% else %}{% url "login" %}?{% url "blog" slug=row.slug %}#comment_form{% endif %}">Оставить коментарий </a>
-      </span>
-      <span>
-        {{ row.num_comments }} Коментариев
-      </span>
-      {% if row.tags.all %}
-        <span class="float-left">
-          Тэги:
-          {% for t in row.tags.all %}
-            <a class="ajax-nav" href="/tag/{{ t.slug }}/">{{ t.name }}</a>{% if not forloop.last %}, {% endif %}
-          {% endfor %}
-        </span>
-      {% endif %}
-      <!--<div class="btn-group">
-        <a class="btn" href="{% url "blog" slug=row.slug %}">Read more</a>
-        <a class="btn" href="{% url "blog" slug=row.slug %}#comments">{{ row.num_comments }} Comments</a>
-
-        {% if user.is_authenticated %}
-          <a class="btn" href="{% url "blog" slug=row.slug %}#comment_form">Add Comment</a>
-        {% endif %}
-        {% comment %}      <small><a class="btn" href="#">{% if row.user.first_name or row.user.last_name %}{{ row.user.first_name }} {{ row.user.last_name }}{% else %}{{ row.user.username }}{% endif %} blog</a></small>{% endcomment %}
-      </div>-->
-  </div>
-  <time>
-  {% localtime on %}
-    {% timezone TIME_ZONE %}
-      {{ row.post_date|date:"d-M Y" }}
-    {% endtimezone %}
-  {% endlocaltime %}
-  </time>
-</div>
-
-
-{% endfor %}
-
+                  {% if user.is_authenticated %}
+                    <a class="btn" href="{% url "blog" slug=row.slug %}#comment_form">Add Comment</a>
+                  {% endif %}
+                    <small><a class="btn" href="#">{% if row.user.first_name or row.user.last_name %}{{ row.user.first_name }} {{ row.user.last_name }}{% else %}{{ row.user.username }}{% endif %} blog</a></small>
+              {% endcomment %}
+            </div>
+        </div>
+    </a>
+  {% endfor %}
 </div>
 
 {% endblock %}
