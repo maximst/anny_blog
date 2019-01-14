@@ -18,7 +18,7 @@
             {% comment %} {% vote_list row.pk %} {% endcomment %}
             <div class="blog-list-body content-list-body">
             </div>
-            <div class="blog-images">
+            <div class="blog-images blog-images-list">
               {% thumbnail row.front_image.image "226x390" upscale=True crop="center" as i %}
                 <div>
                     <img class="blog-image" src="{{ i.url|ext_media }}" onError="this.onerror=null;this.src='{{ i.url }}';" alt="{{ im.title }}" />
@@ -28,7 +28,7 @@
               {% if row.poll %}
                 {% poll row.poll %}
               {% endif %}
-                {{ row.preview|safe|truncatechars_html:40 }}
+                {{ row.preview|safe|truncatechars_html:38 }}
             </article>
               {% comment %}
               {% if row.embed_video %}

@@ -255,6 +255,11 @@ a,
     margin: 5px;
 }
 
+.blog-images-detail img {
+    height: 97%;
+    width: auto;
+}
+
 .blog-images img, #pp_full_res img {
     -moz-transform: scaleX(-1);
     -o-transform: scaleX(-1);
@@ -270,6 +275,14 @@ a,
     -o-transition: none;
     -ms-transition: none;
     transition: none;
+}
+
+.blog-images-detail div {
+    display: inline-block;
+}
+
+.blog-images-list div {
+    height: 400px;
 }
 
 .blog-images div {

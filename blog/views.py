@@ -96,7 +96,7 @@ def blog_list(request):
     contents = Blog.objects.language('all').all().order_by('-create_time')
     if not contents:
         return render(request, 'blog/blog_list.html', {'content': contents})
-    paginator = Paginator(contents, 10)
+    paginator = Paginator(contents, 16)
 
     page = request.GET.get('p')
     try:
