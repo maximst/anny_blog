@@ -31,7 +31,7 @@
             {% if row.poll %}
             {% poll row.poll %}
             {% endif %}
-            {{ row.preview|safe|truncatechars_html:38 }}
+            {{ row.preview|safe|truncatechars_html:55 }}
         </article>
             {% comment %}
             {% if row.embed_video %}
@@ -45,7 +45,7 @@
                 <time>
                     {% localtime on %}
                     {% timezone TIME_ZONE %}
-                    {{ row.create_time|date:"d-M Yг. G:i" }}
+                    {{ row.create_time|date:"d-M Yг" }}
                     {% endtimezone %}
                     {% endlocaltime %}
                 </time>

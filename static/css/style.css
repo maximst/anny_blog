@@ -178,6 +178,12 @@ a,
     padding: 5px;
     display: inline-block;
 }
+
+.blog-list article {
+    height: 45px;
+    overflow: hidden;
+}
+
 .content-container,
 .blog-detail {
     padding-top: 30px;
@@ -185,6 +191,10 @@ a,
 
 .blog-list-footer {
     font-size: 70%;
+}
+
+.blog-list-footer a {
+    float: right;
 }
 
 .navbar-inverse {
