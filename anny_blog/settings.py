@@ -171,7 +171,6 @@ INSTALLED_APPS = (
     'social.apps.django_app.default',
     #'coffeescript',
     'sorl.thumbnail',
-    #'linkexchange_django',
     #'sape.django',
     'supercaptcha',
     'compressor',
@@ -180,6 +179,7 @@ INSTALLED_APPS = (
     'mptt',
     'easy_thumbnails',
     'hvad',
+    'linkexchange_django',
 
     'blog',
     'tag',

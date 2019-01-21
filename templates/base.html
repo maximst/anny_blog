@@ -4,6 +4,7 @@
 {% load coretags %}
 {% load radiotags %}
 {% load compile_static %}
+{% load linkexchange_tags %}
 {% load compress %}
 {% get_static_prefix as static_prefix %}
 <head>
@@ -96,11 +97,10 @@
     <div id="container">
       <div class="text-center advertisement-links" style="margin: -7px;">
           <strong>Реклама: </strong>
-{% comment %}
-          {% for link in linkexchange_blocks %}
+          {% for link in linkexchange_filter %}
               {% if link != '<div></div>' %}{{ link|safe }}{% endif %}
           {% endfor %}
-{% endcomment %}
+
           {% links %}
           <span style="font-size: 10px; padding: 0;">{% setlinks %}</span>
       </div>
