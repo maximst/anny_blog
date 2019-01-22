@@ -96,13 +96,15 @@
     </div>
     <div id="container">
       <div class="text-center advertisement-links" style="margin: -7px;">
+          {% links as marketing_links %}
+          {% setlinks as marketing_setlinks %}
           <strong>Реклама: </strong>
           {% for link in linkexchange_filter %}
               {% if link != '<div></div>' %}{{ link|safe }}{% endif %}
           {% endfor %}
 
-          {% links %}
-          <span style="font-size: 10px; padding: 0;">{% setlinks %}</span>
+          {{ marketing_links|safe }}
+          <span style="font-size: 10px; padding: 0;">{{ marketing_setlinks|safe }}</span>
       </div>
 
       <nav>{% breadcrump %}</nav>
