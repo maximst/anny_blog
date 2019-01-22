@@ -13,7 +13,7 @@
     <div id="preview-{{ row.id }}" class="fp-list blog-list content-list linebreack span3">
         <div class="blog-list-header content-list-header">
             <a class="ajax-nav" href="{% url "blog" slug=row.slug %}" title="Go to: {{ row.title }}">
-                <h4>{{ row.title|truncatechars_html:25 }}</h4>
+                <h4>{{ row.title|truncatechars_html:24 }}</h4>
             </a>
         </div>
         {% comment %} {% vote_list row.pk %} {% endcomment %}
