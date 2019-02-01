@@ -154,7 +154,7 @@ def links(context):
     if url.endswith('/'):
         alt_url = url[:-1]
     else:
-        alt_url = '{}/'.format(url)
+        alt_url = u'{}/'.format(url)
 
     quoted_url = urllib.quote(url.encode('utf-8'))
     alt_quoted_url = urllib.quote(alt_url.encode('utf-8'))
