@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 import json
 
@@ -12,7 +12,10 @@ def tags_autocomplite(request):
     query = request.GET.get('query')
 
     if not request.is_ajax() or query is None:
-        return HttpResponse(status=400)
+        return JsonResponse({'error': 'Only AJAX supported'}, status=400)
+
+    if not request.user.is_superuser:
+        return JsonResponse({'error': 'Only superuser can use this view'}, status=403)
 
     tags = ArticleTag.objects.filter(name__icontains=query)
 
@@ -23,4 +26,4 @@ def tags_autocomplite(request):
 
     response['query_time'] = time() - t,
 
-    return HttpResponse(json.dumps(response), mimetype="application/json")
+    return JsonResponse(response)

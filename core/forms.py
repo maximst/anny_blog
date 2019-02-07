@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 from user_profile.models import UserProfile
 
-import supercaptcha
+from captcha.fields import CaptchaField
 from pytz import all_timezones
 from PIL import Image
 from StringIO import StringIO
@@ -28,7 +28,7 @@ class RegistrationForm(forms.Form):
             widget=forms.Select(choices=zip(all_timezones, all_timezones)))
     signature = forms.CharField(max_length=255, widget=forms.Textarea,
                                         required=False, label='Подпись')
-    captcha = supercaptcha.CaptchaField(label=u'Введите текст с картинки')
+    captcha = CaptchaField(label=u'Введите текст с картинки')
 
 
     def save(self, avatar=None):

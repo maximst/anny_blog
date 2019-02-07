@@ -57,7 +57,7 @@ class ArticleAdmin(BaseModelAdmin):
     class Media:
         from django.conf import settings
         static_url = getattr(settings, 'STATIC_URL', '/static')
-        js = [  
+        js = [
             static_url + 'js/jquery.autocomplete.js',
             static_url + 'js/tag-autocomplite.js',
             #static_url + 'js/jquery.js'

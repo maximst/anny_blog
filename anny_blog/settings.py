@@ -87,8 +87,8 @@ STATICFILES_DIRS = (
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
     #'django.contrib.staticfiles.finders.DefaultStorageFinder',
     'compressor.finders.CompressorFinder',
     #'coffeescript.finders.CoffeescriptFinder',
@@ -96,8 +96,8 @@ STATICFILES_FINDERS = (
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.filesystem.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
 
@@ -153,22 +153,18 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-#    'grappelli',
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.sitemaps',
     #'django.contrib.comments',
     'django_comments',
     'django_comments_xtd',
-    #'south',
     'voting',
     'taggit',
     'social_django',
     'social.apps.django_app.default',
-    #'coffeescript',
     'sorl.thumbnail',
-    #'sape.django',
-    'supercaptcha',
     'compressor',
     'static_precompiler',
     'filer',
@@ -176,6 +172,7 @@ INSTALLED_APPS = (
     'easy_thumbnails',
     'hvad',
     'linkexchange_django',
+    'captcha',
 
     'blog',
     'tag',
@@ -183,36 +180,39 @@ INSTALLED_APPS = (
     'user_profile',
     'radio',
     'poll',
+
+    'ckeditor',
+    'ckeditor_uploader'
 )
 
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error when DEBUG=False.
-# See http://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
-    },
-    'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
-        }
-    },
-    'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-    }
-}
+## A sample logging configuration. The only tangible logging
+## performed by this configuration is to send an email to
+## the site admins on every HTTP 500 error when DEBUG=False.
+## See http://docs.djangoproject.com/en/dev/topics/logging for
+## more details on how to customize your logging configuration.
+#LOGGING = {
+    #'version': 1,
+    #'disable_existing_loggers': False,
+    #'filters': {
+        #'require_debug_false': {
+            #'()': 'django.utils.log.RequireDebugFalse'
+        #}
+    #},
+    #'handlers': {
+        #'mail_admins': {
+            #'level': 'ERROR',
+            #'filters': ['require_debug_false'],
+            #'class': 'django.utils.log.AdminEmailHandler'
+        #}
+    #},
+    #'loggers': {
+        #'django.request': {
+            #'handlers': ['mail_admins'],
+            #'level': 'ERROR',
+            #'propagate': True,
+        #},
+    #}
+#}
 
 LOGIN_URL = '/accounts/login/'
 
@@ -254,25 +254,12 @@ SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
 
 COFFEESCRIPT_ROOT = autopath('static')
 LINKEXCHANGE_CONFIG = autopath('anny_blog', 'linkexchange.cfg')
-SAPE_DATABASE = autopath('sape')
-SAPE_USER = '1ace11f022c3a648b3cc382788c589cd'
-SAPE_HOST = HOSTNAME
-
-#COMPRESS_PRECOMPILERS = (
-    #('text/coffeescript', 'coffee --compile --stdio'),
-#)
 
 THUMBNAIL_QUALITY = 80
 
 AVATAR_SIZE = (100, 100)
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * (1024 * 1024)
-
-
-SOUTH_MIGRATION_MODULES = {
-    'default': 'social.apps.django_app.default.south_migrations',
-#    'easy_thumbnails': 'easy_thumbnails.south_migrations',
-}
 
 #CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 CKEDITOR_UPLOAD_PATH = 'article/'
@@ -350,6 +337,8 @@ EXT_MEDIA_IP = '127.0.0.1'
 CACHE_TIMEOUT = 60
 
 COMMENTS_APP='django_comments_xtd'
+
+CAPTCHA_LENGTH = 7
 
 try:
     from .local_settings import *

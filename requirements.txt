@@ -1,4 +1,4 @@
-Django==1.11
+Django==1.11.18
 Pillow
 pytz
 -e git+https://github.com/pjdelport/django-voting.git#egg=django-voting
@@ -15,8 +15,7 @@ pyfaceb
 requests==2.20.0
 LinkExchange.Django
 LinkExchange
-sape
--e git+https://github.com/Marx86/supercaptcha.git#egg=supercaptcha
+django-simple-captcha==0.5.10
 BeautifulSoup
 django_compressor
 django-redis

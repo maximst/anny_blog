@@ -12,7 +12,7 @@
       </div>
       <div class="blog-detail-body content-detail-body">
       <div class="blog-author content-author">{% if content.user.profile.sex == 1 %}<b style="color: #f0a; font-size: 16px;">♀</b>{% endif %} {% if content.user.profile.sex == 2 %}<b style="color: #0af; font-size: 16px;">♂</b>{% endif %} {% comment %}{% if content.user.profile.year_old %} Возраст: {{ content.user.profile.year_old }} {% endif %}{% endcomment %} {% timezone TIME_ZONE %}{{ content.create_time }}{% endtimezone %} {% if content.user.first_name or content.user.last_name %}{{ content.user.first_name }} {{ content.user.last_name }}{% else %}{{ content.user.username }}{% endif %} добавил{% if content.user.profile.sex == 1 %}а{% endif %} запись</div>
-        {% vote %}
+        {% comment %}{% vote %}{% endcomment %}
         <br />
         {% if content.poll %}
             {% poll content.poll %}
