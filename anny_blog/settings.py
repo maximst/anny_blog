@@ -266,7 +266,7 @@ CKEDITOR_UPLOAD_PATH = 'article/'
 KEDITOR_IMAGE_BACKEND = 'Pillow'
 CKEDITOR_CONFIGS = {
     'default': {
-        'skin': 'moono',
+        #'skin': 'moono',
         # 'skin': 'office2013',
         'toolbar_Basic': [
             ['Source', '-', 'Bold', 'Italic']
