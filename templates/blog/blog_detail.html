@@ -35,14 +35,25 @@
 	  {% for im in content.images %}
 	    {% thumbnail im.image content.image_size as i %}
 <!--	      <div class="thumbnail-container">-->
-              <a rel="prettyPhoto[{{ content.slug }}]" data-pp="true" data-pp-gallery="{{ content.slug }}" data-pp-title="{{ im.title }}" class="thumbnail-img" href="{{ im.image.url|ext_media }}" data-alt-href="{{ im.image.url }}" title="{{ im.title }}">
-		{% if content.image_rows != 1 %}
-		<div {% if row.image_rows == 2 %}class="img-border"{% endif %} style="height: {{ content.image_width }}px; width: {{ content.image_width }}px;">
-                {% endif %}
-                <img class="blog-image" src="{{ i.url|ext_media }}" onError="this.onerror=null;this.src='{{ i.url }}';" style="max-width: {{ content.image_size }}px;" alt="{{ im.title }}" />
-                {% if content.image_rows != 1 %}
-		  </div>
-                {% endif %}
+              <a data-rel="prettyPhoto[{{ content.slug }}]"
+                 data-pp="true"
+                 data-pp-gallery="{{ content.slug }}"
+                 data-pp-title="{{ im.title }}"
+                 class="thumbnail-img pretty-photo"
+                 href="{{ im.image.url|ext_media }}"
+                 data-alt-href="{{ im.image.url }}"
+                 title="{{ im.title }}">
+                  {% if content.image_rows != 1 %}
+                    <div {% if row.image_rows == 2 %}class="img-border"{% endif %} style="height: {{ content.image_width }}px; width: {{ content.image_width }}px;">
+                  {% endif %}
+                    <img class="blog-image"
+                         src="{{ i.url|ext_media }}"
+                         onError="this.onerror=null;this.src='{{ i.url }}';"
+                         style="max-width: {{ content.image_size }}px;"
+                         alt="{{ im.title }}" />
+                  {% if content.image_rows != 1 %}
+                    </div>
+                  {% endif %}
 		</a>
 <!--		<br>
 		{% if im.title %}
