@@ -27,7 +27,7 @@ class BaseModelAdmin(admin.ModelAdmin):
 
 class BlogImageInline(admin.TabularInline):
   model = BlogImage
-  extra = 1
+  extra = 0
 
 
 class BlogAdmin(TranslatableAdmin, BaseModelAdmin):
