@@ -11,6 +11,8 @@ from core.utils import flip_horizontal
 
 from urlparse import urlparse, parse_qs
 
+from .utils import get_default_views_count
+
 
 class Blog(TranslatableModel):
     IMAGE_ROWS_CHOICES = [(i, i.__str__()) for i in range(1, 11)]
@@ -51,6 +53,7 @@ class Blog(TranslatableModel):
                                choices=IMAGE_ROWS_CHOICES)
     video = models.URLField(default='', blank=True)
     poll = models.ForeignKey(Poll, blank=True, null=True)
+    views_count = models.PositiveIntegerField(default=get_default_views_count)
 
     def __unicode__(self):
         return u'%s' % self.title

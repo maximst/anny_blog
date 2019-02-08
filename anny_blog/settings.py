@@ -340,6 +340,9 @@ COMMENTS_APP='django_comments_xtd'
 
 CAPTCHA_LENGTH = 7
 
+MIN_VIEWS_COUNT = 30
+MAX_VIEWS_COUNT = 90
+
 try:
     from .local_settings import *
 except ImportError:

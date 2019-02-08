@@ -1,9 +1,11 @@
 # -*-coding: utf8-*-
+import random
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.context_processors import csrf
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.cache import cache_page
 from django.conf import settings
+from django.db.models import F
 
 from models import Blog, Comment, Article
 from forms import CommentForm
@@ -85,6 +87,10 @@ def blog_detail(request, slug):
     else:
         comment_form = CommentForm()
     context['comment_form'] = comment_form
+
+    Blog.objects.filter(id=content.id).update(
+        views_count=F('views_count') + random.randint(1, 3)
+    )
 
     return render(request, 'blog/blog_detail.html', context)
 

@@ -189,6 +189,14 @@ a,
     padding-top: 30px;
 }
 
+.views-count {
+    margin: 5px 7px 5px 0;
+}
+
+.views-count span {
+    padding-left: 3px;
+}
+
 .blog-list-footer {
     font-size: 70%;
 }
@@ -386,6 +394,7 @@ a,
 }
 
 .soul {
+  color: #fff;
   font-family: 'newpushkinbook';
   font-size: 23px;
   padding-right: 20px;
