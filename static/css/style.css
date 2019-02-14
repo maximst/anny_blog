@@ -279,6 +279,7 @@ a,
 }
 
 .blog-images img, #pp_full_res img {
+/*
     -moz-transform: scaleX(-1);
     -o-transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
@@ -286,6 +287,7 @@ a,
     transform: scaleX(-1);
     filter: FlipH;
     -ms-filter: "FlipH";
+*/
 
     -webkit-transition: none;
     -khtml-transition: none;
