@@ -172,3 +172,63 @@ class Article(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.title
+
+
+class InstagramChannel(models.Model):
+    title = models.CharField(max_length=128, unique=True)
+    enabled = models.BooleanField(default=True)
+    channel = models.CharField(max_length=255, unique=True)
+
+    def __unicode__(self):
+        return u'%s' % self.title
+
+
+class InstagramCategory(models.Model):
+    title = models.CharField(max_length=128, unique=True)
+    enabled = models.BooleanField(default=True)
+    channels = models.ManyToManyField(InstagramChannel)
+
+    def __unicode__(self):
+        return u'%s' % self.title
+
+
+class InstagramBlog(models.Model):
+    inst_id = models.PositiveIntegerField()
+    short_code = models.CharField(max_length=32)
+    inst_user = models.CharField(max_length=255)
+    category = models.ForeignKey(InstagramCategory)
+    title = models.CharField(max_length=255, unique=True)
+    body = RichTextField()
+    slug = models.SlugField(max_length=255, unique=True)
+    deleted = models.BooleanField(default=False)
+    user = models.ForeignKey(User, null=True, default=1)
+    create_time = models.DateTimeField(auto_now=False, auto_now_add=True)
+    edit_time = models.DateTimeField(auto_now=True, auto_now_add=False)
+    tags = TaggableManagerN(through=ArticleTaggedItem)
+    views_count = models.PositiveIntegerField(default=get_default_views_count)
+
+    def __unicode__(self):
+        return u'%s' % self.title
+
+    @property
+    def images(self):
+        return self.instagramimage_set.order_by('order', 'pk')
+
+    @property
+    def front_image(self):
+        return self.images.first
+
+
+class InstagramImage(models.Model):
+    ORDER_CHOICES = zip(*[range(100)]*2)
+
+    inst_id = models.PositiveIntegerField()
+    title = models.CharField(max_length=128, default='', blank=True)
+    blog = models.ForeignKey(InstagramBlog)
+    image = models.ImageField(upload_to='images', max_length=1024)
+    front_page = models.BooleanField(default=True)
+    order = models.IntegerField(default=0, blank=True, choices=ORDER_CHOICES)
+    ext_url = models.URLField(null=True, blank=True, max_length=2048)
+
+    def __unicode__(self):
+        return u'%s' % self.title or self.inst_id
