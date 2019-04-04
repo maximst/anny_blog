@@ -197,15 +197,18 @@ class InstagramBlog(models.Model):
     short_code = models.CharField(max_length=32)
     inst_user = models.CharField(max_length=255)
     category = models.ForeignKey(InstagramCategory)
-    title = models.CharField(max_length=255, unique=True)
+    title = models.CharField(max_length=255)
     body = RichTextField()
-    slug = models.SlugField(max_length=255, unique=True)
+    slug = models.SlugField(max_length=255)
     deleted = models.BooleanField(default=False)
     user = models.ForeignKey(User, null=True, default=1)
     create_time = models.DateTimeField(auto_now=False, auto_now_add=True)
     edit_time = models.DateTimeField(auto_now=True, auto_now_add=False)
     tags = TaggableManagerN(through=ArticleTaggedItem)
     views_count = models.PositiveIntegerField(default=get_default_views_count)
+
+    class Meta:
+        unique_together = (('inst_id', 'category'), ('slug', 'category'))
 
     def __unicode__(self):
         return u'%s' % self.title
@@ -225,10 +228,13 @@ class InstagramImage(models.Model):
     inst_id = models.PositiveIntegerField()
     title = models.CharField(max_length=128, default='', blank=True)
     blog = models.ForeignKey(InstagramBlog)
-    image = models.ImageField(upload_to='images', max_length=1024)
+    image = models.ImageField(upload_to='images', max_length=1024, null=True, blank=True)
     front_page = models.BooleanField(default=True)
     order = models.IntegerField(default=0, blank=True, choices=ORDER_CHOICES)
     ext_url = models.URLField(null=True, blank=True, max_length=2048)
+
+    class Meta:
+        unique_together = (('inst_id', 'blog'),)
 
     def __unicode__(self):
         return u'%s' % self.title or self.inst_id

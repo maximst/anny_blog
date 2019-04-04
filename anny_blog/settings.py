@@ -343,6 +343,8 @@ CAPTCHA_LENGTH = 7
 MIN_VIEWS_COUNT = 30
 MAX_VIEWS_COUNT = 90
 
+INSTAGRAM_QUERY_HASH = ''
+
 try:
     from .local_settings import *
 except ImportError:
