@@ -5,6 +5,7 @@ import random
 import datetime
 import requests
 from django.conf import settings
+from django.template.defaultfilters import slugify
 
 
 def get_default_views_count(min_views=None, max_views=None):
@@ -75,17 +76,22 @@ def _instagram_create_channel_posts(category, channel):
 
 def _create_blog(category, post):
     from blog.models import InstagramBlog, InstagramImage
+
+    all_text = [l['node']['text'] for l in post['edge_media_to_caption']['edges']]
+    tags = filter(lambda s: s.startswith('#'), ' '.join(all_text).split())
+    title = all_text and all_text[0].replace('#', '') or ''
+
     ib, created = InstagramBlog.objects.get_or_create(
         inst_id=post['id'],
         category=category,
         defaults={
             'short_code': post['shortcode'],
             'inst_user': post['owner']['username'],
-            'title': post['edge_media_to_caption']['edges'][0]['node']['text'],
-            'body': '\n<br />\n'.join(l['node']['text'] for l in post['edge_media_to_caption']['edges']),
+            'title': title,
+            'body': '\n<br />\n'.join(all_text),
             'create_time': datetime.datetime.fromtimestamp(post['taken_at_timestamp']),
-            'tags': [],
-            'slug': ''
+            'tags': tags,
+            'slug': slugify(title or str(post['id']))
         }
     )
 
