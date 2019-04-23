@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load coretags %}
+{% load polltags %}
+{% load thumbnail %}
+{% load tz %}
+{% get_current_timezone as TIME_ZONE %}
+
+{% block content %}
+    <div class="blog-detail content-detail">
+      <div class="blog-detail-header content-detail-header">
+        <h4>{{ content.title|truncatewords_html:10 }}</h4>
+      </div>
+      <div class="blog-detail-body content-detail-body">
+        <div class="views-count"><i class="icon-eye-open"></i><span>{{ content.views_count }}</span></div>
+        <div class="blog-author content-author">
+          {% if content.user.profile.sex == 1 %}
+            <b style="color: #f0a; font-size: 16px;">♀</b>
+          {% endif %}
+          {% if content.user.profile.sex == 2 %}
+            <b style="color: #0af; font-size: 16px;">♂</b>
+          {% endif %}
+          {% comment %}{% if content.user.profile.year_old %} Возраст: {{ content.user.profile.year_old }} {% endif %}{% endcomment %}
+          {% timezone TIME_ZONE %}{{ content.create_time }}{% endtimezone %}
+          {% if content.user.first_name or content.user.last_name %}{{ content.user.first_name }} {{ content.user.last_name }}{% else %}{{ content.user.username }}{% endif %} добавил{% if content.user.profile.sex == 1 %}а{% endif %} запись
+        </div>
+        {% comment %}{% vote %}{% endcomment %}
+        <br />
+        {% if content.poll %}
+            {% poll content.poll %}
+        {% endif %}
+        <div class="blog-detail-body-content content-detail-body-content">
+          {{ content.body|safe }}
+        </div>
+	<div class="blog-images blog-images-detail">
+	  {% for im in content.images %}
+	    {% if im.is_video %}
+              <video src="{{ im.ext_url }}" controls loop preload="metadata">Тег video не поддерживается вашим браузером.</video>
+            {% else %}
+              {% thumbnail im.image content.image_size as i %}
+                <a data-rel="prettyPhoto[{{ content.slug }}]"
+                    data-pp="true"
+                    data-pp-gallery="{{ content.slug }}"
+                    data-pp-title="{{ im.title }}"
+                    class="thumbnail-img pretty-photo"
+                    href="{{ im.ext_url }}"
+                    data-alt-href="{{ im.image.url }}
+                    title="{{ im.title }}">
+                    <div style="height: {{ content.image_width }}px; width: {{ content.image_width }}px;">
+                        <img class="blog-image"
+                            src="{{ i.url|ext_media }}"
+                            onError="this.onerror=null;this.src='{{ i.url }}';"
+                            style="max-width: {{ content.image_size }}px;"
+                            alt="{{ im.title }}" />
+                        </div>
+                    </a>
+                {% if forloop.counter|divisibleby:content.image_rows %}
+                <br />
+                {% endif %}
+              {% endif %}
+	    {% endfor %}
+	</div>
+          {% if content.embed_video %}
+	    <div class="video">
+	      {{ content.embed_video|safe }}
+	    </div>
+	  {% endif %}
+        <div class="blog-detail-footer content-detail-footer">
+        {% if content.tags.all %}
+        <span class="float-left">
+        <span class="views-count"><i class="icon-eye-open"></i><span>{{ content.views_count }}</span></span>
+        <small>
+          Тэги:
+          {% for t in content.tags.all %}
+            <a class="ajax-nav" href="/tag/{{ t.slug }}/">{{ t.name }}</a>{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </small>
+        </span>
+        {% endif %}
+        <div class="btn-group">
+          {% comment %}{% if user.is_authenticated %}{% endcomment %}
+            <a class="btn ajax-nav" href="{% if user.is_authenticated %}#comment_form{% else %}{% url "login" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}#comment_form{% endif %}">Добавить коментарий</a>
+          {% comment %}{% endif %}{% endcomment %}
+          {% comment %}        <small><a class="btn" href="#">{% if content.user.first_name or content.user.last_name %}{{ content.user.first_name }} {{ content.user.last_name }}{% else %}{{ content.user.username }}{% endif %} blog</a></small>{% endcomment %}
+        </div>
+        </div>
+      </div>
+    <a name="comments"></a>
+    {% for comment in comments %}
+      <div class="comment" id="comment-{{ comment.pk }}">
+        <div class="comment-info">
+            {% if comment.user.profile.sex == 1 %}<b style="color: #f0a; font-size: 16px;">♀</b>{% endif %} {% if comment.user.profile.sex == 2 %}<b style="color: #0af; font-size: 16px;">♂</b>{% endif %}
+            {% if comment.user.get_full_name %}
+              {{ comment.user.get_full_name }}
+            {% else %}
+              {{ comment.user.username }}
+            {% endif %}
+            {% if comment.user.profile.year_old %} Возраст: {{ comment.user.profile.year_old }} {% endif %}
+          <span class="text-right comment-time">
+            {{ comment.create_time }}
+          </span>
+          <span class="float-right">
+            <a href="#comment-{{ comment.pk }}" title="Comment: {{ forloop.counter }}">#{{ forloop.counter }}</a>
+          </span>
+        </div>
+        {% if comment.user.profile %}
+          <img src="{{ comment.user.profile.avatar.url }}" class="img-rounded img-polaroid avatar" />
+        {% endif %}
+{% comment %}        <h3>{{ comment.title }}</h3>{% endcomment %}
+        <div class="comment-body">
+            {{ comment.body|striptags|linebreaks }}
+        </div>
+        <div class="signature">
+          {% if comment.user.profile %}
+            {{ comment.user.profile.signature|striptags }}
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+
+    <a name="comment_form"></a>
+    <br>
+    {% if user.is_authenticated %}
+      <div class="add-comment">
+        <form method="post" action="">
+          {{ comment_form.as_p }}
+          {% csrf_token %}
+          <div class="text-left">
+            <input type="submit" class="btn" value="Отправить" />
+          </div>
+        </form>
+      </div>
+    {% else %}
+      Пожалуйста войдите, что-бы оставить коментарий:
+      <br />
+      <a href="{% url "social:begin" "facebook" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}" class="facebook" title="Войти через facebook">
+          <img src="{{ static_prefix }}img/facebook.png" alt="FB" border="0" width="22" height="22" />
+          Войти через facebook
+      </a>
+      <br />
+      <a href="{% url "social:begin" "vk-oauth2" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}" class="vkontakte" title="Войти через vkontakte">
+          <img src="{{ static_prefix }}img/vkontakte.png" alt="VK" border="0" width="22" height="22" />
+          Войти через vkontakte
+      </a>
+      <br />
+      <a class="ajax-nav" href="{% url "login" %}?next={{ request.META.PATH_INFO }}">Войти</a>
+      <a class="ajax-nav" href="{% url "registration" %}?next={{ request.META.PATH_INFO }}">Регистрация</a>
+    {% endif %}
+    </div>
+{% endblock %}
+ 

@@ -24,3 +24,4 @@ django-ckeditor
 django-hvad==1.8.0
 #django-contrib-comments==1.8.0
 django-comments-xtd==2.3.0
+pytils==0.3

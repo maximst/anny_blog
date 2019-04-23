@@ -7,7 +7,7 @@ from django.views.decorators.cache import cache_page
 from django.conf import settings
 from django.db.models import F
 
-from models import Blog, Comment, Article
+from models import Blog, Comment, Article, InstagramBlog
 from forms import CommentForm
 
 from tag.models import ArticleTag
@@ -35,6 +35,29 @@ def log_write(request):
         log_row.user = request.user
 
     log_row.save()
+
+
+@cache_page(settings.CACHE_TIMEOUT)
+def instagram_detail(request, category, slug):
+    instagram_blog = get_object_or_404(InstagramBlog, category__slug=category, slug=slug)
+    return render(request, 'blog/instagram.html', {'content': instagram_blog})
+
+
+@cache_page(settings.CACHE_TIMEOUT)
+def instagram_list(request, category):
+    content = InstagramBlog.objects.filter(category__slug=category).order_by('create_time')
+    if content:
+        paginator = Paginator(content, 10)
+
+        page = request.GET.get('p')
+        try:
+            content = paginator.page(page)
+        except PageNotAnInteger:
+            content = paginator.page(1)
+        except EmptyPage:
+            content = paginator.page(paginator.num_pages)
+
+    return render(request, 'blog/instagram_list.html', {'content': content})
 
 
 @ajax_navigation

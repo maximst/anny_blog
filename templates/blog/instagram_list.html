@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load l10n %}
+{% load thumbnail %}
+{% load coretags %}
+{% load polltags %}
+{% load tz %}
+{% get_current_timezone as TIME_ZONE %}
+
+{% block content %}
+
+<div class="content-container row">
+  {% for row in content %}
+    <div id="preview-{{ row.id }}" class="fp-list blog-list content-list linebreack span3">
+        <div class="blog-list-header content-list-header">
+            <a class="ajax-nav" href="{% url "instagram" category=row.category.slug slug=row.slug %}" title="Go to: {{ row.title }}">
+                <h4>{{ row.title|truncatechars_html:24 }}</h4>
+            </a>
+        </div>
+        {% comment %} {% vote_list row.pk %} {% endcomment %}
+        <div class="blog-list-body content-list-body">
+        </div>
+        <div class="blog-images blog-images-list">
+            {% thumbnail row.front_image.image "226x390" upscale=True crop="center" as i %}
+            <a class="ajax-nav" href="{% url "instagram" category=row.category.slug slug=row.slug %}" title="Go to: {{ row.title }}">
+                <div>
+                    <img class="blog-image" src="{{ i.ext_url }}" onError="this.onerror=null;this.src='{{ i.url }}';" alt="{{ im.title }}" />
+                </div>
+            </a>
+        </div>
+        <article>
+            {% if row.poll %}
+            {% poll row.poll %}
+            {% endif %}
+            {{ row.preview|safe|truncatechars_html:55 }}
+        </article>
+            {% comment %}
+            {% if row.embed_video %}
+            <div class="video">
+            {{ row.embed_video|safe }}
+            </div>
+            {% endif %}
+            {% endcomment %}
+        <div class="blog-list-footer content-list-footer">
+            <span class="blog-time">
+                <time>
+                    {% localtime on %}
+                    {% timezone TIME_ZONE %}
+                    {{ row.create_time|date:"d-M Yг" }}
+                    {% endtimezone %}
+                    {% endlocaltime %}
+                </time>
+            </span>
+            <a class="ajax-nav" href="{% url "instagram" category=row.category.slug slug=row.slug %}" title="Go to: {{ row.title }}">
+                <span class="link">Читать далее...</span>
+            </a>
+            {% comment %}
+            <span>
+                <a class="ajax-nav" href="{% if user.is_authenticated %}{% url "instagram" category=row.category.slug slug=row.slug %}#comment_form{% else %}{% url "login" %}?{% url "instagram" category=row.category.slug slug=row.slug %}#comment_form{% endif %}">Оставить коментарий </a>
+            </span>
+            <span>
+                {{ row.num_comments }} Коментариев
+            </span>
+            {% if row.tags.all %}
+            <span class="float-left">
+                Тэги:
+                {% for t in row.tags.all %}
+                <a class="ajax-nav" href="/tag/{{ t.slug }}/">{{ t.name }}</a>{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </span>
+            {% endif %}
+            <div class="btn-group">
+                <a class="btn" href="{% url "instagram" category=row.category.slug slug=row.slug %}">Read more</a>
+                <a class="btn" href="{% url "instagram" category=row.category.slug slug=row.slug %}#comments">{{ row.num_comments }} Comments</a>
+
+                {% if user.is_authenticated %}
+                <a class="btn" href="{% url "instagram" category=row.category.slug slug=row.slug %}#comment_form">Add Comment</a>
+                {% endif %}
+                <small><a class="btn" href="#">{% if row.user.first_name or row.user.last_name %}{{ row.user.first_name }} {{ row.user.last_name }}{% else %}{{ row.user.username }}{% endif %} blog</a></small>
+            {% endcomment %}
+        </div>
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

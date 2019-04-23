@@ -78,15 +78,22 @@ class FileAdmin(BaseFileAdmin):
     list_display = ('label', 'file')
 
 
+class InstagramCategoryAdmin(admin.ModelAdmin):
+    list_display = ('__unicode__', 'enabled',)
+    prepopulated_fields = {'slug': ('title',)}
+
+
 class InstagramImageInline(admin.TabularInline):
   model = InstagramImage
   extra = 0
 
 
 class InstagramBlogAdmin(BaseModelAdmin):
-    list_display = ('__unicode__', 'create_time', 'deleted')
+    list_display = ('__unicode__', 'create_time', 'deleted', 'category_', 'images_count')
     prepopulated_fields = {'slug': ('title',)}
     inlines = (InstagramImageInline,)
+    list_filter = ('channel__channel', 'category__title', 'deleted',)
+    ordering = ('create_time',)
 
     class Media:
         from django.conf import settings
@@ -100,6 +107,12 @@ class InstagramBlogAdmin(BaseModelAdmin):
             'all': (static_url + 'css/tag-autocomplite.css',)
         }
 
+    def category_(self, obj):
+        return obj.category.title
+
+    def images_count(self, obj):
+        return obj.images.count()
+
 
 admin.site.register(Blog, BlogAdmin)
 admin.site.register(Comment, CommentAdmin)
@@ -107,4 +120,4 @@ admin.site.register(MediaFile, FileAdmin)
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(InstagramBlog, InstagramBlogAdmin)
 admin.site.register(InstagramChannel, admin.ModelAdmin)
-admin.site.register(InstagramCategory, admin.ModelAdmin)
+admin.site.register(InstagramCategory, InstagramCategoryAdmin)

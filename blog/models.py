@@ -1,5 +1,9 @@
 #-*- coding: utf8 -*-
+import os
+import urllib
+
 from django.db import models
+from django.core.files import File
 from django.contrib.auth.models import User
 from django.conf import settings
 from ckeditor.fields import RichTextField
@@ -185,6 +189,7 @@ class InstagramChannel(models.Model):
 
 class InstagramCategory(models.Model):
     title = models.CharField(max_length=128, unique=True)
+    slug = models.SlugField(max_length=128)
     enabled = models.BooleanField(default=True)
     channels = models.ManyToManyField(InstagramChannel)
 
@@ -193,6 +198,19 @@ class InstagramCategory(models.Model):
 
 
 class InstagramBlog(models.Model):
+    IMAGE_SIZE = {
+        1: 1024,
+        2: 500,
+        3: 300,
+        4: 220,
+        5: 170,
+        6: 140,
+        7: 120,
+        8: 100,
+        9: 90,
+        10: 80,
+    }
+
     inst_id = models.PositiveIntegerField()
     short_code = models.CharField(max_length=32)
     inst_user = models.CharField(max_length=255)
@@ -206,20 +224,30 @@ class InstagramBlog(models.Model):
     edit_time = models.DateTimeField(auto_now=True, auto_now_add=False)
     tags = TaggableManagerN(through=ArticleTaggedItem)
     views_count = models.PositiveIntegerField(default=get_default_views_count)
+    channel = models.ForeignKey(InstagramChannel)
 
     class Meta:
         unique_together = (('inst_id', 'category'), ('slug', 'category'))
 
     def __unicode__(self):
-        return u'%s' % self.title
+        return self.title or '{}-{}'.format(self.category, self.short_code)
 
     @property
     def images(self):
-        return self.instagramimage_set.order_by('order', 'pk')
+        return self.instagramimage_set.filter().order_by('order', 'pk')
 
     @property
     def front_image(self):
-        return self.images.first
+        return self.instagramimage_set.filter(is_video=False).first
+
+    def image_size(self):
+        size = self.image_width()
+        return '%ix%i' % (size, size)
+
+    def image_width(self):
+        rows = self.images.count()
+        rows = rows <= 10 and rows or 10
+        return self.IMAGE_SIZE[rows]
 
 
 class InstagramImage(models.Model):
@@ -228,13 +256,24 @@ class InstagramImage(models.Model):
     inst_id = models.PositiveIntegerField()
     title = models.CharField(max_length=128, default='', blank=True)
     blog = models.ForeignKey(InstagramBlog)
-    image = models.ImageField(upload_to='images', max_length=1024, null=True, blank=True)
+    image = models.ImageField(upload_to='instagram_images', max_length=1024, null=True, blank=True)
     front_page = models.BooleanField(default=True)
     order = models.IntegerField(default=0, blank=True, choices=ORDER_CHOICES)
     ext_url = models.URLField(null=True, blank=True, max_length=2048)
+    is_video = models.BooleanField(default=False)
 
     class Meta:
         unique_together = (('inst_id', 'blog'),)
 
     def __unicode__(self):
-        return u'%s' % self.title or self.inst_id
+        return u'%s' % self.title or unicode(self.inst_id)
+
+    def get_remote_image(self):
+        if self.ext_url and not self.is_video and not self.image:
+            name = self.ext_url.split('?')[0]
+            result = urllib.urlretrieve(self.ext_url)
+            self.image.save(
+                os.path.basename(name),
+                File(open(result[0]))
+            )
+            self.save()

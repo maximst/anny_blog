@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 import re
 import md5
 import json
@@ -5,7 +6,10 @@ import random
 import datetime
 import requests
 from django.conf import settings
-from django.template.defaultfilters import slugify
+from django.db import IntegrityError
+from pytils import translit
+
+TAGS_RE = re.compile('\#([^#^ ^,]+)')
 
 
 def get_default_views_count(min_views=None, max_views=None):
@@ -62,6 +66,7 @@ class InstagramAPI(object):
 
 
 def _instagram_create_channel_posts(category, channel):
+    print(u'Channel "{}" handling...'.format(channel.title))
     api = InstagramAPI(channel.channel)
     has_next = True
 
@@ -71,29 +76,74 @@ def _instagram_create_channel_posts(category, channel):
         except Exception:
             has_next = False
         else:
-            [_create_blog(category, post['node']) for post in posts]
+            for post in posts:
+                created = _create_blog(category, channel, post['node'])
+                if not created:
+                    has_next = False
+                    break
 
 
-def _create_blog(category, post):
+def _create_blog(category, channel, post):
     from blog.models import InstagramBlog, InstagramImage
 
-    all_text = [l['node']['text'] for l in post['edge_media_to_caption']['edges']]
-    tags = filter(lambda s: s.startswith('#'), ' '.join(all_text).split())
-    title = all_text and all_text[0].replace('#', '') or ''
+    print(u'\tGetting info for post "{}"...'.format(post['shortcode']))
 
-    ib, created = InstagramBlog.objects.get_or_create(
-        inst_id=post['id'],
-        category=category,
-        defaults={
-            'short_code': post['shortcode'],
-            'inst_user': post['owner']['username'],
-            'title': title,
-            'body': '\n<br />\n'.join(all_text),
-            'create_time': datetime.datetime.fromtimestamp(post['taken_at_timestamp']),
-            'tags': tags,
-            'slug': slugify(title or str(post['id']))
-        }
-    )
+    all_text = [l['node']['text'] for l in post['edge_media_to_caption']['edges']]
+    tags = TAGS_RE.findall(' '.join(all_text))
+    title = all_text and all_text[0].replace('#', '') or post['shortcode']
+
+    try:
+        ib, created = InstagramBlog.objects.get_or_create(
+            inst_id=post['id'],
+            category=category,
+            defaults={
+                'short_code': post['shortcode'],
+                'inst_user': post['owner']['username'],
+                'title': title,
+                'body': '\n<br />\n'.join(all_text),
+                'create_time': datetime.datetime.fromtimestamp(post['taken_at_timestamp']),
+                'channel': channel,
+                'slug': translit.slugify(title) or post['shortcode'].lower()
+            }
+        )
+    except IntegrityError:
+        ib, created = InstagramBlog.objects.get_or_create(
+            inst_id=post['id'],
+            category=category,
+            defaults={
+                'short_code': post['shortcode'],
+                'inst_user': post['owner']['username'],
+                'title': title,
+                'body': '\n<br />\n'.join(all_text),
+                'create_time': datetime.datetime.fromtimestamp(post['taken_at_timestamp']),
+                'channel': channel,
+                'slug': (translit.slugify(title) or post['shortcode'].lower()) + '-' + str(random.randint(1, 100000))
+            }
+        )
+    ib.tags.add(*tags)
+
+    children = post.get('edge_sidecar_to_children', {}).get('edges', [])
+    if not children:
+        children.append({'node': post})
+
+    if children:
+        for i, child in enumerate(children):
+            ii, ii_created = InstagramImage.objects.get_or_create(
+                inst_id=child['node']['id'],
+                blog=ib,
+                defaults={
+                    'title': u'{}-{}-{}'.format(channel.title, post['shortcode'], i),
+                    'ext_url': child['node']['is_video'] and post.get('video_url') or child['node']['display_url'],
+                    'is_video': child['node']['is_video'],
+                    'order': i
+                }
+            )
+            #TODO: Add preview for video
+            ii.get_remote_image() #TODO: Add parameter custom url for video preview
+
+    print(u'\tDone.\n')
+
+    return created
 
 
 def instagram_parser():

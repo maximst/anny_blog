@@ -7,7 +7,10 @@ from django.contrib import admin
 from django.contrib import auth
 from django.contrib.auth.views import LoginView
 
-from blog.views import blog_list, blog_detail, tags, article, article_list
+from blog.views import (
+    blog_list, blog_detail, tags, article, article_list, instagram_detail,
+    instagram_list
+)
 from core.views import vote, logout, registration, registration_thanks, laminat
 from tag.views import tags_autocomplite
 from user_profile.views import profile
@@ -31,6 +34,8 @@ admin.autodiscover()
 
 urlpatterns = [
     url(r'^blog/(?P<slug>[\w\-]+)/$', blog_detail, name='blog'),
+    url(r'^category/(?P<category>[\w\-]+)/(?P<slug>[\w\-]+)/$', instagram_detail, name='instagram'),
+    url(r'^category/(?P<category>[\w\-]+)/$', instagram_list, name='instagram-list'),
     url(r'^article/(?P<slug>[\w\-]+)/$', article, name='article'),
     url(r'^article/$', article_list, name='article-list'),
     url(r'^blog/$', blog_list, name='blog-list'),
