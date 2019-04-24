@@ -243,5 +243,8 @@ def setlinks(context):
 
 @register.filter
 def ext_media(url):
+    if settings.DEBUG:
+        return url
+
     url = url.replace(u'/media/', u'/follow-chic/media/blog/')
     return u'https://{}{}'.format(settings.EXT_MEDIA_IP, url)

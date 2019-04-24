@@ -23,7 +23,7 @@
             {% thumbnail row.front_image.image "226x390" upscale=True crop="center" as i %}
             <a class="ajax-nav" href="{% url "instagram" category=row.category.slug slug=row.slug %}" title="Go to: {{ row.title }}">
                 <div>
-                    <img class="blog-image" src="{{ i.ext_url }}" onError="this.onerror=null;this.src='{{ i.url }}';" alt="{{ im.title }}" />
+                    <img class="blog-image" src="{{ i.url|ext_media }}" onError="this.onerror=null;this.src='{{ i.url }}';" alt="{{ im.title }}" />
                 </div>
             </a>
         </div>

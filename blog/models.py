@@ -234,11 +234,11 @@ class InstagramBlog(models.Model):
 
     @property
     def images(self):
-        return self.instagramimage_set.filter().order_by('order', 'pk')
+        return self.instagramimage_set.order_by('order', 'pk')
 
     @property
     def front_image(self):
-        return self.instagramimage_set.filter(is_video=False).first
+        return self.instagramimage_set.first
 
     def image_size(self):
         size = self.image_width()
@@ -268,10 +268,11 @@ class InstagramImage(models.Model):
     def __unicode__(self):
         return u'%s' % self.title or unicode(self.inst_id)
 
-    def get_remote_image(self):
-        if self.ext_url and not self.is_video and not self.image:
-            name = self.ext_url.split('?')[0]
-            result = urllib.urlretrieve(self.ext_url)
+    def get_remote_image(self, url=None):
+        _url = url or self.ext_url
+        if _url and not self.image:
+            name = _url.split('?')[0]
+            result = urllib.urlretrieve(_url)
             self.image.save(
                 os.path.basename(name),
                 File(open(result[0]))

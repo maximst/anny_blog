@@ -47,7 +47,7 @@ def instagram_detail(request, category, slug):
 def instagram_list(request, category):
     content = InstagramBlog.objects.filter(category__slug=category).order_by('create_time')
     if content:
-        paginator = Paginator(content, 10)
+        paginator = Paginator(content, 16)
 
         page = request.GET.get('p')
         try:

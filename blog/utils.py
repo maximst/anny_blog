@@ -138,8 +138,8 @@ def _create_blog(category, channel, post):
                     'order': i
                 }
             )
-            #TODO: Add preview for video
-            ii.get_remote_image() #TODO: Add parameter custom url for video preview
+
+            ii.get_remote_image(child['node']['display_url'])
 
     print(u'\tDone.\n')
 
