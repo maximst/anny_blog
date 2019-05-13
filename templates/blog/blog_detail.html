@@ -87,7 +87,7 @@
         {% endif %}
         <div class="btn-group">
           {% comment %}{% if user.is_authenticated %}{% endcomment %}
-            <a class="btn ajax-nav" href="{% if user.is_authenticated %}#comment_form{% else %}{% url "login" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}#comment_form{% endif %}">Добавить коментарий</a>
+            <a class="btn" href="{% if user.is_authenticated %}#comment_form{% else %}{% url "login" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}#comment_form{% endif %}">Добавить коментарий</a>
           {% comment %}{% endif %}{% endcomment %}
           {% comment %}        <small><a class="btn" href="#">{% if content.user.first_name or content.user.last_name %}{{ content.user.first_name }} {{ content.user.last_name }}{% else %}{{ content.user.username }}{% endif %} blog</a></small>{% endcomment %}
         </div>

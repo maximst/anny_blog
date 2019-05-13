@@ -6,6 +6,7 @@ from django.db import models
 from django.core.files import File
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.urls import reverse
 from ckeditor.fields import RichTextField
 from hvad.models import TranslatableModel, TranslatedFields
 
@@ -123,6 +124,9 @@ class Blog(TranslatableModel):
     def front_image(self):
         return self.front_images.first
 
+    def get_url(self):
+        return reverse('blog', kwargs={'slug': self.slug})
+
 
 class Comment(models.Model):
     title = models.CharField(max_length=64, blank=True, default='')
@@ -176,6 +180,9 @@ class Article(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.title
+
+    def get_url(self):
+        return reverse('article', kwargs={'slug': self.slug})
 
 
 class InstagramChannel(models.Model):
@@ -249,6 +256,9 @@ class InstagramBlog(models.Model):
         rows = rows <= 10 and rows or 10
         return self.IMAGE_SIZE[rows]
 
+    def get_url(self):
+        return reverse('instagram', kwargs={'category': self.category.slug, 'slug': self.slug})
+
 
 class InstagramImage(models.Model):
     ORDER_CHOICES = zip(*[range(100)]*2)
@@ -256,7 +266,7 @@ class InstagramImage(models.Model):
     inst_id = models.PositiveIntegerField()
     title = models.CharField(max_length=128, default='', blank=True)
     blog = models.ForeignKey(InstagramBlog)
-    image = models.ImageField(upload_to='instagram_images', max_length=1024, null=True, blank=True)
+    image = models.ImageField(upload_to='category_images', max_length=1024, null=True, blank=True)
     front_page = models.BooleanField(default=True)
     order = models.IntegerField(default=0, blank=True, choices=ORDER_CHOICES)
     ext_url = models.URLField(null=True, blank=True, max_length=2048)
@@ -271,10 +281,14 @@ class InstagramImage(models.Model):
     def get_remote_image(self, url=None):
         _url = url or self.ext_url
         if _url and not self.image:
-            name = _url.split('?')[0]
-            result = urllib.urlretrieve(_url)
-            self.image.save(
-                os.path.basename(name),
-                File(open(result[0]))
-            )
+            name = os.path.basename(_url.split('?')[0])
+            rel_name = 'category_images/{}'.format(name)
+            file_path = self.image.storage.path(rel_name)
+
+            if os.path.exists(file_path):
+                self.image.name = rel_name
+            else:
+                res = urllib.urlretrieve(_url)
+                self.image.save(name, File(open(res[0])))
+
             self.save()

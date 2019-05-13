@@ -1,5 +1,7 @@
 from django.contrib.sitemaps import Sitemap
-from blog.models import Blog, Comment, BlogImage
+from blog.models import (
+    Blog, Comment, BlogImage, InstagramBlog, InstagramImage, Article
+)
 from tag.models import ArticleTag
 
 
@@ -8,13 +10,13 @@ class BlogSitemap(Sitemap):
     priority = 0.5
 
     def items(self):
-        return Blog.objects.all().order_by('id')
+        return Blog.objects.filter(deleted=False).order_by('id')
 
     def lastmod(self, obj):
         return obj.create_time
 
     def location(self, obj):
-        return "/blog/%s/" % obj.slug
+        return obj.get_url()
 
 
 class CommentSitemap(Sitemap):
@@ -36,10 +38,10 @@ class BlogImageSitemap(Sitemap):
     priority = 0.5
 
     def items(self):
-        return BlogImage.objects.all().order_by('id')
+        return BlogImage.objects.filter().exclude(image='').order_by('id')
 
     def location(self, obj):
-        return "%s" % obj.image.url
+        return obj.image.url
 
 
 class ArticleTagSitemap(Sitemap):
@@ -51,3 +53,36 @@ class ArticleTagSitemap(Sitemap):
 
     def location(self, obj):
         return "/tag/%s/" % obj.slug
+
+
+class InstagramBlogSitemap(Sitemap):
+    changefreq = 'weekly'
+    priority = 0.5
+
+    def items(self):
+        return InstagramBlog.objects.filter(deleted=False, category__enabled=True).order_by('id')
+
+    def location(self, obj):
+        return obj.get_url()
+
+
+class InstagramImageSitemap(Sitemap):
+    changefreq = 'weekly'
+    priority = 0.5
+
+    def items(self):
+        return InstagramImage.objects.filter().exclude(image='').order_by('id')
+
+    def location(self, obj):
+        return obj.image.url
+
+
+class ArticleSitemap(Sitemap):
+    changefreq = 'weekly'
+    priority = 0.5
+
+    def items(self):
+        return Article.objects.filter(deleted=False).order_by('id')
+
+    def location(self, obj):
+        return obj.get_url()

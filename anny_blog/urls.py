@@ -19,14 +19,19 @@ from poll.views import vote as poll_vote
 from supercaptcha import draw
 
 from django.contrib.sitemaps.views import sitemap
-from sitemap import (BlogSitemap, CommentSitemap, BlogImageSitemap,
-                                                  ArticleTagSitemap)
+from sitemap import (
+    BlogSitemap, CommentSitemap, BlogImageSitemap, ArticleTagSitemap,
+    InstagramBlogSitemap, InstagramImageSitemap, ArticleSitemap
+)
 
 sitemaps = {
     'blog': BlogSitemap,
     'comment': CommentSitemap,
     'blog_image': BlogImageSitemap,
     'tags': ArticleTagSitemap,
+    'categories': InstagramBlogSitemap,
+    'categories_image': InstagramImageSitemap,
+    'article': ArticleSitemap
 }
 
 
@@ -36,6 +41,7 @@ urlpatterns = [
     url(r'^blog/(?P<slug>[\w\-]+)/$', blog_detail, name='blog'),
     url(r'^category/(?P<category>[\w\-]+)/(?P<slug>[\w\-]+)/$', instagram_detail, name='instagram'),
     url(r'^category/(?P<category>[\w\-]+)/$', instagram_list, name='instagram-list'),
+    url(r'^category/', TemplateView.as_view(template_name='blog/categories.html'), name='instagram-categories'),
     url(r'^article/(?P<slug>[\w\-]+)/$', article, name='article'),
     url(r'^article/$', article_list, name='article-list'),
     url(r'^blog/$', blog_list, name='blog-list'),

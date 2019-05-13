@@ -77,13 +77,16 @@
         </span>
         {% endif %}
         <div class="btn-group">
-          {% comment %}{% if user.is_authenticated %}{% endcomment %}
+{% comment %}
+          {% if user.is_authenticated %}
             <a class="btn ajax-nav" href="{% if user.is_authenticated %}#comment_form{% else %}{% url "login" %}?{% if redirect_querystring %}{{ redirect_querystring }}{% else %}next={{ request.META.PATH_INFO }}{% endif %}#comment_form{% endif %}">Добавить коментарий</a>
-          {% comment %}{% endif %}{% endcomment %}
-          {% comment %}        <small><a class="btn" href="#">{% if content.user.first_name or content.user.last_name %}{{ content.user.first_name }} {{ content.user.last_name }}{% else %}{{ content.user.username }}{% endif %} blog</a></small>{% endcomment %}
+          {% endif %}
+            <small><a class="btn" href="#">{% if content.user.first_name or content.user.last_name %}{{ content.user.first_name }} {{ content.user.last_name }}{% else %}{{ content.user.username }}{% endif %} blog</a></small>
+{% endcomment %}
         </div>
         </div>
       </div>
+{% comment %}
     <a name="comments"></a>
     {% for comment in comments %}
       <div class="comment" id="comment-{{ comment.pk }}">
@@ -105,7 +108,7 @@
         {% if comment.user.profile %}
           <img src="{{ comment.user.profile.avatar.url }}" class="img-rounded img-polaroid avatar" />
         {% endif %}
-{% comment %}        <h3>{{ comment.title }}</h3>{% endcomment %}
+        <h3>{{ comment.title }}</h3>
         <div class="comment-body">
             {{ comment.body|striptags|linebreaks }}
         </div>
@@ -145,6 +148,7 @@
       <a class="ajax-nav" href="{% url "login" %}?next={{ request.META.PATH_INFO }}">Войти</a>
       <a class="ajax-nav" href="{% url "registration" %}?next={{ request.META.PATH_INFO }}">Регистрация</a>
     {% endif %}
+{% endcomment %}
     </div>
 {% endblock %}
  

@@ -66,7 +66,7 @@ class InstagramAPI(object):
 
 
 def _instagram_create_channel_posts(category, channel):
-    print(u'Channel "{}" handling...'.format(channel.title))
+    print(u'\tChannel "{}" handling...'.format(channel.title))
     api = InstagramAPI(channel.channel)
     has_next = True
 
@@ -86,7 +86,7 @@ def _instagram_create_channel_posts(category, channel):
 def _create_blog(category, channel, post):
     from blog.models import InstagramBlog, InstagramImage
 
-    print(u'\tGetting info for post "{}"...'.format(post['shortcode']))
+    print(u'\t\tGetting info for post "{}"...'.format(post['shortcode']))
 
     all_text = [l['node']['text'] for l in post['edge_media_to_caption']['edges']]
     tags = TAGS_RE.findall(' '.join(all_text))
@@ -141,7 +141,7 @@ def _create_blog(category, channel, post):
 
             ii.get_remote_image(child['node']['display_url'])
 
-    print(u'\tDone.\n')
+    print(u'\t\tDone.\n')
 
     return created
 
@@ -149,5 +149,6 @@ def _create_blog(category, channel, post):
 def instagram_parser():
     from blog.models import InstagramChannel, InstagramCategory
     for category in InstagramCategory.objects.filter(enabled=True):
+        print(u'\tCategory "{}":'.format(category.title))
         for channel in category.channels.filter(enabled=True):
             _instagram_create_channel_posts(category, channel)

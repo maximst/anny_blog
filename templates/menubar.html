@@ -19,6 +19,13 @@
       </ul>-->
       <span>
       <ul class="nav">
+        {% for category in categories %}
+          <li>
+            <a href="{% url "instagram-list" category=category.slug %}" id="category-{{ category.slug }}" class="category animate-link" title="Go to: {{ category.title }}">
+              {{ category.title }}
+            </a>
+          </li>
+        {% endfor %}
         <!--li>
           <a class="email animate-link" href="mailto:{{ admin.1 }}" title="Write a letter to {{ admin.0 }} or developer of site">
             <img src="{{ static_prefix }}img/email_hover.png" alt="Write a letter to {{ admin.0 }} or developer of site" />

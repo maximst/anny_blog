@@ -12,7 +12,7 @@
   {% for row in content %}
     <div id="preview-{{ row.id }}" class="fp-list blog-list content-list linebreack span3">
         <div class="blog-list-header content-list-header">
-            <a class="ajax-nav" href="{% url "instagram" category=row.category.slug slug=row.slug %}" title="Go to: {{ row.title }}">
+            <a class="ajax-nav" href="{{ row.get_url }}" title="Go to: {{ row.title }}">
                 <h4>{{ row.title|truncatechars_html:24 }}</h4>
             </a>
         </div>
@@ -21,7 +21,7 @@
         </div>
         <div class="blog-images blog-images-list">
             {% thumbnail row.front_image.image "226x390" upscale=True crop="center" as i %}
-            <a class="ajax-nav" href="{% url "instagram" category=row.category.slug slug=row.slug %}" title="Go to: {{ row.title }}">
+            <a class="ajax-nav" href="{{ row.get_url }}" title="Go to: {{ row.title }}">
                 <div>
                     <img class="blog-image" src="{{ i.url|ext_media }}" onError="this.onerror=null;this.src='{{ i.url }}';" alt="{{ im.title }}" />
                 </div>
@@ -50,12 +50,12 @@
                     {% endlocaltime %}
                 </time>
             </span>
-            <a class="ajax-nav" href="{% url "instagram" category=row.category.slug slug=row.slug %}" title="Go to: {{ row.title }}">
+            <a class="ajax-nav" href="{{ row.get_url }}" title="Go to: {{ row.title }}">
                 <span class="link">Читать далее...</span>
             </a>
             {% comment %}
             <span>
-                <a class="ajax-nav" href="{% if user.is_authenticated %}{% url "instagram" category=row.category.slug slug=row.slug %}#comment_form{% else %}{% url "login" %}?{% url "instagram" category=row.category.slug slug=row.slug %}#comment_form{% endif %}">Оставить коментарий </a>
+                <a class="ajax-nav" href="{% if user.is_authenticated %}{{ row.get_url }}#comment_form{% else %}{% url "login" %}?{{ row.get_url }}#comment_form{% endif %}">Оставить коментарий </a>
             </span>
             <span>
                 {{ row.num_comments }} Коментариев
@@ -69,11 +69,11 @@
             </span>
             {% endif %}
             <div class="btn-group">
-                <a class="btn" href="{% url "instagram" category=row.category.slug slug=row.slug %}">Read more</a>
-                <a class="btn" href="{% url "instagram" category=row.category.slug slug=row.slug %}#comments">{{ row.num_comments }} Comments</a>
+                <a class="btn" href="{{ row.get_url }}">Read more</a>
+                <a class="btn" href="{{ row.get_url }}#comments">{{ row.num_comments }} Comments</a>
 
                 {% if user.is_authenticated %}
-                <a class="btn" href="{% url "instagram" category=row.category.slug slug=row.slug %}#comment_form">Add Comment</a>
+                <a class="btn" href="{{ row.get_url }}#comment_form">Add Comment</a>
                 {% endif %}
                 <small><a class="btn" href="#">{% if row.user.first_name or row.user.last_name %}{{ row.user.first_name }} {{ row.user.last_name }}{% else %}{{ row.user.username }}{% endif %} blog</a></small>
             {% endcomment %}

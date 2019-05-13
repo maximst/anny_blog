@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content-container row">
+    <ul>
+      {% for category in categories %}
+        <li>
+            <a href="{% url "instagram-list" category=category.slug %}">{{ category.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+</div>
+{% endblock %}

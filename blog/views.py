@@ -1,5 +1,6 @@
 # -*-coding: utf8-*-
 import random
+from itertools import chain
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.context_processors import csrf
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -45,7 +46,7 @@ def instagram_detail(request, category, slug):
 
 @cache_page(settings.CACHE_TIMEOUT)
 def instagram_list(request, category):
-    content = InstagramBlog.objects.filter(category__slug=category).order_by('create_time')
+    content = InstagramBlog.objects.select_related('category').filter(category__slug=category).order_by('create_time')
     if content:
         paginator = Paginator(content, 16)
 
@@ -152,15 +153,21 @@ def blog_list(request):
 def tags(request, tag=None):
     #log_write(request)
     if tag:
-        contents = Blog.objects.filter(tags__slug__in=[tag])\
-                                    .order_by('-create_time')
+        blogs = Blog.objects.filter(tags__slug__in=[tag], deleted=False).order_by('-create_time')
+        insts = InstagramBlog.objects.select_related('category').filter(
+            tags__slug__in=[tag],
+            deleted=False,
+            category__enabled=True
+        ).order_by('-create_time')
+
+        contents = sorted(chain(blogs, insts), key=lambda o: o.create_time, reverse=True)
     else:
         contents = ArticleTag.objects.all()
         return render(request, 'tag_list.html', {'content': contents})
 
     if not contents:
         return render(request, 'blog/blog_list.html', {'content': contents})
-    paginator = Paginator(contents, 10)
+    paginator = Paginator(contents, 16)
 
     page = request.GET.get('p')
     try:
