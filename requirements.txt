@@ -1,4 +1,4 @@
-Django==1.11.18
+Django==1.11
 Pillow
 pytz
 -e git+https://github.com/pjdelport/django-voting.git#egg=django-voting
