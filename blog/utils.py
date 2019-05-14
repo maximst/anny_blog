@@ -128,13 +128,14 @@ def _create_blog(category, channel, post):
 
     if children:
         for i, child in enumerate(children):
+            video_url = child['node'].get('video_url')
             ii, ii_created = InstagramImage.objects.get_or_create(
                 inst_id=child['node']['id'],
                 blog=ib,
                 defaults={
                     'title': u'{}-{}-{}'.format(channel.title, post['shortcode'], i),
-                    'ext_url': child['node']['is_video'] and post.get('video_url') or child['node']['display_url'],
-                    'is_video': child['node']['is_video'],
+                    'ext_url': child['node']['is_video'] and video_url or child['node']['display_url'],
+                    'is_video': bool(video_url and child['node']['is_video']),
                     'order': i
                 }
             )

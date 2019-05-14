@@ -241,7 +241,11 @@ class InstagramBlog(models.Model):
 
     @property
     def images(self):
-        return self.instagramimage_set.order_by('order', 'pk')
+        return self.instagramimage_set.filter(is_video=False).order_by('order', 'pk')
+
+    @property
+    def videos(self):
+        return self.instagramimage_set.filter(is_video=True).order_by('order', 'pk')
 
     @property
     def front_image(self):

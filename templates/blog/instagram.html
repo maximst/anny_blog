@@ -33,31 +33,32 @@
         </div>
 	<div class="blog-images blog-images-detail">
 	  {% for im in content.images %}
-	    {% if im.is_video %}
-              <video src="{{ im.ext_url }}" controls loop preload="metadata">Тег video не поддерживается вашим браузером.</video>
-            {% else %}
-              {% thumbnail im.image content.image_size as i %}
-                <a data-rel="prettyPhoto[{{ content.slug }}]"
-                    data-pp="true"
-                    data-pp-gallery="{{ content.slug }}"
-                    data-pp-title="{{ im.title }}"
-                    class="thumbnail-img pretty-photo"
-                    href="{{ im.ext_url }}"
-                    data-alt-href="{{ im.image.url }}
-                    title="{{ im.title }}">
-                    <div style="height: {{ content.image_width }}px; width: {{ content.image_width }}px;">
-                        <img class="blog-image"
-                            src="{{ i.url|ext_media }}"
-                            onError="this.onerror=null;this.src='{{ i.url }}';"
-                            style="max-width: {{ content.image_size }}px;"
-                            alt="{{ im.title }}" />
-                        </div>
-                    </a>
-                {% if forloop.counter|divisibleby:content.image_rows %}
-                <br />
-                {% endif %}
-              {% endif %}
-	    {% endfor %}
+            {% thumbnail im.image content.image_size as i %}
+            <a data-rel="prettyPhoto[{{ content.slug }}]"
+                data-pp="true"
+                data-pp-gallery="{{ content.slug }}"
+                data-pp-title="{{ im.title }}"
+                class="thumbnail-img pretty-photo"
+                href="{{ im.ext_url }}"
+                data-alt-href="{{ im.image.url }}
+                title="{{ im.title }}">
+                <div style="height: {{ content.image_width }}px; width: {{ content.image_width }}px;">
+                    <img class="blog-image"
+                        src="{{ i.url|ext_media }}"
+                        onError="this.onerror=null;this.src='{{ i.url }}';"
+                        style="max-width: {{ content.image_size }}px;"
+                        alt="{{ im.title }}" />
+                </div>
+            </a>
+            {% if forloop.counter|divisibleby:content.image_rows %}
+            <br />
+            {% endif %}
+          {% endfor %}
+          {% for vid in content.videos %}
+            <div clss="video-wrapper">
+                <video src="{{ vid.ext_url }}" controls loop preload="metadata">Тег video не поддерживается вашим браузером.</video>
+            </div>
+          {% endfor %}
 	</div>
           {% if content.embed_video %}
 	    <div class="video">
