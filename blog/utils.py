@@ -90,7 +90,7 @@ def _create_blog(category, channel, post):
 
     all_text = [l['node']['text'] for l in post['edge_media_to_caption']['edges']]
     tags = TAGS_RE.findall(' '.join(all_text))
-    title = all_text and all_text[0].replace('#', '') or post['shortcode']
+    title = (all_text and all_text[0].replace('#', '') or post['shortcode'])[:255]
 
     try:
         ib, created = InstagramBlog.objects.get_or_create(

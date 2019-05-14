@@ -218,7 +218,7 @@ class InstagramBlog(models.Model):
         10: 80,
     }
 
-    inst_id = models.PositiveIntegerField()
+    inst_id = models.BigIntegerField()
     short_code = models.CharField(max_length=32)
     inst_user = models.CharField(max_length=255)
     category = models.ForeignKey(InstagramCategory)
@@ -263,7 +263,7 @@ class InstagramBlog(models.Model):
 class InstagramImage(models.Model):
     ORDER_CHOICES = zip(*[range(100)]*2)
 
-    inst_id = models.PositiveIntegerField()
+    inst_id = models.BigIntegerField()
     title = models.CharField(max_length=128, default='', blank=True)
     blog = models.ForeignKey(InstagramBlog)
     image = models.ImageField(upload_to='category_images', max_length=1024, null=True, blank=True)
