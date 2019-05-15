@@ -89,11 +89,12 @@ class InstagramImageInline(admin.TabularInline):
 
 
 class InstagramBlogAdmin(BaseModelAdmin):
-    list_display = ('__unicode__', 'create_time', 'deleted', 'category_', 'images_count')
+    list_display = ('__unicode__', 'create_time', 'deleted', 'category_', 'images_count', 'videos_count')
     prepopulated_fields = {'slug': ('title',)}
     inlines = (InstagramImageInline,)
     list_filter = ('channel__channel', 'category__title', 'deleted',)
-    ordering = ('create_time',)
+    ordering = ('-create_time',)
+    search_fields = ('inst_id', 'short_code', 'inst_user', 'title',)
 
     class Media:
         from django.conf import settings
@@ -112,6 +113,9 @@ class InstagramBlogAdmin(BaseModelAdmin):
 
     def images_count(self, obj):
         return obj.images.count()
+
+    def videos_count(self, obj):
+        return obj.videos.count()
 
 
 admin.site.register(Blog, BlogAdmin)

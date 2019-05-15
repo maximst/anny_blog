@@ -103,7 +103,7 @@ def _create_blog(category, channel, post):
                 'body': '\n<br />\n'.join(all_text),
                 'create_time': datetime.datetime.fromtimestamp(post['taken_at_timestamp']),
                 'channel': channel,
-                'slug': translit.slugify(title) or post['shortcode'].lower()
+                'slug': (translit.slugify(title) or post['shortcode'].lower())[:255]
             }
         )
     except IntegrityError:
@@ -117,7 +117,7 @@ def _create_blog(category, channel, post):
                 'body': '\n<br />\n'.join(all_text),
                 'create_time': datetime.datetime.fromtimestamp(post['taken_at_timestamp']),
                 'channel': channel,
-                'slug': (translit.slugify(title) or post['shortcode'].lower()) + '-' + str(random.randint(1, 100000))
+                'slug': (translit.slugify(title) or post['shortcode'].lower())[:245] + '-' + str(random.randint(1, 100000))
             }
         )
     ib.tags.add(*tags)

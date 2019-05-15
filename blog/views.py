@@ -46,7 +46,7 @@ def instagram_detail(request, category, slug):
 
 @cache_page(settings.CACHE_TIMEOUT)
 def instagram_list(request, category):
-    content = InstagramBlog.objects.select_related('category').filter(category__slug=category).order_by('create_time')
+    content = InstagramBlog.objects.select_related('category').filter(category__slug=category).order_by('-create_time')
     if content:
         paginator = Paginator(content, 16)
 

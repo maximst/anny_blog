@@ -5,7 +5,7 @@
     <ul>
       {% for category in categories %}
         <li>
-            <a href="{% url "instagram-list" category=category.slug %}">{{ category.title }}</a>
+            <a href="{% url "instagram-list ajax-nav" category=category.slug %}">{{ category.title }}</a>
         </li>
       {% endfor %}
     </ul>
