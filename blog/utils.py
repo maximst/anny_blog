@@ -28,7 +28,7 @@ class InstagramAPI(object):
         'query_hash': settings.INSTAGRAM_QUERY_HASH,
     }
     pages = 12
-    _rhx_gis = None
+    _rhx_gis = ''
     _api = None
     _after = None
     _channel_id = None
@@ -41,7 +41,7 @@ class InstagramAPI(object):
         if result:
             data = json.loads(result.groupdict()['json'])
             self._channel_id = data['entry_data']['ProfilePage'][0]['graphql']['user']['id']
-            self._rhx_gis = data['rhx_gis']
+            self._rhx_gis = data.get('rhx_gis', '')
 
     def get_next_page(self):
         params = self._params.copy()
