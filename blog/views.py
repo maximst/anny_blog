@@ -41,6 +41,11 @@ def log_write(request):
 @cache_page(settings.CACHE_TIMEOUT)
 def instagram_detail(request, category, slug):
     instagram_blog = get_object_or_404(InstagramBlog, category__slug=category, slug=slug)
+
+    InstagramBlog.objects.filter(id=instagram_blog.id).update(
+        views_count=F('views_count') + random.randint(1, 3)
+    )
+
     return render(request, 'blog/instagram.html', {'content': instagram_blog})
 
 

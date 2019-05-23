@@ -66,7 +66,7 @@ class InstagramAPI(object):
 
 
 def _instagram_create_channel_posts(category, channel):
-    print(u'\tChannel "{}" handling...'.format(channel.title))
+    print(u'\tChannel "{}" handling...'.format(channel.title).encode('utf8'))
     api = InstagramAPI(channel.channel)
     has_next = True
 
@@ -150,6 +150,6 @@ def _create_blog(category, channel, post):
 def instagram_parser():
     from blog.models import InstagramChannel, InstagramCategory
     for category in InstagramCategory.objects.filter(enabled=True):
-        print(u'\tCategory "{}":'.format(category.title))
+        print(u'\tCategory "{}":'.format(category.title).encode('utf8'))
         for channel in category.channels.filter(enabled=True):
             _instagram_create_channel_posts(category, channel)
