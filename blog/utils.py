@@ -21,9 +21,13 @@ def get_default_views_count(min_views=None, max_views=None):
 
 
 class InstagramAPI(object):
-    api_url = 'https://www.instagram.com/graphql/query/'
-    channel_url = 'https://www.instagram.com/{channel_name}/'
+    inst_url = 'https://www.instagram.com'
+    api_url = inst_url + '/graphql/query/'
+    channel_url = inst_url + '/{channel_name}/'
+    media_url = inst_url + '/p/{short_code}/'
+
     re_json = re.compile('window\.\_sharedData\s*=\s*(?P<json>.+);</script>', re.I)
+
     _params = {
         'query_hash': settings.INSTAGRAM_QUERY_HASH,
     }
@@ -33,15 +37,25 @@ class InstagramAPI(object):
     _after = None
     _channel_id = None
 
-    def __init__(self, channel_name):
+    def __init__(self, channel_name=None):
         self._after = None
         self._api = requests.session()
+
+        if not channel_name:
+            return
+
         resp = requests.get(self.channel_url.format(channel_name=channel_name))
         result = self.re_json.search(resp.text)
         if result:
             data = json.loads(result.groupdict()['json'])
             self._channel_id = data['entry_data']['ProfilePage'][0]['graphql']['user']['id']
             self._rhx_gis = data.get('rhx_gis', '')
+
+    def get_media(self, short_code, timeout=10):
+        resp = requests.get(self.media_url.format(short_code=short_code), timeout=timeout)
+        result = self.re_json.search(resp.text)
+        if result:
+            return json.loads(result.groupdict()['json'])
 
     def get_next_page(self):
         params = self._params.copy()

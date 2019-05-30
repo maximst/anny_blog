@@ -16,7 +16,7 @@ from core.utils import flip_horizontal
 
 from urlparse import urlparse, parse_qs
 
-from .utils import get_default_views_count
+from .utils import get_default_views_count, InstagramAPI
 
 
 class Blog(TranslatableModel):
@@ -266,6 +266,7 @@ class InstagramBlog(models.Model):
 
 class InstagramImage(models.Model):
     ORDER_CHOICES = zip(*[range(100)]*2)
+    INST_API = InstagramAPI()
 
     inst_id = models.BigIntegerField()
     title = models.CharField(max_length=128, default='', blank=True)
@@ -273,7 +274,7 @@ class InstagramImage(models.Model):
     image = models.ImageField(upload_to='category_images', max_length=1024, null=True, blank=True)
     front_page = models.BooleanField(default=True)
     order = models.IntegerField(default=0, blank=True, choices=ORDER_CHOICES)
-    ext_url = models.URLField(null=True, blank=True, max_length=2048)
+    _ext_url = models.URLField(null=True, blank=True, max_length=2048, db_column='ext_url')
     is_video = models.BooleanField(default=False)
 
     class Meta:
@@ -281,6 +282,20 @@ class InstagramImage(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.title or unicode(self.inst_id)
+
+    @property
+    def ext_url(self):
+        if self.is_video:
+            try:
+                media = self.INST_API.get_media(self.blog.short_code, timeout=1)
+                for m in media['entry_data']['PostPage']:
+                    if int(m['graphql']['shortcode_media']['id']) == self.inst_id:
+                        self._ext_url = m['graphql']['shortcode_media']['video_url']
+                        self.save()
+                        break
+            except Exception:
+                pass
+        return self._ext_url
 
     def get_remote_image(self, url=None):
         _url = url or self.ext_url
