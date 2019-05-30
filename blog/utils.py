@@ -148,7 +148,7 @@ def _create_blog(category, channel, post):
                 blog=ib,
                 defaults={
                     'title': u'{}-{}-{}'.format(channel.title, post['shortcode'], i),
-                    'ext_url': child['node']['is_video'] and video_url or child['node']['display_url'],
+                    '_ext_url': child['node']['is_video'] and video_url or child['node']['display_url'],
                     'is_video': bool(video_url and child['node']['is_video']),
                     'order': i
                 }
