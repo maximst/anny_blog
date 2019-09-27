@@ -84,7 +84,7 @@
 								</div> \
 								<a href="#" class="pp_arrow_next">Next</a> \
 							</div>',
-			image_markup: '<img id="fullResImage" src="{path}" />',
+			image_markup: '<img id="fullResImage" src="{path}" onerror="this.onerror=null;this.src=\'{alt_path}\';" />',
 			flash_markup: '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="{width}" height="{height}"><param name="wmode" value="{wmode}" /><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="{path}" /><embed src="{path}" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="{width}" height="{height}" wmode="{wmode}"></embed></object>',
 			quicktime_markup: '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" codebase="http://www.apple.com/qtactivex/qtplugin.cab" height="{height}" width="{width}"><param name="src" value="{path}"><param name="autoplay" value="{autoplay}"><param name="type" value="video/quicktime"><embed src="{path}" height="{height}" width="{width}" autoplay="{autoplay}" type="video/quicktime" pluginspage="http://www.apple.com/quicktime/download/"></embed></object>',
 			iframe_markup: '<iframe src ="{path}" width="{width}" height="{height}" frameborder="no"></iframe>',
@@ -151,6 +151,7 @@
 			
 			// Put the SRCs, TITLEs, ALTs into an array.
 			pp_images = (isSet) ? jQuery.map(matchedObjects, function(n, i){ if($(n).attr(settings.hook).indexOf(theRel) != -1) return $(n).attr('href'); }) : $.makeArray($(this).attr('href'));
+			pp_alt_images = (isSet) ? jQuery.map(matchedObjects, function(n, i){ if($(n).attr(settings.hook).indexOf(theRel) != -1) return $(n).data('alt-href'); }) : $.makeArray($(this).data('alt-href'));
 			pp_titles = (isSet) ? jQuery.map(matchedObjects, function(n, i){ if($(n).attr(settings.hook).indexOf(theRel) != -1) return ($(n).find('img').attr('alt')) ? $(n).find('img').attr('alt') : ""; }) : $.makeArray($(this).find('img').attr('alt'));
 			pp_descriptions = (isSet) ? jQuery.map(matchedObjects, function(n, i){ if($(n).attr(settings.hook).indexOf(theRel) != -1) return ($(n).attr('title')) ? $(n).attr('title') : ""; }) : $.makeArray($(this).attr('title'));
 			
@@ -245,7 +246,7 @@
 						prevImage = new Image();
 						if(isSet && pp_images[set_position - 1]) prevImage.src = pp_images[set_position - 1];
 
-						$pp_pic_holder.find('#pp_full_res')[0].innerHTML = settings.image_markup.replace(/{path}/g,pp_images[set_position]);
+						$pp_pic_holder.find('#pp_full_res')[0].innerHTML = settings.image_markup.replace(/{path}/g,pp_images[set_position]).replace(/{alt_path}/g, pp_alt_images[set_position]);
 
 						imgPreloader.onload = function(){
 							// Fit item to viewport
@@ -254,12 +255,15 @@
 							_showContent();
 						};
 
-						imgPreloader.onerror = function(){
-							alert('Image cannot be loaded. Make sure the path is correct and image exist.');
-							$.prettyPhoto.close();
-						};
+//						imgPreloader.onerror = function() {
+//                                                    alert('Image cannot be loaded. Make sure the path is correct and image exist.');
+//                                                    $.prettyPhoto.close();
+//						};
 					
 						imgPreloader.src = pp_images[set_position];
+                                                imgPreloader.onerror = function() {
+                                                    imgPreloader.src = pp_alt_images[set_position];
+                                                };
 					break;
 				
 					case 'youtube':
@@ -763,11 +767,13 @@
 					if(!pp_images[i].match(/\b(jpg|jpeg|png|gif)\b/gi)){
 						classname = 'default';
 						img_src = '';
+                                                alt_img_src = '';
 					}else{
 						classname = '';
 						img_src = pp_images[i];
+                                                alt_img_src = pp_alt_images[i];
 					}
-					toInject += "<li class='"+classname+"'><a href='#'><img src='" + img_src + "' width='50' alt='' /></a></li>";
+					toInject += "<li class='"+classname+"'><a href='#'><img src='" + img_src + "' onerror=\"this.onerror=null;this.src='" + alt_img_src + "';\" width='50' alt='' /></a></li>";
 				};
 				
 				toInject = settings.gallery_markup.replace(/{gallery}/g,toInject);

@@ -36,10 +36,12 @@
     <script src="{% static "coffee/ajax.coffee"|compile %}"></script>
     <script src="{% static "coffee/navigation.coffee"|compile %}"></script>
     {% endcompress %}
-    <script type="text/javascript" src="//vk.com/js/api/openapi.js?97" async defer></script>
-    <script type="text/javascript" src="//vk.com/js/api/openapi.js?101" async defer></script>
+    <script type="text/javascript" id="vk-api-script" src="//vk.com/js/api/openapi.js?162" async defer></script>
     <script type="text/javascript">
-        VK.init({apiId: 3520788, onlyWidgets: true});
+        document.getElementById('vk-api-script').onload = function() {
+            VK.init({apiId: 3520788, onlyWidgets: true});
+            VK.Widgets.Like("vk_like", {type: "button", height: 18, pageTitle: "Anny", pageDescription: "Шик по последней моде! Следи за модой!", pageUrl: "https://follow-chic.com/", pageImage: "https://follow-chic.com/img/logo.png"});
+        };
     </script>
     {% compress css %}
     <link rel="stylesheet" href="{{ static_prefix }}css/jquery-ui.min.css" type="text/css"/>
@@ -126,9 +128,9 @@
 
       <!-- VKONTAKTE LIKE -->
 	  <div id="vk_like" class="float-right"></div>
-	  <script type="text/javascript">
+	  <!--script type="text/javascript">
 	    VK.Widgets.Like("vk_like", {type: "button", height: 18, pageTitle: "Anny", pageDescription: "Шик по последней моде! Следи за модой!", pageUrl: "https://follow-chic.com/", pageImage: "https://follow-chic.com/img/logo.png"});
-	  </script>
+	  </script -->
 
       <!-- GOOGLE PLUS -->
       <div style="float: right">
