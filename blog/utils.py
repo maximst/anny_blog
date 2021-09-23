@@ -5,9 +5,11 @@ import json
 import random
 import datetime
 import requests
+from time import sleep
 from django.conf import settings
 from django.db import IntegrityError
 from pytils import translit
+from pprint import pprint
 
 TAGS_RE = re.compile('\#([^#^ ^,]+)')
 
@@ -40,11 +42,13 @@ class InstagramAPI(object):
     def __init__(self, channel_name=None):
         self._after = None
         self._api = requests.session()
+        self._api.headers.update({'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'})
+        self._api.cookies.set(name='sessionid', value='37525544615%3A6fFarVmKyLCT4V%3A6', domain=self.inst_url[11:])
 
         if not channel_name:
             return
 
-        resp = requests.get(self.channel_url.format(channel_name=channel_name))
+        resp = self._api.get(self.channel_url.format(channel_name=channel_name))
         result = self.re_json.search(resp.text)
         if result:
             data = json.loads(result.groupdict()['json'])
@@ -52,7 +56,7 @@ class InstagramAPI(object):
             self._rhx_gis = data.get('rhx_gis', '')
 
     def get_media(self, short_code, timeout=10):
-        resp = requests.get(self.media_url.format(short_code=short_code), timeout=timeout)
+        resp = self._api.get(self.media_url.format(short_code=short_code), timeout=timeout)
         result = self.re_json.search(resp.text)
         if result:
             return json.loads(result.groupdict()['json'])
@@ -95,6 +99,7 @@ def _instagram_create_channel_posts(category, channel):
                 if not created:
                     has_next = False
                     break
+        sleep(random.randint(10, 120))
 
 
 def _create_blog(category, channel, post):
@@ -154,6 +159,7 @@ def _create_blog(category, channel, post):
                 }
             )
 
+            sleep(random.randint(2, 7))
             ii.get_remote_image(child['node']['display_url'])
 
     print(u'\t\tDone.\n')
@@ -167,3 +173,4 @@ def instagram_parser():
         print(u'\tCategory "{}":'.format(category.title).encode('utf8'))
         for channel in category.channels.filter(enabled=True):
             _instagram_create_channel_posts(category, channel)
+        sleep(random.randint(60, 300))
