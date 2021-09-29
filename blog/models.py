@@ -14,7 +14,7 @@ from tag.models import ArticleTaggedItem, TaggableManagerN
 from poll.models import Poll
 from core.utils import flip_horizontal
 
-from urlparse import urlparse, parse_qs
+from urllib.parse import urlparse, parse_qs
 
 from .utils import get_default_views_count, InstagramAPI
 
@@ -47,17 +47,16 @@ class Blog(TranslatableModel):
 #    body = models.TextField(default='')
     slug = models.SlugField(max_length=128, unique=True)
     deleted = models.BooleanField(default=False)
-    user = models.ForeignKey(User, null=True, default=1)
+    user = models.ForeignKey(User, null=True, default=1, on_delete=models.DO_NOTHING)
     front_page = models.BooleanField(default=True)
     on_top = models.BooleanField(default=False)
     create_time = models.DateTimeField(editable=True, auto_now=False, auto_now_add=True)
     edit_time = models.DateTimeField(auto_now=True, auto_now_add=False)
     ip = models.GenericIPAddressField(default='127.0.0.1')
     tags = TaggableManagerN(through=ArticleTaggedItem)
-    image_rows = models.PositiveIntegerField(max_length=2, default=1,
-                               choices=IMAGE_ROWS_CHOICES)
+    image_rows = models.PositiveIntegerField(default=1, choices=IMAGE_ROWS_CHOICES)
     video = models.URLField(default='', blank=True)
-    poll = models.ForeignKey(Poll, blank=True, null=True)
+    poll = models.ForeignKey(Poll, blank=True, null=True, on_delete=models.DO_NOTHING)
     views_count = models.PositiveIntegerField(default=get_default_views_count)
 
     def __unicode__(self):
@@ -131,11 +130,11 @@ class Blog(TranslatableModel):
 class Comment(models.Model):
     title = models.CharField(max_length=64, blank=True, default='')
     body = models.TextField()
-    user = models.ForeignKey(User, null=True)
+    user = models.ForeignKey(User, null=True, on_delete=models.DO_NOTHING)
     create_time = models.DateTimeField(auto_now=False, auto_now_add=True)
     edit_time = models.DateTimeField(auto_now=True, auto_now_add=False)
     ip = models.GenericIPAddressField(default='127.0.0.1')
-    blog = models.ForeignKey(Blog)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return u'%s: %s - %s' % (self.user, self.blog, self.body[:32])
@@ -145,7 +144,7 @@ class BlogImage(models.Model):
     ORDER_CHOICES = zip(*[range(100)]*2)
 
     title = models.CharField(max_length=128, default='', blank=True)
-    blog = models.ForeignKey(Blog)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images', max_length=1024)
     front_page = models.BooleanField(default=True)
     order = models.IntegerField(default=0, blank=True, choices=ORDER_CHOICES)
@@ -173,7 +172,7 @@ class Article(models.Model):
     body = RichTextField()
     slug = models.SlugField(max_length=128, unique=True)
     deleted = models.BooleanField(default=False)
-    user = models.ForeignKey(User, null=True, default=1)
+    user = models.ForeignKey(User, null=True, default=1, on_delete=models.DO_NOTHING)
     create_time = models.DateTimeField(auto_now=False, auto_now_add=True)
     edit_time = models.DateTimeField(auto_now=True, auto_now_add=False)
     tags = TaggableManagerN(through=ArticleTaggedItem)
@@ -221,17 +220,17 @@ class InstagramBlog(models.Model):
     inst_id = models.BigIntegerField()
     short_code = models.CharField(max_length=32)
     inst_user = models.CharField(max_length=255)
-    category = models.ForeignKey(InstagramCategory)
+    category = models.ForeignKey(InstagramCategory, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     body = RichTextField()
     slug = models.SlugField(max_length=255)
     deleted = models.BooleanField(default=False)
-    user = models.ForeignKey(User, null=True, default=1)
+    user = models.ForeignKey(User, null=True, default=1, on_delete=models.DO_NOTHING)
     create_time = models.DateTimeField(editable=True, auto_now=False, auto_now_add=False)
     edit_time = models.DateTimeField(auto_now=True, auto_now_add=False)
     tags = TaggableManagerN(through=ArticleTaggedItem)
     views_count = models.PositiveIntegerField(default=get_default_views_count)
-    channel = models.ForeignKey(InstagramChannel)
+    channel = models.ForeignKey(InstagramChannel, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = (('inst_id', 'category'), ('slug', 'category'))
@@ -270,7 +269,7 @@ class InstagramImage(models.Model):
 
     inst_id = models.BigIntegerField()
     title = models.CharField(max_length=128, default='', blank=True)
-    blog = models.ForeignKey(InstagramBlog)
+    blog = models.ForeignKey(InstagramBlog, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='category_images', max_length=1024, null=True, blank=True)
     front_page = models.BooleanField(default=True)
     order = models.IntegerField(default=0, blank=True, choices=ORDER_CHOICES)

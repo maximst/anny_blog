@@ -1,6 +1,6 @@
 #-*-coding: utf8-*-
 from django import forms
-from models import Comment
+from .models import Comment
 
 class CommentForm(forms.Form):
     body = forms.CharField(widget=forms.Textarea, label="Оставить коментарий")

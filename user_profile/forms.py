@@ -3,11 +3,11 @@ from django import forms
 from django.conf import settings
 from django.core.files import File
 
-from models import UserProfile
+from .models import UserProfile
 
 from pytz import all_timezones
 from PIL import Image
-from StringIO import StringIO
+from io import StringIO
 
 
 class ProfileForm(forms.Form):

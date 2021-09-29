@@ -1,8 +1,9 @@
 #!-*-coding: utf8-*-
 from django import template
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.conf import settings
 from django.core.paginator import Page
+from django.utils import html
 from django.contrib.contenttypes.models import ContentType
 
 from blog.models import Blog
@@ -11,7 +12,6 @@ from voting.models import Vote
 
 import zlib
 import urllib
-import urllib2
 import sqlite3
 
 register = template.Library()
@@ -49,7 +49,7 @@ def menubar(context):
 def breadcrump(context):
     crumps = context['request'].META['PATH_INFO'].split('/')[:-1]
 
-    urls = map(lambda c: crumps[:crumps.index(c)+1], crumps)
+    urls = list(map(lambda c: crumps[:crumps.index(c)+1], crumps))
     urls[0].append(u'')
 
     titles = ['home'] + crumps[1:]
@@ -154,10 +154,10 @@ def links(context):
     if url.endswith('/'):
         alt_url = url[:-1]
     else:
-        alt_url = u'{}/'.format(url)
+        alt_url = '{}/'.format(url)
 
-    quoted_url = urllib.quote(url.encode('utf-8'))
-    alt_quoted_url = urllib.quote(alt_url.encode('utf-8'))
+    quoted_url = urllib.parse.quote(url.encode('utf-8'))
+    alt_quoted_url = urllib.parse.quote(alt_url.encode('utf-8'))
 
     conn = sqlite3.connect(settings.LINKS_DB)
     sql = conn.cursor()
@@ -171,20 +171,23 @@ def links(context):
                 links.append(u'<li>%s</li>' % link[2])
         except Exception:
             pass
-
-    return u'<ul class="linx cached">%s</ul>' % '\n'.join(links)
+    return html.format_html('<ul class="linx unstyled cached">{}</ul>', html.mark_safe('\n'.join(links)))
 
 
 @register.simple_tag(takes_context=True)
 def setlinks(context):
-    request = context['request']
+    request = context.get('request')
+    if not request:
+        return ''
+
     full_url = request.build_absolute_uri()
-    crc_uri_1 = str(zlib.crc32(full_url[8:]) % (1<<32))
-    crc_uri_2 = str(zlib.crc32(full_url) % (1<<32))
-    qs = urllib.urlencode({
-        '1': '1',
+    crc_uri_1 = str(zlib.crc32(full_url[full_url.startswith('https') and 8 or 7:].encode())).encode()
+    crc_uri_2 = str(zlib.crc32(full_url.encode())).encode()
+
+    qs = urllib.parse.urlencode({
         'host': 'follow-chic.com',
         'p': '6d6e10342d591fd102032427afb42eca',
+        'k': 'utf-8'
     })
     setlinks_url = 'http://show.setlinks.ru/?%s' % qs
 
@@ -193,52 +196,13 @@ def setlinks(context):
         return row_list and row_list[0] in (crc_uri_1, crc_uri_2) or False
 
     try:
-        result = urllib2.urlopen(setlinks_url, timeout=3)
+        result = urllib.request.urlopen(setlinks_url, timeout=3)
         result = result.code == 200 and result.readlines() or None
     except:
-        return '<!--6d6e1-->'
+        return ''
     else:
-        res = result and filter(_filter, result) or None
-        return res and res[0].decode('cp1251').replace(res[0].split()[0], '<!--6d6e1-->') or '<!--6d6e1-->'
-
-    url = request.META.get('PATH_INFO', '')
-    url_withouth_slash = url.endswith('/') and url[:-1] or url
-    query_string = request.META.get('QUERY_STRING')
-    if query_string:
-        url += '?%s' % query_string
-        url_withouth_slash += '?%s' % query_string
-
-    setlinks_querystring = urllib.urlencode({
-        'host': 'follow-chic.com',
-        'start': '1',
-        'count': '20',
-        'p': '6d6e10342d591fd102032427afb42eca',
-        'uri': url.encode('utf-8'),
-    })
-
-    setlinks_querystring_withouth_slash = urllib.urlencode({
-        'host': 'follow-chic.com',
-        'start': '1', 
-        'count': '20',   
-        'p': '6d6e10342d591fd102032427afb42eca',
-        'uri': url_withouth_slash.encode('utf-8'),
-    })
-
-    setlinks_url = 'http://show.setlinks.ru/page.php?%s' % setlinks_querystring
-    setlinks_url_withouth_slash = 'http://show.setlinks.ru/page.php?%s' % setlinks_querystring_withouth_slash
-
-    try:
-        result = urllib2.urlopen(setlinks_url, timeout=3)
-        result = result.code == 200 and result.read() or None
-        if not result:
-            result = urllib2.urlopen(setlinks_url_url_withouth_slash, timeout=3)
-            result = result.code == 200 and result.read() or None
-    except:
-        return None
-    else:
-        return result
-
-    return None
+        res = result and list(filter(_filter, result)) or None
+        return res and html.mark_safe(res[0].replace(res[0].split()[0], b'<!--6d6e1-->').decode()) or ''
 
 
 @register.filter

@@ -123,15 +123,15 @@ TEMPLATES = [
     },
 ]
 
-MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-#    'core.middleware.MySocialAuthExceptionMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 )
 
 ROOT_URLCONF = 'anny_blog.urls'
@@ -159,13 +159,13 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     #'django.contrib.comments',
     'django_comments',
-#    'django_comments_xtd',
+    'django_comments_xtd',
     'voting',
     'taggit',
     'social_django',
     'social.apps.django_app.default',
     'sorl.thumbnail',
-#    'compressor',
+    'compressor',
     'static_precompiler',
     'filer',
     'mptt',
@@ -344,6 +344,10 @@ MIN_VIEWS_COUNT = 30
 MAX_VIEWS_COUNT = 90
 
 INSTAGRAM_QUERY_HASH = ''
+
+DEFAULT_AUTO_FIELD='django.db.models.BigAutoField'
+
+HVAD = {'AUTOLOAD_TRANSLATIONS': True}
 
 try:
     from .local_settings import *

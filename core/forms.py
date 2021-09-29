@@ -9,7 +9,7 @@ from user_profile.models import UserProfile
 from captcha.fields import CaptchaField
 from pytz import all_timezones
 from PIL import Image
-from StringIO import StringIO
+from io import StringIO
 
 
 class RegistrationForm(forms.Form):

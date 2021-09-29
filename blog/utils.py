@@ -1,10 +1,10 @@
 #-*- coding: utf-8 -*-
 import re
-import md5
 import json
 import random
 import datetime
 import requests
+from hashlib import md5
 from time import sleep
 from django.conf import settings
 from django.db import IntegrityError

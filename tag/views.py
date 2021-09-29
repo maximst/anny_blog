@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 import json
 
-from models import ArticleTag
+from .models import ArticleTag
 
 from time import time
 

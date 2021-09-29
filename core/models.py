@@ -18,5 +18,5 @@ class Log(models.Model):
     sessionid = models.CharField(default='', max_length=512)
     http_referer = models.URLField(max_length=1024, default='')
     http_user_agent = models.CharField(default='', max_length=255)
-    user = models.ForeignKey(User, default=None, null=True, blank=True)
+    user = models.ForeignKey(User, default=None, null=True, blank=True, on_delete=models.DO_NOTHING)
     access_time = models.DateTimeField(auto_now=False, auto_now_add=True)

@@ -1,10 +1,10 @@
 import vkontakte
 from django.shortcuts import render
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from core.decorators import ajax_navigation
 
-from forms import SearchForm
+from .forms import SearchForm
 
 def get_vk_audio(vk_api, query=None):
     users = vk_api.users.get()

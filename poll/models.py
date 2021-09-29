@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Poll(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, null=True, on_delete=models.DO_NOTHING)
     question = models.TextField(unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     anonymous = models.BooleanField(default=False)
@@ -47,7 +47,7 @@ class Poll(models.Model):
 
 
 class PollChoice(models.Model):
-    poll = models.ForeignKey(Poll)
+    poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
     choice = models.CharField(max_length=255)
     order = models.IntegerField(default=0)
 
@@ -61,8 +61,8 @@ class PollChoice(models.Model):
 
 
 class PollVoice(models.Model):
-    user = models.ForeignKey(User)
-    pollchoice = models.ForeignKey(PollChoice)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    pollchoice = models.ForeignKey(PollChoice, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

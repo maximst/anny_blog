@@ -105,9 +105,6 @@ class Migration(migrations.Migration):
             fields=[
                 ('file_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='filer.File')),
             ],
-            options={
-                'manager_inheritance_from_future': True,
-            },
             bases=('filer.file',),
         ),
     ]

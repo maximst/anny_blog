@@ -1,6 +1,6 @@
 from django.contrib import admin
 from filer.admin.fileadmin import FileAdmin as BaseFileAdmin
-from models import (
+from .models import (
     Blog, Comment, BlogImage, MediaFile, Article, InstagramBlog, InstagramImage,
     InstagramChannel, InstagramCategory
 )

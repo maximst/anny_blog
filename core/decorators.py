@@ -2,7 +2,7 @@
 from django.http import JsonResponse
 from django.core.cache import cache
 
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 
 
 def ajax_navigation(fn):

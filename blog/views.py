@@ -8,8 +8,8 @@ from django.views.decorators.cache import cache_page
 from django.conf import settings
 from django.db.models import F
 
-from models import Blog, Comment, Article, InstagramBlog
-from forms import CommentForm
+from .models import Blog, Comment, Article, InstagramBlog
+from .forms import CommentForm
 
 from tag.models import ArticleTag
 from core.models import Log
@@ -107,7 +107,7 @@ def blog_detail(request, slug):
     context = {'content': content, 'comments': comments}
     context.update(csrf(request))
 
-    if request.method == 'POST' and user.is_authenticated():
+    if request.method == 'POST' and user.is_authenticated:
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
             ip = request.META['REMOTE_ADDR']

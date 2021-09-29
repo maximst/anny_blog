@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth import logout as django_logout
 from django.core.cache import cache
 from django.core.mail import EmailMessage
@@ -15,8 +15,8 @@ from django.forms import ValidationError
 
 
 from voting.models import Vote
-from forms import RegistrationForm
-from decorators import ajax_navigation
+from .forms import RegistrationForm
+from .decorators import ajax_navigation
 
 
 def homepage(request):
@@ -74,7 +74,7 @@ def vote(request, app, model, pk, vote):
 @ajax_navigation
 def registration(request):
     cache.clear()
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return redirect('/')
 
     if request.method == 'POST':
@@ -124,8 +124,6 @@ def laminat(request):
 
     w, l = [x[0] / x[1] for x in zip(room, board)]
     W, L = math.ceil(w), math.ceil(l)
-    print w,l 
-    print W, L
 
     board_count = W * L
     waste = (_mm_to_m(board[0]) * _mm_to_m(board[1]) * board_count) - (_mm_to_m(room[0]) * _mm_to_m(room[1]))

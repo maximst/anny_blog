@@ -100,6 +100,10 @@ a,
     display: inline-block;
 }
 
+ml_getver {
+    visibility: hidden;
+}
+
 .blog-list-header a,
 .shadowed-text {
     text-shadow: 0 1px 0 #fff;

@@ -18,7 +18,7 @@ class UserProfile(models.Model):
         (2, 'Мужской')
     )
 
-    user = models.OneToOneField(User, unique=True)
+    user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE)
     avatar = models.ImageField(upload_to='avatars', blank=True,
                                 default='avatars/default.png')
     signature = models.CharField(max_length=255, blank=True, default='')
